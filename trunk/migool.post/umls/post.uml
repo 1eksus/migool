@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Package xmi:version="2.1" xmlns:xmi="http://schema.omg.org/spec/XMI/2.1" xmlns:uml="http://www.eclipse.org/uml2/3.0.0/UML" xmi:id="_Fq9kkJryEd6NprjKLgCo0A" name="post">
+  <elementImport xmi:id="_FsB7kJryEd6NprjKLgCo0A">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"/>
+  </elementImport>
+  <elementImport xmi:id="_FsB7kZryEd6NprjKLgCo0A">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+  </elementImport>
+  <elementImport xmi:id="_FsB7kpryEd6NprjKLgCo0A">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#UnlimitedNatural"/>
+  </elementImport>
+  <elementImport xmi:id="_FsB7k5ryEd6NprjKLgCo0A">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+  </elementImport>
+  <packagedElement xmi:type="uml:Class" xmi:id="_HFJqoJryEd6NprjKLgCo0A" name="Post">
+    <ownedAttribute xmi:id="_kEXzAJryEd6NprjKLgCo0A" name="title" aggregation="composite">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_s5v4QJryEd6NprjKLgCo0A" name="url" aggregation="composite">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_v1BWkJryEd6NprjKLgCo0A" name="category" aggregation="composite">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_nxdTUJrzEd6NprjKLgCo0A" name="image" type="_8JtbUJryEd6NprjKLgCo0A" aggregation="composite"/>
+    <ownedAttribute xmi:id="_viN54JrzEd6NprjKLgCo0A" name="begStory" aggregation="composite">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_yfxQIJrzEd6NprjKLgCo0A" name="endStory" aggregation="composite">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="__Sgi0JrzEd6NprjKLgCo0A" name="name" aggregation="composite"/>
+    <ownedAttribute xmi:id="_Ayl1gJr0Ed6NprjKLgCo0A" name="originalName" aggregation="composite"/>
+    <ownedAttribute xmi:id="_CQ0uEJr0Ed6NprjKLgCo0A" name="version" aggregation="composite"/>
+    <ownedAttribute xmi:id="_D7p4MJr0Ed6NprjKLgCo0A" name="year" aggregation="composite"/>
+    <ownedAttribute xmi:id="_FYV4oJr0Ed6NprjKLgCo0A" name="format" aggregation="composite"/>
+    <ownedAttribute xmi:id="_GpuoAJr0Ed6NprjKLgCo0A" name="language" aggregation="composite"/>
+    <ownedAttribute xmi:id="_INtjQJr0Ed6NprjKLgCo0A" name="size" aggregation="composite"/>
+    <ownedAttribute xmi:id="_NzKI0Jr0Ed6NprjKLgCo0A" name="screens" aggregation="composite"/>
+    <ownedAttribute xmi:id="_Qw4eMJr0Ed6NprjKLgCo0A" name="fileLinks" aggregation="composite"/>
+    <ownedAttribute xmi:id="_Sdg_IJr0Ed6NprjKLgCo0A" name="tags" aggregation="composite"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_8JtbUJryEd6NprjKLgCo0A" name="Image">
+    <ownedAttribute xmi:id="_J0X0gJrzEd6NprjKLgCo0A" name="bytes" aggregation="composite"/>
+    <ownedAttribute xmi:id="_bsV7oJrzEd6NprjKLgCo0A" name="type" aggregation="composite">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+      <defaultValue xmi:type="uml:LiteralString" xmi:id="_hOptoJrzEd6NprjKLgCo0A" value=""/>
+    </ownedAttribute>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Interface" xmi:id="_SEsz4J3QEd6kvcPHLSGfbA" name="IPoster">
+    <ownedOperation xmi:id="_UM_WEJ3QEd6kvcPHLSGfbA" name="post" isAbstract="true">
+      <ownedParameter xmi:id="_aIUsEJ3QEd6kvcPHLSGfbA" direction="return">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+      </ownedParameter>
+    </ownedOperation>
+  </packagedElement>
+</uml:Package>

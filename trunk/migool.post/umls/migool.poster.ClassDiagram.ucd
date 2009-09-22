@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<editmodel:ClassDiagramEditModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:editmodel="editmodel.xmi" xmlns:options="options.xmi" name="migool.poster.ClassDiagram" id="{UMLID=_-nufUZ73Ed6FPO_TDENW7A,JavaID=migool.poster}" metadata="uml2-1.0" initialized="true" tag="10" key="3230303730363239206D69676F6F6C2E706F7374">
+  <children xsi:type="editmodel:ClassEditModel" name="HostLoginPassword" location="50,50" size="164,173" timstampe="2" stereotype="" id="{UMLID=_pAZqMJ76Ed6FPO_TDENW7A,JavaID=migool.poster/HostLoginPassword}" runTimeClassModel="getPassword(),host,getHost(),login,password,getLogin(),HostLoginPassword(Ljava.lang.String;Ljava.lang.String;Ljava.lang.String;)">
+    <children xsi:type="editmodel:CompartmentEditModel" size="79,54">
+      <children xsi:type="editmodel:AttributeEditModel" name="host" size="50,16" id="{UMLID=_pF6cUJ76Ed6FPO_TDENW7A}"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="login" size="51,16" id="{UMLID=_pIl84p76Ed6FPO_TDENW7A}"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="password" size="79,16" id="{UMLID=_pIl85J76Ed6FPO_TDENW7A}"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="138,72">
+      <children xsi:type="editmodel:MethodEditModel" name="HostLoginPassword" size="138,16" id="{UMLID=_pKrnkJ76Ed6FPO_TDENW7A,JavaID=migool.poster/HostLoginPassword#HostLoginPassword(Ljava.lang.String;Ljava.lang.String;Ljava.lang.String;)}"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getHost" size="77,16" id="{UMLID=_pK1YlJ76Ed6FPO_TDENW7A,JavaID=migool.poster/HostLoginPassword#getHost()}"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getLogin" size="81,16" id="{UMLID=_pK-igp76Ed6FPO_TDENW7A,JavaID=migool.poster/HostLoginPassword#getLogin()}"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getPassword" size="105,16" id="{UMLID=_pIvt4J76Ed6FPO_TDENW7A,JavaID=migool.poster/HostLoginPassword#getPassword()}"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPrivateAttributes="true" showProtectedAttributes="true" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showProtectedMethods="true" showPublicMethods="true" showPackageMethods="true" showPrivateMethods="true" showStaticMethods="true" showProtectedInnerClasses="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showPrivateInnerClasses="true" showStaticInnerClasses="true" showMethods="true" showAttributes="true" showLiterals="true" ShowInnerEntity="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="PosterResponse" location="626,50" size="141,83" timstampe="2" stereotype="" id="{UMLID=_p9WaoJ76Ed6FPO_TDENW7A,JavaID=migool.poster/PosterResponse}" runTimeClassModel="OK,PosterResponse()">
+    <children xsi:type="editmodel:CompartmentEditModel" size="44,18">
+      <children xsi:type="editmodel:AttributeEditModel" name="OK" size="44,16" id="{UMLID=_p-1oYJ76Ed6FPO_TDENW7A}"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="120,18">
+      <children xsi:type="editmodel:MethodEditModel" name="PosterResponse" size="120,16" id="{UMLID=_p--yUJ76Ed6FPO_TDENW7A,JavaID=migool.poster/PosterResponse#PosterResponse()}"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPrivateAttributes="true" showProtectedAttributes="true" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showProtectedMethods="true" showPublicMethods="true" showPackageMethods="true" showPrivateMethods="true" showStaticMethods="true" showProtectedInnerClasses="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showPrivateInnerClasses="true" showStaticInnerClasses="true" showMethods="true" showAttributes="true" showLiterals="true" ShowInnerEntity="true"/>
+  </children>
+  <children xsi:type="editmodel:InterfaceEditModel" name="IHostClient" location="264,50" size="145,183" timstampe="71" id="{UMLID=_qAenIJ76Ed6FPO_TDENW7A,JavaID=migool.poster/IHostClient}" runTimeClassModel="migool.poster.IHostClient.UploadResult,uploadImage(Lmigool.post.internal.Image;),upload(Ljava.io.InputStream;),login(),migool.poster.IHostClient.LoginResult">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="100,54">
+      <children xsi:type="editmodel:MethodEditModel" name="login" size="62,16" id="{UMLID=_qA7TEJ76Ed6FPO_TDENW7A,JavaID=migool.poster/IHostClient#login()}"/>
+      <children xsi:type="editmodel:MethodEditModel" name="uploadImage" size="100,16" id="{UMLID=_qBXX9p76Ed6FPO_TDENW7A,JavaID=migool.poster/IHostClient#uploadImage(Lmigool.post.internal.Image;)}"/>
+      <children xsi:type="editmodel:MethodEditModel" name="upload" size="72,16" id="{UMLID=_qBEdAp76Ed6FPO_TDENW7A,JavaID=migool.poster/IHostClient#upload(Ljava.io.InputStream;)}"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="124,58">
+      <children xsi:type="editmodel:ClassEditModel" name="LoginResult" size="115,47" timstampe="71" stereotype="" id="{UMLID=_qB0D4Z76Ed6FPO_TDENW7A,JavaID=migool.poster/IHostClient$LoginResult}" shortShow="true" runTimeClassModel="OK,LoginResult(),ERROR,NOT_LOGGED">
+        <children xsi:type="editmodel:CompartmentEditModel" size="99,54">
+          <children xsi:type="editmodel:AttributeEditModel" name="OK" size="44,16" id="{UMLID=_qFseUJ76Ed6FPO_TDENW7A}"/>
+          <children xsi:type="editmodel:AttributeEditModel" name="ERROR" size="64,16" id="{UMLID=_qF1oQJ76Ed6FPO_TDENW7A}"/>
+          <children xsi:type="editmodel:AttributeEditModel" name="NOT_LOGGED" size="99,16" id="{UMLID=_qF1oQp76Ed6FPO_TDENW7A}"/>
+        </children>
+        <children xsi:type="editmodel:CompartmentEditModel" size="96,18">
+          <children xsi:type="editmodel:MethodEditModel" name="LoginResult" size="96,16" id="{UMLID=_qF1oRJ76Ed6FPO_TDENW7A,JavaID=migool.poster/IHostClient$LoginResult#LoginResult()}"/>
+        </children>
+        <children xsi:type="editmodel:CompartmentEditModel"/>
+        <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPrivateAttributes="true" showProtectedAttributes="true" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showProtectedMethods="true" showPublicMethods="true" showPackageMethods="true" showPrivateMethods="true" showStaticMethods="true" showProtectedInnerClasses="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showPrivateInnerClasses="true" showStaticInnerClasses="true" showMethods="true" showAttributes="true" showLiterals="true" ShowInnerEntity="true"/>
+      </children>
+      <children xsi:type="editmodel:ClassEditModel" name="UploadResult" size="124,47" timstampe="71" stereotype="" id="{UMLID=_qB0D4576Ed6FPO_TDENW7A,JavaID=migool.poster/IHostClient$UploadResult}" shortShow="true" runTimeClassModel="UploadResult(),OK,ERROR">
+        <children xsi:type="editmodel:CompartmentEditModel" size="64,36">
+          <children xsi:type="editmodel:AttributeEditModel" name="OK" size="44,16" id="{UMLID=_qHU2AJ76Ed6FPO_TDENW7A}"/>
+          <children xsi:type="editmodel:AttributeEditModel" name="ERROR" size="64,16" id="{UMLID=_qHenAJ76Ed6FPO_TDENW7A}"/>
+        </children>
+        <children xsi:type="editmodel:CompartmentEditModel" size="103,18">
+          <children xsi:type="editmodel:MethodEditModel" name="UploadResult" size="103,16" id="{UMLID=_qHenAp76Ed6FPO_TDENW7A,JavaID=migool.poster/IHostClient$UploadResult#UploadResult()}"/>
+        </children>
+        <children xsi:type="editmodel:CompartmentEditModel"/>
+        <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPrivateAttributes="true" showProtectedAttributes="true" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showProtectedMethods="true" showPublicMethods="true" showPackageMethods="true" showPrivateMethods="true" showStaticMethods="true" showProtectedInnerClasses="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showPrivateInnerClasses="true" showStaticInnerClasses="true" showMethods="true" showAttributes="true" showLiterals="true" ShowInnerEntity="true"/>
+      </children>
+    </children>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPrivateAttributes="true" showProtectedAttributes="true" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showProtectedMethods="true" showPublicMethods="true" showPackageMethods="true" showPrivateMethods="true" showStaticMethods="true" showProtectedInnerClasses="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showPrivateInnerClasses="true" showStaticInnerClasses="true" showMethods="true" showAttributes="true" showLiterals="true" ShowInnerEntity="true"/>
+  </children>
+  <children xsi:type="editmodel:InterfaceEditModel" name="IPoster" location="50,283" size="85,79" timstampe="2" id="{UMLID=_qJRWwJ76Ed6FPO_TDENW7A,JavaID=migool.poster/IPoster}" runTimeClassModel="post(Lmigool.post.Post;)">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="61,18">
+      <children xsi:type="editmodel:MethodEditModel" name="post" size="61,16" id="{UMLID=_qJagsJ76Ed6FPO_TDENW7A,JavaID=migool.poster/IPoster#post(Lmigool.post.Post;)}"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPrivateAttributes="true" showProtectedAttributes="true" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showProtectedMethods="true" showPublicMethods="true" showPackageMethods="true" showPrivateMethods="true" showStaticMethods="true" showProtectedInnerClasses="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showPrivateInnerClasses="true" showStaticInnerClasses="true" showMethods="true" showAttributes="true" showLiterals="true" ShowInnerEntity="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="PosterBase" location="459,50" size="117,111" timstampe="2" stereotype="" id="{UMLID=_qLgLYJ76Ed6FPO_TDENW7A,JavaID=migool.poster/PosterBase}" runTimeClassModel="httpClient,hlp,PosterBase(Lmigool.poster.HostLoginPassword;)">
+    <children xsi:type="editmodel:CompartmentEditModel">
+      <children xsi:type="editmodel:AttributeEditModel" name="hlp" size="49,21" id="{UMLID=_qNJKIp76Ed6FPO_TDENW7A}"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="httpClient" size="79,21" id="{UMLID=_qM2PMJ76Ed6FPO_TDENW7A}"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="96,18">
+      <children xsi:type="editmodel:MethodEditModel" name="PosterBase" size="96,16" id="{UMLID=_qNJKJJ76Ed6FPO_TDENW7A,JavaID=migool.poster/PosterBase#PosterBase(Lmigool.poster.HostLoginPassword;)}"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPrivateAttributes="true" showProtectedAttributes="true" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showProtectedMethods="true" showPublicMethods="true" showPackageMethods="true" showPrivateMethods="true" showStaticMethods="true" showProtectedInnerClasses="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showPrivateInnerClasses="true" showStaticInnerClasses="true" showMethods="true" showAttributes="true" showLiterals="true" ShowInnerEntity="true"/>
+  </children>
+  <diagramOptions xsi:type="options:ClassDiagramOptions" properties="wireOptions=1" autoName="false"/>
+  <boardSetting snapToGeometry="true" gridEnabled="true" gridSpacing="14,14" gridOrigin="154,266" rulerUnit="cm" gridShow="true">
+    <leftRuler/>
+    <topRuler/>
+  </boardSetting>
+  <classDiagramPreferences xsi:type="editmodel:UMLClassDiagramPreference" attributeSorter="Natural" methodSorter="Natural" shortPackageNameFormat="true" showClassStereotype="true" showPackageStereotype="true" innerClassSorter="Natural" showPrivateAttributes="true" showProtectedAttributes="true" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showProtectedMethods="true" showPublicMethods="true" showPackageMethods="true" showPrivateMethods="true" showStaticMethods="true" showProtectedInnerClasses="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showPrivateInnerClasses="true" showStaticInnerClasses="true" showInterfaceStereotype="true" showMethods="true" showAttributes="true" showLiterlas="true" showInnerEntity="true"/>
+</editmodel:ClassDiagramEditModel>
