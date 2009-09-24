@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import migool.host.auth.LoginResult;
+import migool.host.auth.LoginResponse;
 import migool.host.auth.impl.HostLoginPassword;
 import migool.host.upload.UploadResponse;
 import migool.host.upload.UploadResult;
@@ -72,14 +72,14 @@ public class DlePoster_Old implements IDlePoster {
 			html = post.getResponse().getBody().toString();
 
 			isLogged = html.contains(hlp.login);
-			return (isLogged) ? LoginResult.OK : LoginResult.NOT_LOGGED;
+			return (isLogged) ? LoginResponse.OK : LoginResponse.NOT_LOGGED;
 		} catch (Exception e) {
-			return LoginResult.ERROR;
+			return LoginResponse.ERROR;
 		}
 	}
 	
 	public UploadResponse uploadImage(Image image) {
-		if (!isLogged && (login() != LoginResult.OK)) {
+		if (!isLogged && (login() != LoginResponse.OK)) {
 			return new UploadResponse(UploadResult.ERROR, null);
 		}
 		// TODO

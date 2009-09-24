@@ -1,7 +1,7 @@
 package migool.host;
 
 import migool.host.auth.LoginPassword;
-import migool.host.auth.LoginResult;
+import migool.host.auth.LoginResponse;
 
 /**
  * 
@@ -10,5 +10,5 @@ import migool.host.auth.LoginResult;
  */
 public interface IHostClient {
 	//public UploadResponse uploadImage(Image img);
-	public LoginResult login(LoginPassword lp);
+	public LoginResponse login(LoginPassword lp);
 }
