@@ -6,10 +6,13 @@ package migool.host.auth;
  *
  */
 public final class LoginResult {
-	private LoginResult() {
-	}
-	
 	public static final int OK = 0;
 	public static final int ERROR = 1;
 	public static final int NOT_LOGGED = 2;
+
+	private int code;
+	private String message;
+
+	public LoginResult() {
+	}
 }
