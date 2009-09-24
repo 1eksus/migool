@@ -30,6 +30,7 @@ public final class IOUtil {
 				bo.write(buf, 0, read);
 			}
 		}
+		in.close();
 		return bo.toByteArray();
 	}
 
@@ -46,6 +47,7 @@ public final class IOUtil {
 		while ((line = br.readLine()) != null) {
 			ret.append(line + "\n");
 		}
+		br.close();
 		return ret.toString();
 	}
 }
