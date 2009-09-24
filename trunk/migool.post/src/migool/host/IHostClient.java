@@ -1,5 +1,9 @@
 package migool.host;
 
+import java.io.IOException;
+
+import org.apache.http.client.ClientProtocolException;
+
 import migool.host.auth.LoginPassword;
 import migool.host.auth.LoginResponse;
 
@@ -9,6 +13,6 @@ import migool.host.auth.LoginResponse;
  *
  */
 public interface IHostClient {
-	//public UploadResponse uploadImage(Image img);
-	public LoginResponse login(LoginPassword lp);
+	public LoginResponse login(LoginPassword lp) throws ClientProtocolException, IOException;
+	public String getHost();
 }

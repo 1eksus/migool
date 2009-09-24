@@ -12,11 +12,12 @@ import migool.share.image.ImageShareResponse;
  * 
  */
 public class RadikalRu implements IImageShare {
+	
+	public static final String HOST = "radikal.ru";
 
 	@Override
 	public LoginResponse login(LoginPassword lp) {
-		// TODO Auto-generated method stub
-		return null;
+		return new LoginResponse(LoginResponse.OK);
 	}
 
 	@Override
@@ -25,4 +26,8 @@ public class RadikalRu implements IImageShare {
 		return null;
 	}
 
+	@Override
+	public String getHost() {
+		return HOST;
+	}
 }
