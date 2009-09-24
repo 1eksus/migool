@@ -1,5 +1,6 @@
 package migool.poster.cms.dle;
 
+import migool.poster.PostResponse;
 import migool.poster.cms.ICMSPoster;
 
 /**
@@ -13,5 +14,5 @@ public interface IDlePoster extends ICMSPoster {
 	 * @param post
 	 * @return
 	 */
-	int post(DlePost post);
+	PostResponse post(DlePost post);
 }
