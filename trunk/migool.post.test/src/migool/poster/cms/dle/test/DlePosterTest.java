@@ -6,7 +6,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-import migool.host.auth.LoginResult;
+import migool.host.auth.LoginResponse;
 import migool.host.upload.UploadResponse;
 import migool.host.upload.UploadResult;
 import migool.http.HttpClient;
@@ -27,16 +27,16 @@ public class DlePosterTest {
 	@Test
 	public void testLogin() {
 		poster = new DlePoster_Old(IConstants.HLP_DLE_80, new HttpClient());
-		assertEquals(poster.login(), LoginResult.OK);
+		assertEquals(poster.login(), LoginResponse.OK);
 	}
 
 	@Test
 	public void testUploadImage() {
 		String fileName = "d:\\DEN\\21.jpg";
 		Image image = new Image();
-		image.type = "image/jpeg";
+		image.setType("image/jpeg");
 		try {
-			image.bytes = IOUtil.toByteArray(new FileInputStream(new File(fileName)));
+			image.setBytes(IOUtil.toByteArray(new FileInputStream(new File(fileName))));
 		} catch (FileNotFoundException e) {
 			assertFalse(true);
 		}
