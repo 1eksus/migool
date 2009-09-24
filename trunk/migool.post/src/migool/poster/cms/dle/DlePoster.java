@@ -35,7 +35,7 @@ public final class DlePoster implements IDlePoster {
 		HttpClient client = new DefaultHttpClient();
 		HttpGet request = new HttpGet(httpRoot);
 		HttpResponse response = client.execute(request);
-		String html = IOUtil.toByteArray(response.getEntity().getContent());
+		String html = IOUtil.toString(response.getEntity().getContent());
 		return null;
 	}
 
