@@ -6,5 +6,4 @@ package migool.poster.host;
  *
  */
 public class _4erda4okCom {
-
 }

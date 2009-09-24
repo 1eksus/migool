@@ -147,7 +147,7 @@ public class DlePoster_Old implements IDlePoster {
 			"--" + boundary + "--" + CRLF;
 			ByteArrayOutputStream out = new ByteArrayOutputStream();
 			out.write(temp.getBytes());
-			out.write(image.bytes);
+			out.write(image.getBytes());
 			out.write(temp2.getBytes());
 //			sb.append(new String(image.bytes) + CRLF);
 //			sb.append("--" + boundary + CRLF);
