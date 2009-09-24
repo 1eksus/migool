@@ -7,6 +7,9 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.htmlparser.Parser;
+import org.htmlparser.util.NodeList;
+import org.htmlparser.util.ParserException;
 
 import migool.host.auth.LoginPassword;
 import migool.host.auth.LoginResponse;
@@ -30,12 +33,14 @@ public final class DlePoster implements IDlePoster {
 	}
 
 	@Override
-	public LoginResponse login(LoginPassword lp) throws ClientProtocolException, IOException {
+	public LoginResponse login(LoginPassword lp) throws ClientProtocolException, IOException, Exception {
 		// TODO Auto-generated method stub
 		HttpClient client = new DefaultHttpClient();
 		HttpGet request = new HttpGet(httpRoot);
 		HttpResponse response = client.execute(request);
 		String html = IOUtil.toString(response.getEntity().getContent());
+		Parser parser = new Parser(html);
+		NodeList nl = parser.parse(null);
 		return null;
 	}
 

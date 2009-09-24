@@ -13,6 +13,6 @@ import migool.host.auth.LoginResponse;
  *
  */
 public interface IHostClient {
-	public LoginResponse login(LoginPassword lp) throws ClientProtocolException, IOException;
+	public LoginResponse login(LoginPassword lp) throws ClientProtocolException, IOException, Exception;
 	public String getHost();
 }
