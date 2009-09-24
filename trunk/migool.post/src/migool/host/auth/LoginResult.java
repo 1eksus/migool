@@ -11,8 +11,17 @@ public final class LoginResult {
 	public static final int NOT_LOGGED = 2;
 
 	private int code;
-	private String message;
 
-	public LoginResult() {
+	public LoginResult(int code) {
+		super();
+		this.setCode(code);
 	}
+
+	public void setCode(int code) {
+		this.code = code;
+	}
+
+	public int getCode() {
+		return code;
+	}	
 }

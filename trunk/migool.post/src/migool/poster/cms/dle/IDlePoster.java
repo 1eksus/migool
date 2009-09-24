@@ -1,11 +1,13 @@
 package migool.poster.cms.dle;
 
+import migool.poster.cms.ICMSPoster;
+
 /**
  * 
  * @author Denis Migol
  *
  */
-public interface IDlePoster {
+public interface IDlePoster extends ICMSPoster {
 	/**
 	 * 
 	 * @param post
