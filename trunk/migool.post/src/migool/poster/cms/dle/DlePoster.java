@@ -8,6 +8,4 @@ package migool.poster.cms.dle;
 public final class DlePoster {
 	public DlePoster() {
 	}
-	
-	
 }
