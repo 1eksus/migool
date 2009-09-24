@@ -1,4 +1,4 @@
-package migool.poster.cms.ucoz;
+package migool.poster.cms.ucoz.post;
 
 /**
  * 
