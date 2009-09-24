@@ -23,5 +23,5 @@ public final class LoginResponse {
 
 	public int getCode() {
 		return code;
-	}	
+	}
 }
