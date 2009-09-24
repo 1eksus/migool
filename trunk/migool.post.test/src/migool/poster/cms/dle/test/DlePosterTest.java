@@ -11,7 +11,7 @@ import migool.host.upload.UploadResponse;
 import migool.host.upload.UploadResult;
 import migool.http.HttpClient;
 import migool.post.internal.Image;
-import migool.poster.cms.dle.DlePoster;
+import migool.poster.cms.dle.DlePoster_Old;
 import migool.util.IOUtil;
 
 import org.junit.Test;
@@ -22,11 +22,11 @@ import org.junit.Test;
  *
  */
 public class DlePosterTest {
-	private static DlePoster poster;
+	private static DlePoster_Old poster;
 	
 	@Test
 	public void testLogin() {
-		poster = new DlePoster(IConstants.HLP_DLE_80, new HttpClient());
+		poster = new DlePoster_Old(IConstants.HLP_DLE_80, new HttpClient());
 		assertEquals(poster.login(), LoginResult.OK);
 	}
 
