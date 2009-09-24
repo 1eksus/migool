@@ -1,6 +1,6 @@
 package migool.poster.cms.dle.test;
 
-import migool.host.auth.impl.HostLoginPassword;
+import migool.host.auth.LoginPassword;
 
 /**
  * 
@@ -21,6 +21,5 @@ public interface IConstants {
 	public static final String HOST_DLE_82 = "dle82";
 	
 	//
-	public static final HostLoginPassword HLP_DLE_67 = new HostLoginPassword(HOST_DLE_67, LOGIN, PASS);
-	public static final HostLoginPassword HLP_DLE_80 = new HostLoginPassword(HOST_DLE_80, LOGIN, PASS);
+	public static final LoginPassword LOGIN_PASSWORD = new LoginPassword(LOGIN, PASS);
 }
