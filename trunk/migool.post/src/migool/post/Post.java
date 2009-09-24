@@ -2,7 +2,7 @@ package migool.post;
 
 import java.util.List;
 
-import migool.post.internal.Category;
+import migool.post.category.Category;
 import migool.post.internal.FileLink;
 import migool.post.internal.Image;
 
