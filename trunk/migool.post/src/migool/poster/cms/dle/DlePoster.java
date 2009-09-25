@@ -19,7 +19,10 @@ import org.htmlparser.util.NodeList;
 
 import migool.host.auth.LoginPassword;
 import migool.host.auth.LoginResponse;
+import migool.post.internal.Image;
 import migool.poster.PostResponse;
+import migool.share.image.IImageShare;
+import migool.share.image.ImageShareResponse;
 import migool.util.HtmlParserUtil;
 import migool.util.IOUtil;
 import migool.util.LinkUtil;
@@ -29,7 +32,7 @@ import migool.util.LinkUtil;
  * @author Denis Migol
  *
  */
-public final class DlePoster implements IDlePoster {
+public final class DlePoster implements IDlePoster, IImageShare {
 
 	private String host;
 	private String httpRoot;
@@ -69,6 +72,12 @@ public final class DlePoster implements IDlePoster {
 		response = client.execute(request);
 		String html = IOUtil.toString(response.getEntity().getContent());
 		return (html.contains(login)) ? new LoginResponse(LoginResponse.OK) : new LoginResponse(LoginResponse.ERROR);
+	}
+	
+	@Override
+	public ImageShareResponse upload(Image img) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
