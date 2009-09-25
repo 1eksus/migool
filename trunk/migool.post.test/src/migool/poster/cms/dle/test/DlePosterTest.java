@@ -25,6 +25,7 @@ public class DlePosterTest {
 	public void testLogin() throws Exception {
 		LoginResponse response = poster.login(IConstants.LOGIN_PASSWORD);
 		assertNotNull(response);
+		assertEquals(response.getCode(), LoginResponse.OK);
 	}
 
 	/**
