@@ -24,6 +24,7 @@ import org.htmlparser.filters.HasChildFilter;
 import org.htmlparser.filters.TagNameFilter;
 import org.htmlparser.tags.FormTag;
 import org.htmlparser.tags.InputTag;
+import org.htmlparser.util.NodeList;
 
 import migool.host.auth.LoginPassword;
 import migool.host.auth.LoginResponse;
@@ -60,8 +61,8 @@ public final class DlePoster implements IDlePoster, IImageShare {
 
 		FormTag form = HtmlParserUtil.getLoginForm(IOUtil.toString(response.getEntity().getContent()));
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
-		params.add(new BasicNameValuePair("login_name", "dle"));
-		params.add(new BasicNameValuePair("login_password", "dle"));
+//		params.add(new BasicNameValuePair("login_name", "dle"));
+//		params.add(new BasicNameValuePair("login_password", "dle"));
 
 		InputTag input = HtmlParserUtil.getInputTag(form, IDleConstants.LOGIN_INPUTS);
 		String login = lp.getLogin();
@@ -118,6 +119,15 @@ public final class DlePoster implements IDlePoster, IImageShare {
 		HttpGet get = new HttpGet(url);
 		HttpResponse response = client.execute(get);
 		String html = IOUtil.toString(response.getEntity().getContent());
+
+		FormTag form = (FormTag) (new Parser(html)).parse(new AndFilter(new TagNameFilter("form"), new HasAttributeFilter("name", "entryform"))).elementAt(0);
+		System.out.println(form);
+		NodeList nl = form.getFormInputs();
+		System.out.println(nl);
+		nl = form.getFormTextareas();
+		System.out.println(nl);
+		nl = form.getChildren();
+		System.out.println(nl);
 		return null;
 	}
 

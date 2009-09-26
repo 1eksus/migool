@@ -1,6 +1,3 @@
-/**
- * 
- */
 package migool.poster.cms.dle.test;
 
 import static org.junit.Assert.*;
@@ -54,7 +51,7 @@ public class DlePosterTest {
 	 * Test method for {@link migool.poster.cms.dle.DlePoster#post(migool.poster.cms.dle.DlePost)}.
 	 */
 	@Test
-	public void testPost() {
-		fail("Not yet implemented");
+	public void testPost() throws Exception {
+		poster.post(null);
 	}
 }
