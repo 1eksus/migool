@@ -6,6 +6,10 @@ package migool.share.image;
  *
  */
 public final class ImageShareResponse {
+	
+	public static final int OK = 0;
+	public static final int ERROR = 1;
+	
 	private int code;
 	private String link;
 	private String thumbLink;

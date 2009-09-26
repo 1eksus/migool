@@ -31,9 +31,11 @@ import migool.post.internal.Image;
 import migool.poster.PostResponse;
 import migool.share.image.IImageShare;
 import migool.share.image.ImageShareResponse;
+import migool.util.EmptyChecker;
 import migool.util.HtmlParserUtil;
 import migool.util.IOUtil;
 import migool.util.LinkUtil;
+import migool.util.Regex;
 
 /**
  * 
@@ -83,7 +85,6 @@ public final class DlePoster implements IDlePoster, IImageShare {
 
 	@Override
 	public ImageShareResponse upload(Image img) throws ClientProtocolException, IOException, Exception {
-		// TODO Auto-generated method stub
 		String url = httpRoot + IDleConstants.UPLOAD_PATH;
 		HttpUriRequest request = new HttpGet(url);
 		HttpResponse response = client.execute(request);
@@ -92,15 +93,22 @@ public final class DlePoster implements IDlePoster, IImageShare {
 		FormTag form = (FormTag) (new Parser(html)).parse(new AndFilter(new TagNameFilter("form"), new HasChildFilter(new HasAttributeFilter("type", "file"), true))).elementAt(0);
 		MultipartEntity entity = new MultipartEntity();
 		InputTag file = (InputTag) form.getFormInputs().extractAllNodesThatMatch(new HasAttributeFilter("type", "file"), true).elementAt(0);
-		entity.addPart(file.getAttribute("name"), new InputStreamBody(new ByteArrayInputStream(img.bytes), "_.jpg"));
+		entity.addPart(file.getAttribute("name"), new InputStreamBody(new ByteArrayInputStream(img.bytes), img.fileName));
 		HtmlParserUtil.setHiddenInputs(form, entity);
 
 		HttpPost post = new HttpPost(url);
 		post.setEntity(entity);
 		response = client.execute(post);
 		html = IOUtil.toString(response.getEntity().getContent());
-		System.out.println(html);
-		return null;
+		String link = new Regex(html, "http://[\\/\\w\\-_]+" + img.fileName).getMatches()[0][0];
+		ImageShareResponse ret = new ImageShareResponse();
+		if (EmptyChecker.isNotNullOrEmpty(link)) {
+			ret.setCode(ImageShareResponse.OK);
+			ret.setLink(link);
+		} else {
+			ret.setCode(ImageShareResponse.ERROR);
+		}
+		return ret;
 	}
 
 	@Override

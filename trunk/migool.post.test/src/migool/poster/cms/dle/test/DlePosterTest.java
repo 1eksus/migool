@@ -39,17 +39,15 @@ public class DlePosterTest {
 	 */
 	@Test
 	public void testUpload() throws Exception {
-		try {
-			String fileName = "d:/den/1.jpg";
-			Image img = new Image();
-			img.bytes = IOUtil.toByteArray(new FileInputStream(new File(fileName)));
+		String fileName = "d:/den/1.jpg";
+		File file = new File(fileName);
+		Image img = new Image();
+		img.fileName = file.getName();
+		img.bytes = IOUtil.toByteArray(new FileInputStream(file));
 
-			ImageShareResponse response = poster.upload(img);
-			assertNotNull(response);
-		} catch(Exception e) {
-			e.printStackTrace();
-			throw e;
-		}
+		ImageShareResponse response = poster.upload(img);
+		assertNotNull(response);
+		assertEquals(response.getCode(), ImageShareResponse.OK);
 	}
 
 	/**
