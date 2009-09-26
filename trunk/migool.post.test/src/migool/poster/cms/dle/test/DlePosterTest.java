@@ -22,7 +22,7 @@ import org.junit.Test;
  */
 public class DlePosterTest {
 
-	private DlePoster poster = new DlePoster(IConstants.HOST_DLE_80);
+	private static final DlePoster poster = new DlePoster(IConstants.HOST_DLE_80);
 
 	/**
 	 * Test method for {@link migool.poster.cms.dle.DlePoster#login(migool.host.auth.LoginPassword)}.

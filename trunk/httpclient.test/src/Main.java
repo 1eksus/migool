@@ -35,7 +35,7 @@ public class Main {
 	public static final String HOST = "dle80";
 	public static final String SITE = LinkUtil.createHttpRoot(HOST);
 	private static final HttpClient client = new DefaultHttpClient();
-	private static final String FILENAME = "D:\\Den\\21.jpg";
+	private static final String FILENAME = "D:\\Den\\1.jpg";
 
 	public static final void testGet() {
 		HttpUriRequest get = new HttpGet(SITE);
@@ -163,7 +163,7 @@ public class Main {
 	public static void main(String[] args) {
 		testGet();
 		testLogin();
-		// testUploadImage();
-		testPost();
+		testUploadImage();
+		//testPost();
 	}
 }

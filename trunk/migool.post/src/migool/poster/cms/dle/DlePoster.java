@@ -71,11 +71,6 @@ public final class DlePoster implements IDlePoster, IImageShare {
 		if (input != null) {
 			params.add(new BasicNameValuePair(input.getAttribute("name"), lp.getPassword()));
 		}
-//		NodeList hiddens = HtmlParserUtil.getHiddenInputs(form);
-//		for (int i = 0; i < hiddens.size(); i++) {
-//			input = (InputTag) hiddens.elementAt(i);
-//			params.add(new BasicNameValuePair(input.getAttribute("name"), input.getAttribute("value")));
-//		}
 		HtmlParserUtil.setHiddenInputs(form, params);
 
 		HttpPost request = new HttpPost(httpRoot);
@@ -95,14 +90,15 @@ public final class DlePoster implements IDlePoster, IImageShare {
 		HttpResponse response = client.execute(request);
 		String html = IOUtil.toString(response.getEntity().getContent());
 
-		FormTag form = (FormTag) (new Parser(html)).extractAllNodesThatMatch(new AndFilter(new TagNameFilter("form"), new HasChildFilter(new HasAttributeFilter("type", "file")))).elementAt(0);
+		FormTag form = (FormTag) (new Parser(html)).parse(new AndFilter(new TagNameFilter("form"), new HasChildFilter(new HasAttributeFilter("type", "file"), true))).elementAt(0);
 		MultipartEntity entity = new MultipartEntity();
 		InputTag file = (InputTag) form.getFormInputs().extractAllNodesThatMatch(new HasAttributeFilter("type", "file"), true).elementAt(0);
 		entity.addPart(file.getAttribute("name"), new InputStreamBody(new ByteArrayInputStream(img.bytes), "_.jpg"));
 		HtmlParserUtil.setHiddenInputs(form, entity);
-		
-		request = new HttpPost(url);
-		response = client.execute(request);
+
+		HttpPost post = new HttpPost(url);
+		post.setEntity(entity);
+		response = client.execute(post);
 		html = IOUtil.toString(response.getEntity().getContent());
 		System.out.println(html);
 		return null;
