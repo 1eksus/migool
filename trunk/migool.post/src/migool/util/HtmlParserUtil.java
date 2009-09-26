@@ -1,5 +1,12 @@
 package migool.util;
 
+import java.io.UnsupportedEncodingException;
+import java.util.List;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.content.StringBody;
+import org.apache.http.message.BasicNameValuePair;
 import org.htmlparser.Parser;
 import org.htmlparser.filters.AndFilter;
 import org.htmlparser.filters.HasAttributeFilter;
@@ -62,5 +69,36 @@ public final class HtmlParserUtil {
 	 */
 	public static NodeList getHiddenInputs(FormTag form) {
 		return form.getFormInputs().extractAllNodesThatMatch(new AndFilter(new TagNameFilter("input"), new HasAttributeFilter("type", "hidden")), true);
-	}	
+	}
+
+	/**
+	 * 
+	 * @param form
+	 * @param params
+	 */
+	public static void setHiddenInputs(FormTag form, List<NameValuePair> params) {
+		NodeList hiddens = getHiddenInputs(form);
+		InputTag input = null;
+		for (int i = 0; i < hiddens.size(); i++) {
+			input = (InputTag) hiddens.elementAt(i);
+			params.add(new BasicNameValuePair(input.getAttribute("name"), input.getAttribute("value")));
+		}
+	}
+
+	/**
+	 * 
+	 * @param form
+	 * @param entity
+	 */
+	public static void setHiddenInputs(FormTag form, MultipartEntity entity) {
+		NodeList hiddens = getHiddenInputs(form);
+		InputTag input = null;
+		for (int i = 0; i < hiddens.size(); i++) {
+			input = (InputTag) hiddens.elementAt(i);
+			try {
+				entity.addPart(input.getAttribute("name"), new StringBody(input.getAttribute("value")));
+			} catch (UnsupportedEncodingException e) {
+			}
+		}
+	}
 }

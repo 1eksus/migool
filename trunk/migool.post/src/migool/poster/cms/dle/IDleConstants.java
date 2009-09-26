@@ -8,7 +8,7 @@ package migool.poster.cms.dle;
 public interface IDleConstants {
 	public static final String REGISTER_PATH = "/index.php?do=register";
 	public static final String ADD_NEWS_PATH = "/index.php?do=addnews";
-	
+	public static final String UPLOAD_PATH = "/engine/images.php?area=short_story&add_id=";
 	
 	public static String[] LOGIN_INPUTS = { "login_name", "login" };
 	public static String[] PASS_INPUTS = { "login_password", "pass" };

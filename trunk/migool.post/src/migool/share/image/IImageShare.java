@@ -1,5 +1,9 @@
 package migool.share.image;
 
+import java.io.IOException;
+
+import org.apache.http.client.ClientProtocolException;
+
 import migool.host.IHostClient;
 import migool.post.internal.Image;
 
@@ -9,5 +13,5 @@ import migool.post.internal.Image;
  *
  */
 public interface IImageShare extends IHostClient {
-	ImageShareResponse upload(Image img);
+	ImageShareResponse upload(Image img) throws ClientProtocolException, IOException, Exception;
 }
