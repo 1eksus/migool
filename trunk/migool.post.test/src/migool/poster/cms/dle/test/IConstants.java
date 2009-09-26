@@ -17,7 +17,7 @@ public interface IConstants {
 	public static final String HOST_DLE_72 = "dle72";
 	public static final String HOST_DLE_73 = "dle73";
 	public static final String HOST_DLE_75 = "dle75";
-	public static final String HOST_DLE_80 = "dle80";
+	public static final String HOST_DLE_80 = "www.dle80";
 	public static final String HOST_DLE_82 = "dle82";
 	
 	//
