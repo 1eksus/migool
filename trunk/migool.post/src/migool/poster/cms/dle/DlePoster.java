@@ -112,8 +112,12 @@ public final class DlePoster implements IDlePoster, IImageShare {
 	}
 
 	@Override
-	public PostResponse post(DlePost post) {
+	public PostResponse post(DlePost post) throws ClientProtocolException, IOException, Exception {
 		// TODO Auto-generated method stub
+		String url = httpRoot + IDleConstants.ADD_NEWS_PATH;
+		HttpGet get = new HttpGet(url);
+		HttpResponse response = client.execute(get);
+		String html = IOUtil.toString(response.getEntity().getContent());
 		return null;
 	}
 

@@ -57,5 +57,4 @@ public class DlePosterTest {
 	public void testPost() {
 		fail("Not yet implemented");
 	}
-
 }

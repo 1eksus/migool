@@ -14,6 +14,7 @@ import org.htmlparser.filters.HasChildFilter;
 import org.htmlparser.filters.TagNameFilter;
 import org.htmlparser.tags.FormTag;
 import org.htmlparser.tags.InputTag;
+import org.htmlparser.tags.SelectTag;
 import org.htmlparser.util.NodeList;
 import org.htmlparser.util.ParserException;
 
@@ -100,5 +101,14 @@ public final class HtmlParserUtil {
 			} catch (UnsupportedEncodingException e) {
 			}
 		}
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public static String[] getSelectOptions(SelectTag select) {
+		// TODO
+		return null;
 	}
 }
