@@ -4,9 +4,12 @@ import static org.junit.Assert.*;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.Arrays;
 
 import migool.host.auth.LoginResponse;
 import migool.post.internal.Image;
+import migool.poster.PostResponse;
+import migool.poster.cms.dle.DlePost;
 import migool.poster.cms.dle.DlePoster;
 import migool.share.image.ImageShareResponse;
 import migool.util.IOUtil;
@@ -52,6 +55,15 @@ public class DlePosterTest {
 	 */
 	@Test
 	public void testPost() throws Exception {
-		poster.post(null);
+		DlePost post = new DlePost();
+		post.title = "заголовок";
+		post.url = "урла";
+		post.category = null;
+		post.shortStory = "краткая новость";
+		post.fullStory = "полная новость";
+		post.tags = Arrays.asList(new String[]{"тэг_1", "тэг_2", "тэг 3"});
+		PostResponse response = poster.post(post);
+		assertNotNull(response);
+		assertEquals(response.getCode(), PostResponse.OK);
 	}
 }
