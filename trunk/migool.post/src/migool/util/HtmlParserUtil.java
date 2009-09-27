@@ -1,19 +1,27 @@
 package migool.util;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.message.BasicNameValuePair;
+import org.htmlparser.Node;
+import org.htmlparser.NodeFilter;
 import org.htmlparser.Parser;
 import org.htmlparser.filters.AndFilter;
 import org.htmlparser.filters.HasAttributeFilter;
 import org.htmlparser.filters.HasChildFilter;
+import org.htmlparser.filters.NotFilter;
+import org.htmlparser.filters.OrFilter;
 import org.htmlparser.filters.TagNameFilter;
 import org.htmlparser.tags.FormTag;
 import org.htmlparser.tags.InputTag;
+import org.htmlparser.tags.OptionTag;
 import org.htmlparser.tags.SelectTag;
 import org.htmlparser.util.NodeList;
 import org.htmlparser.util.ParserException;
@@ -65,6 +73,32 @@ public final class HtmlParserUtil {
 
 	/**
 	 * 
+	 * @param inputs
+	 * @param params
+	 */
+	public static void setInputs(NodeList inputs, List<NameValuePair> params) {
+		InputTag input = null;
+		for (int i = 0; i < inputs.size(); i++) {
+			input = (InputTag) inputs.elementAt(i);
+			params.add(new BasicNameValuePair(input.getAttribute("name"), input.getAttribute("value")));
+		}		
+	}
+
+	/**
+	 * 
+	 * @param inputs
+	 * @param params
+	 */
+	public static void setInputs(NodeList inputs, Map<String, String> params) {
+		InputTag input = null;
+		for (int i = 0; i < inputs.size(); i++) {
+			input = (InputTag) inputs.elementAt(i);
+			params.put(input.getAttribute("name"), input.getAttribute("value"));
+		}
+	}
+
+	/**
+	 * 
 	 * @param form
 	 * @return
 	 */
@@ -75,15 +109,28 @@ public final class HtmlParserUtil {
 	/**
 	 * 
 	 * @param form
+	 * @return
+	 */
+	public static NodeList getNotHiddenInputs(FormTag form) {
+		return form.getFormInputs().extractAllNodesThatMatch(new AndFilter(new TagNameFilter("input"), new NotFilter(new HasAttributeFilter("type", "hidden"))), true);
+	}
+
+	/**
+	 * 
+	 * @param form
 	 * @param params
 	 */
 	public static void setHiddenInputs(FormTag form, List<NameValuePair> params) {
-		NodeList hiddens = getHiddenInputs(form);
-		InputTag input = null;
-		for (int i = 0; i < hiddens.size(); i++) {
-			input = (InputTag) hiddens.elementAt(i);
-			params.add(new BasicNameValuePair(input.getAttribute("name"), input.getAttribute("value")));
-		}
+		setInputs(getHiddenInputs(form), params);
+	}
+
+	/**
+	 * 
+	 * @param form
+	 * @param params
+	 */
+	public static void setHiddenInputs(FormTag form, Map<String, String> params) {
+		setInputs(getHiddenInputs(form), params);
 	}
 
 	/**
@@ -107,8 +154,42 @@ public final class HtmlParserUtil {
 	 * 
 	 * @return
 	 */
-	public static String[] getSelectOptions(SelectTag select) {
-		// TODO
+	public static Map<String, String> getSelectOptions(SelectTag select) {
+		OptionTag[] options = select.getOptionTags();
+		Map<String, String> ret = new TreeMap<String, String>();
+		for (OptionTag option : options) {
+			ret.put(option.getValue(), option.getOptionText());
+		}
+		return ret;
+	}
+
+	/**
+	 * 
+	 * @param node
+	 * @param tags
+	 * @return
+	 */
+	public static NodeList getChildTags(Node node, List<String> tagNames) {
+		NodeList children = node.getChildren();
+		if (children != null) {
+			int size = tagNames.size();
+			List<NodeFilter> predicates = new ArrayList<NodeFilter>(size);
+			for (String name : tagNames) {
+				predicates.add(new TagNameFilter(name));
+			}
+			NodeFilter filter = new OrFilter(predicates.toArray(new NodeFilter[size]));
+			return children.extractAllNodesThatMatch(filter, true);
+		}
 		return null;
 	}
+	
+//	public static List<String> getChildTags(Node node, NodeFilter filter) {
+//		List<String> ret = new ArrayList<String>();
+//		NodeList children = node.getChildren();
+//		if (children != null) {
+//			NodeList add = children.extractAllNodesThatMatch(filter);
+//			
+//		}
+//		return ret;
+//	}
 }

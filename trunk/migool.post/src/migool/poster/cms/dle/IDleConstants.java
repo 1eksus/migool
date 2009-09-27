@@ -18,9 +18,19 @@ public interface IDleConstants {
 	public static final String LOGIN_SUBMIT = "login=submit";
 
 	public static final String ENTRYFORM = "entryform";
+	public static final String TITLE = "title";
+	public static final String ALT_NAME = "alt_name";
 	public static final String CATLIST = "catlist[]";
 	public static final String SHORT_STORY = "short_story";
 	public static final String FULL_STORY = "full_story";
+	public static final String TAGS = "tags";
+
+	public static final String ALLOW_COMM = "allow_comm";
+	public static final String ALLOW_MAIN = "allow_main";
+	public static final String APPROVE = "approve";
+	public static final String ALLOW_RATING = "allow_rating";
 	public static final String ADD = "add";
 	public static final String MOD = "mod";
+	
+	public static final String[] ERROR_MESSAGES = new String[] {"Внимание, обнаружена ошибка", "ANTISPAM: User ID not valid"}; 
 }
