@@ -14,7 +14,7 @@ import migool.post.internal.Image;
 public class Post {
 	public String title;
 	public String url;
-	public Category category;
+	public List<Category> categories;
 	public Image image;
 
 	public String begStory;

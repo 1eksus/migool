@@ -14,7 +14,7 @@ public class DlePost {
 	public String title;
 	public String url;
 
-	public Category category;
+	public List<Category> categories;
 
 	public String shortStory;
 	public String fullStory;
