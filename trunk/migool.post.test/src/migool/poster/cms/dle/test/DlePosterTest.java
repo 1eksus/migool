@@ -58,7 +58,7 @@ public class DlePosterTest {
 		DlePost post = new DlePost();
 		post.title = "заголовок";
 		post.url = "урла";
-		post.category = null;
+		post.categories = null;
 		post.shortStory = "краткая новость";
 		post.fullStory = "полная новость";
 		post.tags = Arrays.asList(new String[]{"тэг_1", "тэг_2", "тэг 3"});
