@@ -1,5 +1,7 @@
 package migool.poster.cms.dle;
 
+import static migool.util.HtmlParserUtil.*;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -41,7 +43,6 @@ import migool.poster.PostResponse;
 import migool.share.image.IImageShare;
 import migool.share.image.ImageShareResponse;
 import migool.util.EmptyChecker;
-import migool.util.HtmlParserUtil;
 import migool.util.IOUtil;
 import migool.util.LinkUtil;
 import migool.util.Regex;
@@ -68,18 +69,18 @@ public final class DlePoster implements IDlePoster, IImageShare {
 	public LoginResponse login(LoginPassword lp) throws ClientProtocolException, IOException, Exception {
 		HttpResponse response = client.execute(new HttpGet(httpRoot));
 
-		FormTag form = HtmlParserUtil.getLoginForm(IOUtil.toString(response.getEntity().getContent()));
+		FormTag form = getLoginForm(IOUtil.toString(response.getEntity().getContent()));
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
-		InputTag input = HtmlParserUtil.getInputTag(form, IDleConstants.LOGIN_INPUTS);
+		InputTag input = getInputTag(form, IDleConstants.LOGIN_INPUTS);
 		String login = lp.getLogin();
 		if (input != null) {
 			params.add(new BasicNameValuePair(input.getAttribute("name"), login));
 		}
-		input = HtmlParserUtil.getInputTag(form, IDleConstants.PASS_INPUTS);
+		input = getInputTag(form, IDleConstants.PASS_INPUTS);
 		if (input != null) {
 			params.add(new BasicNameValuePair(input.getAttribute("name"), lp.getPassword()));
 		}
-		HtmlParserUtil.setHiddenInputs(form, params);
+		setHiddenInputs(form, params);
 
 		HttpPost request = new HttpPost(httpRoot);
 		request.setEntity(new UrlEncodedFormEntity(params));
@@ -101,7 +102,7 @@ public final class DlePoster implements IDlePoster, IImageShare {
 		MultipartEntity entity = new MultipartEntity();
 		InputTag file = (InputTag) form.getFormInputs().extractAllNodesThatMatch(new HasAttributeFilter("type", "file"), true).elementAt(0);
 		entity.addPart(file.getAttribute("name"), new InputStreamBody(new ByteArrayInputStream(img.bytes), img.fileName));
-		HtmlParserUtil.setHiddenInputs(form, entity);
+		setHiddenInputs(form, entity);
 
 		HttpPost post = new HttpPost(url);
 		post.setEntity(entity);
@@ -126,21 +127,19 @@ public final class DlePoster implements IDlePoster, IImageShare {
 		String html = IOUtil.toString(response.getEntity().getContent());
 
 		FormTag form = (FormTag) (new Parser(html)).parse(new AndFilter(new TagNameFilter("form"), new HasAttributeFilter("name", IDleConstants.ENTRYFORM))).elementAt(0);
-		NodeList elems = HtmlParserUtil.getChildTags(form, Arrays.asList(new String[]{"input", "select", "textarea"}));
-		System.out.println(elems);
-		//List<NameValuePair> params = new ArrayList<NameValuePair>();
+		List<String> names = getNameAttributeValues(getChildTags(form, Arrays.asList(new String[]{"input", "select", "textarea"})));
+		System.out.println(names);
 		Map<String, String> params = new HashMap<String, String>();
 
 		// filling for default values:
-		HtmlParserUtil.setHiddenInputs(form, params);
-		NodeList nl = HtmlParserUtil.getNotHiddenInputs(form).extractAllNodesThatMatch(new NotFilter(new HasAttributeFilter("name", "nview")));
-		HtmlParserUtil.setInputs(nl, params);
+		setHiddenInputs(form, params);
+		NodeList nl = getNotHiddenInputs(form).extractAllNodesThatMatch(new NotFilter(new HasAttributeFilter("name", "nview")));
+		setInputs(nl, params);
 
 		// filling post:
 		// title
 		InputTag input = form.getInputTag(IDleConstants.TITLE);
 		if (input != null) {
-			//params.add(new BasicNameValuePair(input.getAttribute("name"), post.title));
 			params.put(input.getAttribute("name"), post.title);
 		}
 		// URL
@@ -151,28 +150,24 @@ public final class DlePoster implements IDlePoster, IImageShare {
 		// TODO category
 		SelectTag select = (SelectTag) form.getChildren().extractAllNodesThatMatch(new HasAttributeFilter("name", "catlist[]"), true).elementAt(0);
 		if (select != null) {
-			Map<String, String> cats = HtmlParserUtil.getSelectOptions(select);
+			Map<String, String> cats = getSelectOptions(select);
 			System.out.println(cats);
-			//params.add(new BasicNameValuePair("catlist[]", "1"));
 			params.put("catlist[]", "1");
 		}
 		// tags
 		input = form.getInputTag(IDleConstants.TAGS);
 		if (input != null) {
-			//params.add(new BasicNameValuePair(input.getAttribute("name"), TagUtil.toString(post.tags)));
 			params.put(input.getAttribute("name"), TagUtil.toString(post.tags));
 		}
 		// short story
 		nl = form.getFormTextareas();
 		TextareaTag textarea = (TextareaTag) nl.extractAllNodesThatMatch(new HasAttributeFilter("name", IDleConstants.SHORT_STORY)).elementAt(0);
 		if (textarea != null) {
-			//params.add(new BasicNameValuePair(textarea.getAttribute("name"), post.shortStory));
 			params.put(textarea.getAttribute("name"), post.shortStory);
 		}
 		// full story
 		textarea = (TextareaTag) nl.extractAllNodesThatMatch(new HasAttributeFilter("name", IDleConstants.FULL_STORY)).elementAt(0);
 		if (textarea != null) {
-			//params.add(new BasicNameValuePair(textarea.getAttribute("name"), post.fullStory));
 			params.put(textarea.getAttribute("name"), post.fullStory);
 		}
 		// other inputs
@@ -183,21 +178,29 @@ public final class DlePoster implements IDlePoster, IImageShare {
 				k = key.toString();
 				nl = form.getChildren().extractAllNodesThatMatch(new HasAttributeFilter("name", k));
 				if (nl.size() > 0) {
-					//params.add(new BasicNameValuePair(k, inputs.getProperty(k)));
 					params.put(k, inputs.getProperty(k));
 				}
 			}
 		}
-		
-		HttpPost request = new HttpPost(url);
-		List<NameValuePair> p = new ArrayList<NameValuePair>();
-		for (String key : params.keySet()) {
-			p.add(new BasicNameValuePair(key, params.get(key)));
+
+		// convert into request
+		List<NameValuePair> p = new ArrayList<NameValuePair>(names.size());
+		for (String name : names) {
+			String value = params.get(name);
+			if (value != null) {
+				p.add(new BasicNameValuePair(name, params.get(name)));
+			}
 		}
-		System.out.println(p);
-		request.setEntity(new UrlEncodedFormEntity(p));
+
+		// do request
+		HttpPost request = new HttpPost(url);
+		// TODO charset detection
+		request.setEntity(new UrlEncodedFormEntity(p, "windows-1251"));
+		request.setHeader("Referer", url);
 		response = client.execute(request);
+
 		html = IOUtil.toString(response.getEntity().getContent());
+		System.out.println(html);
 		if (StringUtil.contains(html, IDleConstants.ERROR_MESSAGES)) {
 			return new PostResponse(PostResponse.NOT_POSTED, null);
 		}

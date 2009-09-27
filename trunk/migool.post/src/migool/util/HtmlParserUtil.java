@@ -19,6 +19,7 @@ import org.htmlparser.filters.HasChildFilter;
 import org.htmlparser.filters.NotFilter;
 import org.htmlparser.filters.OrFilter;
 import org.htmlparser.filters.TagNameFilter;
+import org.htmlparser.nodes.TagNode;
 import org.htmlparser.tags.FormTag;
 import org.htmlparser.tags.InputTag;
 import org.htmlparser.tags.OptionTag;
@@ -182,14 +183,20 @@ public final class HtmlParserUtil {
 		}
 		return null;
 	}
-	
-//	public static List<String> getChildTags(Node node, NodeFilter filter) {
-//		List<String> ret = new ArrayList<String>();
-//		NodeList children = node.getChildren();
-//		if (children != null) {
-//			NodeList add = children.extractAllNodesThatMatch(filter);
-//			
-//		}
-//		return ret;
-//	}
+
+	/**
+	 * 
+	 * @param nl
+	 * @return
+	 */
+	public static List<String> getNameAttributeValues(NodeList nl) {
+		List<String> ret = new ArrayList<String>(nl.size());
+		for (int i = 0; i < nl.size(); i++) {
+			String name = ((TagNode)nl.elementAt(i)).getAttribute("name");
+			if (name != null) {
+				ret.add(name);
+			}
+		}
+		return ret;
+	}
 }
