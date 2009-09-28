@@ -1,13 +1,20 @@
 package migool.poster.cms.ucoz;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 import org.htmlparser.tags.FormTag;
+import org.htmlparser.tags.Html;
 
 import migool.host.auth.LoginPassword;
 import migool.host.auth.LoginResponse;
@@ -141,9 +148,20 @@ public class UcozPoster implements ICMSPoster {
 		HttpGet get = new HttpGet(site);
 		HttpResponse response = client.execute(get);
 		String html = IOUtil.toString(response.getEntity().getContent());
+
+		// fill the form
 		FormTag form = HtmlParserUtil.getLoginForm(html);
-		System.out.println(form);
-		// TODO Auto-generated method stub
-		return null;
+		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		HtmlParserUtil.setHiddenInputs(form, params);
+		params.add(new BasicNameValuePair("user", lp.getLogin()));
+		params.add(new BasicNameValuePair("password", lp.getPassword()));
+		System.out.println(params);
+
+		HttpPost request = new HttpPost(site + IUcozConstants.LOGIN_POST_PATH);
+		request.setEntity(new UrlEncodedFormEntity(params));
+		html = IOUtil.toString(client.execute(request).getEntity().getContent());
+		
+		form = HtmlParserUtil.getLoginForm(html);
+		return (form == null) ? new LoginResponse(LoginResponse.OK): new LoginResponse(LoginResponse.NOT_LOGGED);
 	}
 }

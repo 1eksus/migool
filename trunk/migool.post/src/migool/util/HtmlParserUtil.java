@@ -33,6 +33,9 @@ import org.htmlparser.util.ParserException;
  *
  */
 public final class HtmlParserUtil {
+	
+	public static final NodeFilter PASSWORD_INPUT_FILTER = new AndFilter(new TagNameFilter("input"), new HasAttributeFilter("type", "password"));
+	
 	private HtmlParserUtil() {
 	}
 
@@ -45,7 +48,7 @@ public final class HtmlParserUtil {
 		Parser parser;
 		try {
 			parser = new Parser(html);
-			NodeList nl = parser.parse(new AndFilter(new TagNameFilter("form"), new HasChildFilter(new AndFilter(new TagNameFilter("input"), new HasAttributeFilter("type", "password")), true)));
+			NodeList nl = parser.parse(new AndFilter(new TagNameFilter("form"), new HasChildFilter(PASSWORD_INPUT_FILTER, true)));
 			if (nl.size() == 1) {
 				return (FormTag) nl.elementAt(0);
 			}

@@ -26,6 +26,7 @@ public class UcozPosterTest {
 	public void testLogin() throws Exception {
 		LoginResponse response = poster.login(new LoginPassword("migooltest@gmail.com", "Migool_Test"));
 		assertNotNull(response);
+		assertEquals(response.getCode(), LoginResponse.OK);
 	}
 
 //	@Test

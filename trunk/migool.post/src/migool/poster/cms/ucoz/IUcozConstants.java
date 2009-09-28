@@ -11,6 +11,8 @@ public interface IUcozConstants {
 		"3dn.ru", "my1.ru", "clan.su", "moy.su", "do.am", "pp.net.ua",
 		"ucoz.ua", "ucoz.kz", "ucoz.lv", "ucoz.com", "ucoz.net",
 		"ucoz.org", "ucoz.co.uk", "ucoz.de", "ws.co.ua" };
+	
+	public static final String LOGIN_POST_PATH = "/index/sub";
 
 	public static final String NEWS_PATH = "/news";
 	public static final String LOAD_PATH = "/load";
