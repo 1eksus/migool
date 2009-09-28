@@ -56,17 +56,17 @@ import migool.util.StringUtil;
 public final class DlePoster implements IDlePoster, IImageShare {
 
 	private String host;
-	private String httpRoot;
+	private final String site;
 	private final HttpClient client;
 
 	public DlePoster(String host) {
 		this.host = host;
-		this.httpRoot = LinkUtil.createHttpRoot(host);
+		this.site = LinkUtil.createHttpRoot(host);
 		this.client = new DefaultHttpClient();
 	}
 
 	public LoginResponse login(LoginPassword lp) throws ClientProtocolException, IOException, Exception {
-		HttpResponse response = client.execute(new HttpGet(httpRoot));
+		HttpResponse response = client.execute(new HttpGet(site));
 
 		FormTag form = getLoginForm(IOUtil.toString(response.getEntity().getContent()));
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -81,17 +81,17 @@ public final class DlePoster implements IDlePoster, IImageShare {
 		}
 		setHiddenInputs(form, params);
 
-		HttpPost request = new HttpPost(httpRoot);
+		HttpPost request = new HttpPost(site);
 		request.setEntity(new UrlEncodedFormEntity(params));
 		response = client.execute(request);
 		response.getEntity().getContent().close();
-		response = client.execute(new HttpGet(httpRoot));
+		response = client.execute(new HttpGet(site));
 		String html = IOUtil.toString(response.getEntity().getContent());
 		return (html.contains(login)) ? new LoginResponse(LoginResponse.OK) : new LoginResponse(LoginResponse.ERROR);
 	}
 
 	public ImageShareResponse upload(Image img) throws ClientProtocolException, IOException, Exception {
-		String url = httpRoot + IDleConstants.UPLOAD_PATH;
+		String url = site + IDleConstants.UPLOAD_PATH;
 		HttpUriRequest request = new HttpGet(url);
 		HttpResponse response = client.execute(request);
 		String html = IOUtil.toString(response.getEntity().getContent());
@@ -118,7 +118,7 @@ public final class DlePoster implements IDlePoster, IImageShare {
 	}
 
 	public PostResponse post(DlePost post) throws ClientProtocolException, IOException, Exception {
-		String url = httpRoot + IDleConstants.ADD_NEWS_PATH;
+		String url = site + IDleConstants.ADD_NEWS_PATH;
 		HttpGet get = new HttpGet(url);
 		HttpResponse response = client.execute(get);
 		String html = IOUtil.toString(response.getEntity().getContent());
