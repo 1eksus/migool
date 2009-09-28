@@ -15,18 +15,15 @@ public class RadikalRu implements IImageShare {
 	
 	public static final String HOST = "radikal.ru";
 
-	@Override
 	public LoginResponse login(LoginPassword lp) {
 		return new LoginResponse(LoginResponse.OK);
 	}
 
-	@Override
 	public ImageShareResponse upload(Image img) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
 	public String getHost() {
 		return HOST;
 	}

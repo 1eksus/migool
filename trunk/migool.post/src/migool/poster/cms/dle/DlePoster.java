@@ -65,7 +65,6 @@ public final class DlePoster implements IDlePoster, IImageShare {
 		this.client = new DefaultHttpClient();
 	}
 
-	@Override
 	public LoginResponse login(LoginPassword lp) throws ClientProtocolException, IOException, Exception {
 		HttpResponse response = client.execute(new HttpGet(httpRoot));
 
@@ -91,7 +90,6 @@ public final class DlePoster implements IDlePoster, IImageShare {
 		return (html.contains(login)) ? new LoginResponse(LoginResponse.OK) : new LoginResponse(LoginResponse.ERROR);
 	}
 
-	@Override
 	public ImageShareResponse upload(Image img) throws ClientProtocolException, IOException, Exception {
 		String url = httpRoot + IDleConstants.UPLOAD_PATH;
 		HttpUriRequest request = new HttpGet(url);
@@ -119,7 +117,6 @@ public final class DlePoster implements IDlePoster, IImageShare {
 		return ret;
 	}
 
-	@Override
 	public PostResponse post(DlePost post) throws ClientProtocolException, IOException, Exception {
 		String url = httpRoot + IDleConstants.ADD_NEWS_PATH;
 		HttpGet get = new HttpGet(url);
@@ -209,7 +206,6 @@ public final class DlePoster implements IDlePoster, IImageShare {
 		return (form == null) ? new PostResponse(PostResponse.OK, null): new PostResponse(PostResponse.NOT_POSTED, null);
 	}
 
-	@Override
 	public String getHost() {
 		return host;
 	}
