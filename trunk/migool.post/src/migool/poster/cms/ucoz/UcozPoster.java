@@ -14,7 +14,6 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.htmlparser.tags.FormTag;
-import org.htmlparser.tags.Html;
 
 import migool.host.auth.LoginPassword;
 import migool.host.auth.LoginResponse;
