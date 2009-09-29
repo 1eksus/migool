@@ -1,6 +1,7 @@
 package migool.post.category;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -12,7 +13,8 @@ public class Categories {
 	public static final List<Category> CATS;
 
 	/* Main categories */
-	public static final Category SOFT = new Category("soft");
+	public static final Category SOFT = createSoft();
+	public static final Category SCRIPTS = createScripts();
 	public static final Category DRIVERS = new Category("drivers");
 	public static final Category VIDEO = new Category("video");
 	public static final Category MUSIC = new Category("music");
@@ -27,6 +29,29 @@ public class Categories {
 	public static final Category NEWS = new Category("news");
 	public static final Category HUMOUR = new Category("humour");
 
+	/**
+	 * 
+	 * @return
+	 */
+	private static final Category createSoft() {
+		Category ret = new Category("soft");
+		ret.synonyms = Arrays.asList(new String[]{"soft", "софт", "programs", "программы", "progs", "проги"});
+		//ret.children.add();
+		return ret;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	private static Category createScripts() {
+		Category ret = new Category("scripts");
+		return ret;
+	}
+
+	/**
+	 * 
+	 */
 	static {
 		CATS = new ArrayList<Category>();
 		CATS.add(SOFT);
