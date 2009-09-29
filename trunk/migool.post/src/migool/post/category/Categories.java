@@ -13,6 +13,7 @@ public class Categories {
 
 	/* Main categories */
 	public static final Category SOFT = new Category("soft");
+	public static final Category DRIVERS = new Category("drivers");
 	public static final Category VIDEO = new Category("video");
 	public static final Category MUSIC = new Category("music");
 	public static final Category GAMES = new Category("games");
