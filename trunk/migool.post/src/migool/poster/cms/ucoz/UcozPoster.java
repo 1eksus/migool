@@ -11,12 +11,12 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.htmlparser.tags.FormTag;
 
 import migool.host.auth.LoginPassword;
 import migool.host.auth.LoginResponse;
+import migool.http.client.HttpClientFactory;
 import migool.poster.PostResponse;
 import migool.poster.cms.ICMSPoster;
 import migool.poster.cms.ucoz.post.BlogUcozPost;
@@ -46,7 +46,8 @@ public class UcozPoster implements ICMSPoster {
 	public UcozPoster(String host) {
 		this.host = host;
 		this.site = LinkUtil.createHttpRoot(host);
-		this.client = new DefaultHttpClient();
+		//this.client = new DefaultHttpClient();
+		this.client = HttpClientFactory.newInstance().newHttpClient();
 	}
 
 	public LoginResponse login(LoginPassword lp) throws ClientProtocolException, IOException, Exception {

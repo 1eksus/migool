@@ -21,7 +21,6 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.content.InputStreamBody;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.htmlparser.Parser;
 import org.htmlparser.filters.AndFilter;
@@ -37,6 +36,7 @@ import org.htmlparser.util.NodeList;
 
 import migool.host.auth.LoginPassword;
 import migool.host.auth.LoginResponse;
+import migool.http.client.HttpClientFactory;
 import migool.post.internal.Image;
 import migool.post.tag.TagUtil;
 import migool.poster.PostResponse;
@@ -62,7 +62,8 @@ public final class DlePoster implements IDlePoster, IImageShare {
 	public DlePoster(String host) {
 		this.host = host;
 		this.site = LinkUtil.createHttpRoot(host);
-		this.client = new DefaultHttpClient();
+		//this.client = new DefaultHttpClient();
+		this.client = HttpClientFactory.newInstance().newHttpClient();
 	}
 
 	public LoginResponse login(LoginPassword lp) throws ClientProtocolException, IOException, Exception {
