@@ -14,7 +14,6 @@ public abstract class HttpClientFactory {
 	
 	public static final HttpClientFactory newInstance() {
 		return new HttpClientFactory() {
-			
 			public HttpClient newHttpClient() {
 				return new DefaultHttpClient();
 			}
