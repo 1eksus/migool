@@ -3,10 +3,18 @@ package com.appspot.op;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.*;
 
 @SuppressWarnings("serial")
 public class Online_posterServlet extends HttpServlet {
+	
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		super.doPost(req, resp);
+	}
+	
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		resp.setCharacterEncoding("UTF-8");
 		resp.setContentType("text/html");
