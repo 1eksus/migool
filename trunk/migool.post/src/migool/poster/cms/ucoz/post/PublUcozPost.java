@@ -2,23 +2,19 @@ package migool.poster.cms.ucoz.post;
 
 import java.util.List;
 
+import migool.post.internal.Image;
+
 /**
  * 
  * @author Denis Migol
  *
  */
 public class PublUcozPost {
-	public static final String OCAT = "ocat";
-	public static final String ANAME = "aname";
-	public static final String AEMAIL = "aemail";
-	public static final String ASITE = "asite";
-	public static final String SOURCE = "source";
-	
 	public String cat;
 	public String title;
 	public String brief;
 	public String message;
-	public List<String> files;
+	public List<Image> files;
 	public String aname;
 	public String aemail;
 	public String asite;

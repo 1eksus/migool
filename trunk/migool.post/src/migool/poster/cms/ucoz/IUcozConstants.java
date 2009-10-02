@@ -63,4 +63,18 @@ public interface IUcozConstants {
 	// !!!
 	public static final String OTHER = "other"; // OTHER1..OTHER5
 	//public static final String SBCR = "sbcr";
+	
+	public static final String FILTER3 = "filter3"; // board kind of board
+	
+	public static final String OCAT = "ocat";
+	public static final String ANAME = "aname";
+	public static final String AEMAIL = "aemail";
+	public static final String ASITE = "asite";
+	public static final String SOURCE = "source";
+
+	public static final String PHONE = "phone";
+
+	public static final String PYA = "pya";
+	public static final String PMA = "pma";
+	public static final String PDA = "pda";
 }
