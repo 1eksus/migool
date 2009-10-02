@@ -33,9 +33,9 @@ import org.htmlparser.util.ParserException;
  *
  */
 public final class HtmlParserUtil {
-	
+
 	public static final NodeFilter PASSWORD_INPUT_FILTER = new AndFilter(new TagNameFilter("input"), new HasAttributeFilter("type", "password"));
-	
+
 	private HtmlParserUtil() {
 	}
 
