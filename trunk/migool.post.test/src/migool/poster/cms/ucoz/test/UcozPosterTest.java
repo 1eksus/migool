@@ -4,8 +4,13 @@ import static org.junit.Assert.*;
 
 import migool.host.auth.LoginPassword;
 import migool.host.auth.LoginResponse;
+import migool.http.client.HttpClientFactory;
 import migool.poster.cms.ucoz.UcozPoster;
 
+import org.apache.http.HttpHost;
+import org.apache.http.client.HttpClient;
+import org.apache.http.conn.params.ConnRouteParams;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,8 +21,23 @@ import org.junit.Test;
  *
  */
 public class UcozPosterTest {
-
-	private static final UcozPoster poster = new UcozPoster("ucoztest.at.ua");
+	
+	private static final UcozPoster poster;
+	
+	static {
+		HttpClientFactory.setDefault(new HttpClientFactory() {
+			@Override
+			public HttpClient newHttpClient() {
+				String proxyHost = "127.0.0.1";
+				int proxyPort = 8081;
+				HttpClient client = new DefaultHttpClient();
+				final HttpHost hcProxyHost = new HttpHost(proxyHost, proxyPort);
+				client.getParams().setParameter(ConnRouteParams.DEFAULT_PROXY, hcProxyHost);
+				return client;
+			}
+		});
+		poster = new UcozPoster("ucoztest.at.ua");
+	}
 
 	@Before
 	public void setUp() throws Exception {
