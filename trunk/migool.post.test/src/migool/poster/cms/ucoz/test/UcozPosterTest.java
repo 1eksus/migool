@@ -21,9 +21,9 @@ import org.junit.Test;
  *
  */
 public class UcozPosterTest {
-	
+
 	private static final UcozPoster poster;
-	
+
 	static {
 		HttpClientFactory.setDefault(new HttpClientFactory() {
 			@Override
