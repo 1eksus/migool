@@ -10,8 +10,13 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ * 
+ * @author Denis Migol
+ *
+ */
 public class UcozPosterTest {
-	
+
 	private static final UcozPoster poster = new UcozPoster("ucoztest.at.ua");
 
 	@Before
