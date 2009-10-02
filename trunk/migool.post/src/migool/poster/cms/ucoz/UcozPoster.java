@@ -65,6 +65,8 @@ public class UcozPoster implements ICMSPoster {
 		HttpPost request = new HttpPost(site + IUcozConstants.LOGIN_POST_PATH);
 		request.setEntity(new UrlEncodedFormEntity(params));
 		html = IOUtil.toString(client.execute(request).getEntity().getContent());
+		
+		html = IOUtil.toString(client.execute(get).getEntity().getContent());
 
 		form = HtmlParserUtil.getLoginForm(html);
 		return (form == null) ? new LoginResponse(LoginResponse.OK) : new LoginResponse(LoginResponse.NOT_LOGGED);
