@@ -27,6 +27,12 @@ public class UcozPosterTest {
 		LoginResponse response = poster.login(new LoginPassword("migooltest@gmail.com", "Migool_Test"));
 		assertNotNull(response);
 		assertEquals(response.getCode(), LoginResponse.OK);
+
+		UcozPoster newPoster = new UcozPoster(poster.getHost());
+		response = newPoster.login(new LoginPassword("migooltest@gmail.com", "Migool_Tst"));
+		assertNotNull(response);
+		assertTrue(response.getCode() != LoginResponse.OK);
+		//assertEquals(response.getCode(), LoginResponse.NOT_LOGGED);
 	}
 
 //	@Test
