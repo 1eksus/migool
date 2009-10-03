@@ -82,4 +82,10 @@ public interface IUcozConstants {
 
 	public static final String SUBJECT = "subject";
 	public static final String NAME = "name";
+
+	public static final String ICQ = "icq";
+	public static final String COUNTRY = "country";
+	public static final String CITY = "city";
+	public static final String STATE = "state";
+	public static final String CODE = "code"; // CAPTCHA
 }
