@@ -71,10 +71,15 @@ public interface IUcozConstants {
 	public static final String AEMAIL = "aemail";
 	public static final String ASITE = "asite";
 	public static final String SOURCE = "source";
+	
+	public static final String SLINK = "slink";
 
 	public static final String PHONE = "phone";
 
 	public static final String PYA = "pya";
 	public static final String PMA = "pma";
 	public static final String PDA = "pda";
+
+	public static final String SUBJECT = "subject";
+	public static final String NAME = "name";
 }

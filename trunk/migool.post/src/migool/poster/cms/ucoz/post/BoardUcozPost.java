@@ -11,8 +11,8 @@ import migool.post.internal.Image;
  *
  */
 public class BoardUcozPost {
-	public String cat;
-	public int kind; // 1 - info, 2 - demand (spros), 3 - supply (predlozhenie)
+	public String ocat;
+	public int kind; // FILTER3: 1 - info, 2 - demand (spros), 3 - supply (predlozhenie)
 	public String brief;
 	public String message;
 	public List<Image> files;
