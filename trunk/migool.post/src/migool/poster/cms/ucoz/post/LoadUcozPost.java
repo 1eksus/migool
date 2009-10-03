@@ -6,5 +6,5 @@ package migool.poster.cms.ucoz.post;
  *
  */
 public class LoadUcozPost {
-
+// TODO
 }
