@@ -10,7 +10,7 @@ import migool.post.internal.Image;
  *
  */
 public class PublUcozPost {
-	public String cat;
+	public String ocat;
 	public String title;
 	public String brief;
 	public String message;
