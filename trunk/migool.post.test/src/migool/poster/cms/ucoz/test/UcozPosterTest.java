@@ -28,10 +28,8 @@ public class UcozPosterTest {
 		HttpClientFactory.setDefault(new HttpClientFactory() {
 			@Override
 			public HttpClient newHttpClient() {
-				String proxyHost = "127.0.0.1";
-				int proxyPort = 8081;
-				HttpClient client = new DefaultHttpClient();
-				final HttpHost hcProxyHost = new HttpHost(proxyHost, proxyPort);
+				final HttpClient client = new DefaultHttpClient();
+				final HttpHost hcProxyHost = new HttpHost("127.0.0.1", 8081);
 				client.getParams().setParameter(ConnRouteParams.DEFAULT_PROXY, hcProxyHost);
 				return client;
 			}
