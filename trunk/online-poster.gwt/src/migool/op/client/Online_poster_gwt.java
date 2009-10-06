@@ -1,9 +1,10 @@
 package migool.op.client;
 
-import migool.post.category.Categories;
-import migool.post.category.Category;
+import java.util.List;
 
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.FileUpload;
 import com.google.gwt.user.client.ui.HTML;
@@ -20,15 +21,18 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class Online_poster_gwt implements EntryPoint {
 
+	private final CategoryServiceAsync categoryService = GWT
+			.create(CategoryService.class);
+	ListBox lb = new ListBox(true);
+
 	/**
 	 * 
 	 * @return
 	 */
 	private Widget createPostWidget() {
 		VerticalPanel vp = new VerticalPanel();
-		//vp.setSize("100%", "100%");
 		vp.setWidth("100%");
-		
+
 		vp.add(new HTML("Заголовок"));
 
 		TextBox tb = new TextBox();
@@ -45,13 +49,20 @@ public class Online_poster_gwt implements EntryPoint {
 
 		vp.add(new HTML("Категории"));
 
-		ListBox lb = new ListBox(true);
 		lb.setName("cats");
-		for (Category cat : Categories.CATS) {
-			lb.addItem(cat.name);
-		}
-//		lb.addItem("cat1 cat1 cat1 cat1");
-//		lb.addItem("cat2");
+		categoryService.getCategories(new AsyncCallback<List<String>>() {
+
+			@Override
+			public void onSuccess(List<String> result) {
+				for (String cat : result) {
+					lb.addItem(cat);
+				}
+			}
+
+			@Override
+			public void onFailure(Throwable caught) {
+			}
+		});
 		vp.add(lb);
 
 		vp.add(new HTML("Картинка"));
@@ -60,9 +71,9 @@ public class Online_poster_gwt implements EntryPoint {
 		fu.setName("image");
 		fu.setWidth("100%");
 		vp.add(fu);
-		
+
 		vp.add(new HTML("Текст новости"));
-		
+
 		TextArea ta = new TextArea();
 		ta.setName("story");
 		ta.setWidth("100%");
@@ -70,49 +81,49 @@ public class Online_poster_gwt implements EntryPoint {
 		vp.add(ta);
 
 		vp.add(new HTML("Название"));
-		
+
 		tb = new TextBox();
 		tb.setName("name");
 		tb.setWidth("100%");
 		vp.add(tb);
 
 		vp.add(new HTML("Оригинальное название"));
-		
+
 		tb = new TextBox();
 		tb.setName("originalName");
 		tb.setWidth("100%");
 		vp.add(tb);
 
 		vp.add(new HTML("Версия"));
-		
+
 		tb = new TextBox();
 		tb.setName("version");
 		tb.setWidth("100%");
 		vp.add(tb);
 
 		vp.add(new HTML("Год"));
-		
+
 		tb = new TextBox();
 		tb.setName("year");
 		tb.setWidth("100%");
 		vp.add(tb);
 
 		vp.add(new HTML("Формат"));
-		
+
 		tb = new TextBox();
 		tb.setName("format");
 		tb.setWidth("100%");
 		vp.add(tb);
 
 		vp.add(new HTML("Язык"));
-		
+
 		tb = new TextBox();
 		tb.setName("language");
 		tb.setWidth("100%");
 		vp.add(tb);
 
 		vp.add(new HTML("Размер"));
-		
+
 		tb = new TextBox();
 		tb.setName("size");
 		tb.setWidth("100%");
@@ -127,9 +138,9 @@ public class Online_poster_gwt implements EntryPoint {
 		ta.setWidth("100%");
 		ta.setHeight("20em");
 		vp.add(ta);
-		
+
 		vp.add(new HTML("Тэги"));
-		
+
 		tb = new TextBox();
 		tb.setName("tags");
 		tb.setWidth("100%");
@@ -155,21 +166,15 @@ public class Online_poster_gwt implements EntryPoint {
 		tb.setName("platform");
 		tb.setWidth("100%");
 		vp.add(tb);
-		
+
 		CheckBox cb = new CheckBox("free");
 		cb.setName("free");
 		vp.add(cb);
-		
+
 		cb = new CheckBox("crack");
 		cb.setName("crack");
 		vp.add(cb);
 
-		// Wrap the content in a DecoratorPanel
-		// DecoratorPanel decPanel = new DecoratorPanel();
-		// decPanel.setWidget(layout);
-		// return decPanel;
-		//return layout;
-		
 		return vp;
 	}
 
@@ -182,8 +187,7 @@ public class Online_poster_gwt implements EntryPoint {
 		splitPanel.setSize("100%", "100%");
 		splitPanel.setSplitPosition("30%");
 		splitPanel.add(new HTML("<b>asdfas</b><br>fasd"));
-		//splitPanel.add(new HTML("<b>asdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdf</b>"));
-		
+
 		splitPanel.add(createPostWidget());
 	}
 }
