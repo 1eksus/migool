@@ -35,7 +35,7 @@ public class Categories {
 	 */
 	private static final Category createSoft() {
 		Category ret = new Category("soft");
-		ret.synonyms = Arrays.asList(new String[]{"soft", "софт", "programs", "программы", "progs", "проги"});
+		ret.synonyms = Arrays.asList(new String[]{"soft", "СЃРѕС„С‚", "programs", "РїСЂРѕРіСЂР°РјРјС‹", "progs", "РїСЂРѕРіРё"});
 		//ret.children.add();
 		return ret;
 	}
