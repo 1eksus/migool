@@ -10,7 +10,7 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
  * @author Denis Migol
  *
  */
-@RemoteServiceRelativePath("category")
-public interface CategoryService extends RemoteService {
+@RemoteServiceRelativePath("post")
+public interface PostService extends RemoteService {
 	List<String> getCategories();
 }

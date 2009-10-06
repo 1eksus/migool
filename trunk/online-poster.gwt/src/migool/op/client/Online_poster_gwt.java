@@ -21,7 +21,7 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class Online_poster_gwt implements EntryPoint {
 
-	private final CategoryServiceAsync categoryService = GWT.create(CategoryService.class);
+	private final PostServiceAsync categoryService = GWT.create(PostService.class);
 	ListBox lb = new ListBox(true);
 
 	/**

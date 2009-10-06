@@ -9,6 +9,6 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
  * @author Denis Migol
  *
  */
-public interface CategoryServiceAsync {
+public interface PostServiceAsync {
 	void getCategories(AsyncCallback<List<String>> callback);
 }

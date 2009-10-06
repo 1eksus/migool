@@ -3,7 +3,7 @@ package migool.op.server;
 import java.util.ArrayList;
 import java.util.List;
 
-import migool.op.client.CategoryService;
+import migool.op.client.PostService;
 import migool.post.category.Categories;
 import migool.post.category.Category;
 
@@ -15,8 +15,8 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
  *
  */
 @SuppressWarnings("serial")
-public class CategoryServiceImpl extends RemoteServiceServlet implements
-		CategoryService {
+public class PostServiceImpl extends RemoteServiceServlet implements
+		PostService {
 
 	@Override
 	public List<String> getCategories() {

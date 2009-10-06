@@ -7,13 +7,13 @@
 
   <!-- Servlets -->
   <servlet>
-    <servlet-name>categoryServlet</servlet-name>
-    <servlet-class>migool.op.server.CategoryServiceImpl</servlet-class>
+    <servlet-name>postServlet</servlet-name>
+    <servlet-class>migool.op.server.PostServiceImpl</servlet-class>
   </servlet>
   
   <servlet-mapping>
-    <servlet-name>categoryServlet</servlet-name>
-    <url-pattern>/online_poster_gwt/category</url-pattern>
+    <servlet-name>postServlet</servlet-name>
+    <url-pattern>/online_poster_gwt/post</url-pattern>
   </servlet-mapping>
   
   <!-- Default page to serve -->
