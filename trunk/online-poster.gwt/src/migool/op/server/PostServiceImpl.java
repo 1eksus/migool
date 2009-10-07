@@ -1,15 +1,24 @@
 package migool.op.server;
 
+import java.io.ByteArrayInputStream;
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
 
+import javax.jdo.PersistenceManager;
+
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.content.InputStreamBody;
+
 import migool.op.client.PostService;
 import migool.op.client.serializable.PostSerializable;
+import migool.op.server.jdo.PMF;
 import migool.post.Post;
 import migool.post.category.Categories;
 import migool.post.category.Category;
 import migool.poster.HostConfig;
+import migool.util.IOUtil;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
@@ -21,12 +30,13 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 @SuppressWarnings("serial")
 public class PostServiceImpl extends RemoteServiceServlet implements PostService {
 
+	PersistenceManager pm = PMF.get().getPersistenceManager();
 	private Post post;
 	private TreeMap<String, HostConfig> hosts;
 
 	public PostServiceImpl() {
 		super();
-		post = null;
+		post = new Post();
 		hosts = new TreeMap<String, HostConfig>();
 	}
 
@@ -34,7 +44,6 @@ public class PostServiceImpl extends RemoteServiceServlet implements PostService
 		List<String> ret = new ArrayList<String>();
 		for (Category cat : Categories.CATS) {
 			ret.add(cat.name);
-			System.out.println(cat.name);
 		}
 		return ret;
 	}
@@ -50,6 +59,12 @@ public class PostServiceImpl extends RemoteServiceServlet implements PostService
 		this.post.url = clientPost.url;
 		//public List<String> categories;
 		//public Image image; // TODO
+		
+		try {
+			String fileName = clientPost.image;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 		this.post.begStory = clientPost.begStory;
 		this.post.endStory = clientPost.endStory;

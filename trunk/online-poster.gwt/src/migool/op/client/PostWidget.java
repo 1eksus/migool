@@ -11,13 +11,21 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
+import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FileUpload;
+import com.google.gwt.user.client.ui.FormPanel;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HasHorizontalAlignment;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.ui.FormPanel.SubmitCompleteEvent;
+import com.google.gwt.user.client.ui.FormPanel.SubmitCompleteHandler;
+import com.google.gwt.user.client.ui.FormPanel.SubmitEvent;
+import com.google.gwt.user.client.ui.FormPanel.SubmitHandler;
 
 /**
  * 
@@ -66,9 +74,46 @@ public final class PostWidget {
 
 		vp.add(new HTML("Картинка"));
 
+		final FormPanel form = new FormPanel();
+		vp.add(form);
+		form.setAction("/upload");
+		form.setEncoding(FormPanel.ENCODING_MULTIPART);
+		form.setMethod(FormPanel.METHOD_POST);
+
+		final VerticalPanel fvp = new VerticalPanel();
+		form.add(fvp);
+		fvp.setWidth("100%");
 		final FileUpload image = new FileUpload();
+		image.setName("image");
 		image.setWidth("100%");
-		vp.add(image);
+		fvp.add(image);
+		
+		final Button upload = new Button("upload", new ClickHandler() {			
+			@Override
+			public void onClick(ClickEvent event) {
+				// TODO Auto-generated method stub
+				form.submit();
+			}
+		});
+		fvp.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
+		fvp.add(upload);
+		//vp.add(image);
+		form.addSubmitHandler(new SubmitHandler() {
+			@Override
+			public void onSubmit(SubmitEvent event) {
+				// TODO Auto-generated method stub
+			}
+		});
+		form.addSubmitCompleteHandler(new SubmitCompleteHandler() {
+			@Override
+			public void onSubmitComplete(SubmitCompleteEvent event) {
+				Image image = new Image("/upload");
+				fvp.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+				fvp.add(image);
+				
+				upload.setEnabled(false);
+			}
+		});
 
 		vp.add(new HTML("Текст новости"));
 
@@ -167,13 +212,17 @@ public final class PostWidget {
 				post.title = title.getText();
 				post.url = url.getText();
 				post.categories = getSelectedItemsText(cats);
+
 				// public Image image; // TODO
+				post.image = image.getFilename();
 
 				String storyText = story.getText();
-				int index = storyText.indexOf(CUT);
-				int length = CUT.length();
-				post.begStory = storyText.substring(0, index);
-				post.endStory = storyText.substring(index + length, storyText.length());
+				if (!"".equals(storyText)) {
+					int index = storyText.indexOf(CUT);
+					int length = CUT.length();
+					post.begStory = storyText.substring(0, index);
+					post.endStory = storyText.substring(index + length, storyText.length());
+				}
 
 				post.name = name.getText();
 				post.originalName = originalName.getText();

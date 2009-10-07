@@ -37,6 +37,7 @@ public class Online_poster_gwt implements EntryPoint {
 					vp.add(new HTML(host));
 				}
 			}
+
 			@Override
 			public void onFailure(Throwable caught) {
 				// TODO Auto-generated method stub
@@ -64,7 +65,7 @@ public class Online_poster_gwt implements EntryPoint {
 				if (widget != null) {
 					splitPanel.remove(widget);
 				}
-				//splitPanel.add(createPostWidget());
+				// splitPanel.add(createPostWidget());
 				splitPanel.add(PostWidget.create(postService));
 			}
 		});
@@ -84,7 +85,7 @@ public class Online_poster_gwt implements EntryPoint {
 		vp.add(hosts);
 
 		splitPanel.add(vp);
-		//splitPanel.add(createPostWidget());
+		// splitPanel.add(createPostWidget());
 		splitPanel.add(PostWidget.create(postService));
 	}
 }

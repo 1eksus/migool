@@ -14,6 +14,7 @@ public class PostSerializable implements Serializable {
 	public String url;
 	public List<String> categories;
 	//public Image image; // TODO
+	public String image;
 
 	public String begStory;
 	public String endStory;
