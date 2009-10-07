@@ -19,7 +19,6 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
  */
@@ -27,7 +26,6 @@ public class Online_poster_gwt implements EntryPoint {
 
 	private final PostServiceAsync categoryService = GWT.create(PostService.class);
 	HorizontalSplitPanel splitPanel = new HorizontalSplitPanel();
-	ListBox lb = new ListBox(true);
 
 	/**
 	 * 
@@ -53,12 +51,13 @@ public class Online_poster_gwt implements EntryPoint {
 
 		vp.add(new HTML("Категории"));
 
+		final ListBox lb = new ListBox(true);
 		lb.setName("cats");
 		categoryService.getCategories(new AsyncCallback<List<String>>() {
 
 			@Override
 			public void onSuccess(List<String> result) {
-				lb.clear();
+				// lb.clear();
 				for (String cat : result) {
 					lb.addItem(cat);
 				}
@@ -192,12 +191,11 @@ public class Online_poster_gwt implements EntryPoint {
 		splitPanel.setSplitPosition("30%");
 		final Hyperlink link = new Hyperlink("post", "");
 		link.addClickHandler(new ClickHandler() {
-			
+
 			@Override
 			public void onClick(ClickEvent event) {
 				Widget widget = splitPanel.getRightWidget();
 				if (widget != null) {
-					link.setVisible(false);
 					splitPanel.remove(widget);
 				}
 				splitPanel.add(createPostWidget());
