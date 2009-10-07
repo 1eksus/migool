@@ -40,13 +40,36 @@ public class PostServiceImpl extends RemoteServiceServlet implements PostService
 	}
 
 	public List<String> getHosts() {
-		// TODO Auto-generated method stub
-		return null;
+		return new ArrayList<String>(hosts.keySet());
 	}
 
 	@Override
-	public void setPost(PostSerializable post) {
-		// TODO Auto-generated method stub
-		
+	public void setPost(PostSerializable clientPost) {
+		this.post.title = clientPost.title;
+		this.post.title = clientPost.title;
+		this.post.url = clientPost.url;
+		//public List<String> categories;
+		//public Image image; // TODO
+
+		this.post.begStory = clientPost.begStory;
+		this.post.endStory = clientPost.endStory;
+
+		this.post.name = clientPost.name;
+		this.post.originalName = clientPost.originalName;
+		this.post.version = clientPost.version;
+		this.post.year = clientPost.year;
+		this.post.format = clientPost.format;
+		this.post.language = clientPost.language;
+		this.post.size = clientPost.size;
+		//public List<Image> screens; // TODO
+		//public String fileLinks;
+		//public String tags;
+
+		// Warez
+		this.post.developer = clientPost.developer;
+		this.post.os = clientPost.os;
+		this.post.platform = clientPost.platform;
+		this.post.free = clientPost.free;
+		this.post.crack = clientPost.crack;
 	}
 }

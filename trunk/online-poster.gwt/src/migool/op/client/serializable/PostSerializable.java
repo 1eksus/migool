@@ -1,6 +1,7 @@
 package migool.op.client.serializable;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 
@@ -11,8 +12,8 @@ import java.io.Serializable;
 public class PostSerializable implements Serializable {
 	public String title;
 	public String url;
-	//public List<Category> categories;
-	//public Image image;
+	public List<String> categories;
+	//public Image image; // TODO
 
 	public String begStory;
 	public String endStory;
@@ -24,8 +25,8 @@ public class PostSerializable implements Serializable {
 	public String format;
 	public String language;
 	public String size;
-	//public List<Image> screens;
-	//public List<List<FileLink>> fileLinks;
+	//public List<Image> screens; // TODO
+	public String fileLinks;
 	public String tags;
 
 	// Warez
