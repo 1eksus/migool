@@ -4,11 +4,14 @@ import java.util.List;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.FileUpload;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalSplitPanel;
+import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextArea;
@@ -22,6 +25,7 @@ import com.google.gwt.user.client.ui.Widget;
 public class Online_poster_gwt implements EntryPoint {
 
 	private final PostServiceAsync categoryService = GWT.create(PostService.class);
+	HorizontalSplitPanel splitPanel = new HorizontalSplitPanel();
 	ListBox lb = new ListBox(true);
 
 	/**
@@ -53,6 +57,7 @@ public class Online_poster_gwt implements EntryPoint {
 
 			@Override
 			public void onSuccess(List<String> result) {
+				lb.clear();
 				for (String cat : result) {
 					lb.addItem(cat);
 				}
@@ -181,12 +186,24 @@ public class Online_poster_gwt implements EntryPoint {
 	 * This is the entry point method.
 	 */
 	public void onModuleLoad() {
-		HorizontalSplitPanel splitPanel = new HorizontalSplitPanel();
 		RootPanel.get().add(splitPanel);
 		splitPanel.setSize("100%", "100%");
 		splitPanel.setSplitPosition("30%");
-		splitPanel.add(new HTML("<b>asdfas</b><br>fasd"));
+		final Hyperlink link = new Hyperlink("post", "");
+		link.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				Widget widget = splitPanel.getRightWidget();
+				if (widget != null) {
+					link.setVisible(false);
+					splitPanel.remove(widget);
+				}
+				splitPanel.add(createPostWidget());
+			}
+		});
 
+		splitPanel.add(link);
 		splitPanel.add(createPostWidget());
 	}
 }

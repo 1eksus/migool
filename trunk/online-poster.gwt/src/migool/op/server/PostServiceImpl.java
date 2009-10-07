@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.TreeMap;
 
 import migool.op.client.PostService;
-import migool.op.serializable.PostSerializable;
 import migool.post.Post;
 import migool.post.category.Categories;
 import migool.post.category.Category;
@@ -30,7 +29,6 @@ public class PostServiceImpl extends RemoteServiceServlet implements PostService
 		hosts = new TreeMap<String, HostConfig>();
 	}
 
-	@Override
 	public List<String> getCategories() {
 		List<String> ret = new ArrayList<String>();
 		for (Category cat : Categories.CATS) {
@@ -40,12 +38,6 @@ public class PostServiceImpl extends RemoteServiceServlet implements PostService
 		return ret;
 	}
 
-	@Override
-	public void setPost(PostSerializable post) {
-		this.post = post;
-	}
-
-	@Override
 	public List<String> getHosts() {
 		// TODO Auto-generated method stub
 		return null;
