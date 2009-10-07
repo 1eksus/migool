@@ -192,7 +192,6 @@ public final class PostWidget {
 				post.crack = crack.getValue();
 
 				postService.setPost(post, new AsyncCallback<Void>() {
-
 					@Override
 					public void onSuccess(Void result) {
 					}
