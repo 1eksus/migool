@@ -1,6 +1,9 @@
 package migool.op.client;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import migool.op.client.serializable.PostSerializable;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -31,37 +34,52 @@ public class Online_poster_gwt implements EntryPoint {
 
 	/**
 	 * 
+	 * @param lb
+	 * @return
+	 */
+	private List<String> getSelectedItemsText(ListBox lb) {
+		List<String> ret = new ArrayList<String>();
+		int begin = lb.getSelectedIndex();
+		if (begin > -1) {
+			int size = lb.getItemCount();
+			for (int i = begin; i < size; i++) {
+				if (lb.isItemSelected(i)) {
+					ret.add(lb.getItemText(i));
+				}
+			}
+		}
+		return ret;
+	}
+
+	/**
+	 * 
 	 * @return
 	 */
 	private Widget createPostWidget() {
-		VerticalPanel vp = new VerticalPanel();
+		final VerticalPanel vp = new VerticalPanel();
 		vp.setWidth("100%");
 
 		vp.add(new HTML("Заголовок"));
 
-		TextBox tb = new TextBox();
-		tb.setName("title");
-		tb.setWidth("100%");
-		vp.add(tb);
+		final TextBox title = new TextBox();
+		title.setWidth("100%");
+		vp.add(title);
 
 		vp.add(new HTML("URL"));
 
-		tb = new TextBox();
-		tb.setName("url");
-		tb.setWidth("100%");
-		vp.add(tb);
+		final TextBox url = new TextBox();
+		url.setWidth("100%");
+		vp.add(url);
 
 		vp.add(new HTML("Категории"));
 
-		final ListBox lb = new ListBox(true);
-		lb.setName("cats");
+		final ListBox cats = new ListBox(true);
 		postService.getCategories(new AsyncCallback<List<String>>() {
 
 			@Override
 			public void onSuccess(List<String> result) {
-				// lb.clear();
 				for (String cat : result) {
-					lb.addItem(cat);
+					cats.addItem(cat);
 				}
 			}
 
@@ -69,121 +87,113 @@ public class Online_poster_gwt implements EntryPoint {
 			public void onFailure(Throwable caught) {
 			}
 		});
-		vp.add(lb);
+		vp.add(cats);
 
 		vp.add(new HTML("Картинка"));
 
-		FileUpload fu = new FileUpload();
-		fu.setName("image");
-		fu.setWidth("100%");
-		vp.add(fu);
+		final FileUpload image = new FileUpload();
+		image.setWidth("100%");
+		vp.add(image);
 
 		vp.add(new HTML("Текст новости"));
 
-		TextArea ta = new TextArea();
-		ta.setName("story");
-		ta.setWidth("100%");
-		ta.setHeight("20em");
-		vp.add(ta);
+		final TextArea story = new TextArea();
+		story.setWidth("100%");
+		story.setHeight("20em");
+		vp.add(story);
 
 		vp.add(new HTML("Название"));
 
-		tb = new TextBox();
-		tb.setName("name");
-		tb.setWidth("100%");
-		vp.add(tb);
+		final TextBox name = new TextBox();
+		name.setWidth("100%");
+		vp.add(name);
 
 		vp.add(new HTML("Оригинальное название"));
 
-		tb = new TextBox();
-		tb.setName("originalName");
-		tb.setWidth("100%");
-		vp.add(tb);
+		final TextBox originalName = new TextBox();
+		originalName.setWidth("100%");
+		vp.add(originalName);
 
 		vp.add(new HTML("Версия"));
 
-		tb = new TextBox();
-		tb.setName("version");
-		tb.setWidth("100%");
-		vp.add(tb);
+		final TextBox version = new TextBox();
+		version.setWidth("100%");
+		vp.add(version);
 
 		vp.add(new HTML("Год"));
 
-		tb = new TextBox();
-		tb.setName("year");
-		tb.setWidth("100%");
-		vp.add(tb);
+		final TextBox year = new TextBox();
+		year.setWidth("100%");
+		vp.add(year);
 
 		vp.add(new HTML("Формат"));
 
-		tb = new TextBox();
-		tb.setName("format");
-		tb.setWidth("100%");
-		vp.add(tb);
+		final TextBox format = new TextBox();
+		format.setWidth("100%");
+		vp.add(format);
 
 		vp.add(new HTML("Язык"));
 
-		tb = new TextBox();
-		tb.setName("language");
-		tb.setWidth("100%");
-		vp.add(tb);
+		final TextBox language = new TextBox();
+		language.setWidth("100%");
+		vp.add(language);
 
 		vp.add(new HTML("Размер"));
 
-		tb = new TextBox();
-		tb.setName("size");
-		tb.setWidth("100%");
-		vp.add(tb);
+		final TextBox size = new TextBox();
+		size.setWidth("100%");
+		vp.add(size);
 
 		// TODO screens
 
 		vp.add(new HTML("Ссылки"));
 
-		ta = new TextArea();
-		ta.setName("fileLinks");
-		ta.setWidth("100%");
-		ta.setHeight("20em");
-		vp.add(ta);
+		final TextArea fileLinks = new TextArea();
+		fileLinks.setWidth("100%");
+		fileLinks.setHeight("20em");
+		vp.add(fileLinks);
 
 		vp.add(new HTML("Тэги"));
 
-		tb = new TextBox();
-		tb.setName("tags");
-		tb.setWidth("100%");
-		vp.add(tb);
+		final TextBox tags = new TextBox();
+		tags.setWidth("100%");
+		vp.add(tags);
 
 		vp.add(new HTML("Разработчик"));
 
-		tb = new TextBox();
-		tb.setName("developer");
-		tb.setWidth("100%");
-		vp.add(tb);
+		final TextBox developer = new TextBox();
+		developer.setWidth("100%");
+		vp.add(developer);
 
 		vp.add(new HTML("ОС"));
 
-		tb = new TextBox();
-		tb.setName("os");
-		tb.setWidth("100%");
-		vp.add(tb);
+		final TextBox os = new TextBox();
+		os.setWidth("100%");
+		vp.add(os);
 
 		vp.add(new HTML("Платформа"));
 
-		tb = new TextBox();
-		tb.setName("platform");
-		tb.setWidth("100%");
-		vp.add(tb);
+		final TextBox platform = new TextBox();
+		platform.setWidth("100%");
+		vp.add(platform);
 
-		CheckBox cb = new CheckBox("free");
-		cb.setName("free");
-		vp.add(cb);
+		final CheckBox free = new CheckBox("free");
+		vp.add(free);
 
-		cb = new CheckBox("crack");
-		cb.setName("crack");
-		vp.add(cb);
+		final CheckBox crack = new CheckBox("crack");
+		vp.add(crack);
 
 		ClickHandler postHandler = new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
+
+				PostSerializable post = new PostSerializable();
+
+				// TODO
+				post.title = title.getText();
+				post.url = url.getText();
+				post.categories = getSelectedItemsText(cats);
+
 				DialogBox db = new DialogBox(true);
 				db.setModal(true);
 				db.center();
