@@ -31,6 +31,8 @@ public class Online_poster_gwt implements EntryPoint {
 
 	private final PostServiceAsync postService = GWT.create(PostService.class);
 	HorizontalSplitPanel splitPanel = new HorizontalSplitPanel();
+	
+	private static final String CUT = "[cut]";
 
 	/**
 	 * 
@@ -193,6 +195,13 @@ public class Online_poster_gwt implements EntryPoint {
 				post.title = title.getText();
 				post.url = url.getText();
 				post.categories = getSelectedItemsText(cats);
+				//public Image image; // TODO
+				
+				String storyText = story.getText();
+				int index = storyText.indexOf(CUT);
+				int length = CUT.length();
+				post.begStory = storyText.substring(0, index);
+				post.endStory = storyText.substring(index + length, storyText.length());
 
 				DialogBox db = new DialogBox(true);
 				db.setModal(true);
