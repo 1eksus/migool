@@ -7,7 +7,9 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
+import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FileUpload;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalSplitPanel;
@@ -179,6 +181,18 @@ public class Online_poster_gwt implements EntryPoint {
 		cb.setName("crack");
 		vp.add(cb);
 
+		ClickHandler postHandler = new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				DialogBox db = new DialogBox(true);
+				db.setModal(true);
+				db.center();
+				db.show();
+			}
+		};
+		Button post = new Button("отправить", postHandler);
+		vp.add(post);
+
 		return vp;
 	}
 
@@ -189,16 +203,16 @@ public class Online_poster_gwt implements EntryPoint {
 	private Widget createSitesWidget() {
 		final VerticalPanel vp = new VerticalPanel();
 		vp.setWidth("100%");
-		
+
 		postService.getHosts(new AsyncCallback<List<String>>() {
-			
+
 			@Override
 			public void onSuccess(List<String> result) {
 				for (String host : result) {
 					vp.add(new HTML(host));
 				}
 			}
-			
+
 			@Override
 			public void onFailure(Throwable caught) {
 				// TODO Auto-generated method stub
