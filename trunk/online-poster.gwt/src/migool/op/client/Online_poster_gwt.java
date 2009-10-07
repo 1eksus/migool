@@ -24,7 +24,7 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class Online_poster_gwt implements EntryPoint {
 
-	private final PostServiceAsync categoryService = GWT.create(PostService.class);
+	private final PostServiceAsync postService = GWT.create(PostService.class);
 	HorizontalSplitPanel splitPanel = new HorizontalSplitPanel();
 
 	/**
@@ -53,7 +53,7 @@ public class Online_poster_gwt implements EntryPoint {
 
 		final ListBox lb = new ListBox(true);
 		lb.setName("cats");
-		categoryService.getCategories(new AsyncCallback<List<String>>() {
+		postService.getCategories(new AsyncCallback<List<String>>() {
 
 			@Override
 			public void onSuccess(List<String> result) {
@@ -183,14 +183,42 @@ public class Online_poster_gwt implements EntryPoint {
 	}
 
 	/**
+	 * 
+	 * @return
+	 */
+	private Widget createSitesWidget() {
+		final VerticalPanel vp = new VerticalPanel();
+		vp.setWidth("100%");
+		
+		postService.getHosts(new AsyncCallback<List<String>>() {
+			
+			@Override
+			public void onSuccess(List<String> result) {
+				for (String host : result) {
+					vp.add(new HTML(host));
+				}
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+			}
+		});
+		return vp;
+	}
+
+	/**
 	 * This is the entry point method.
 	 */
 	public void onModuleLoad() {
 		RootPanel.get().add(splitPanel);
 		splitPanel.setSize("100%", "100%");
 		splitPanel.setSplitPosition("30%");
-		final Hyperlink link = new Hyperlink("post", "");
-		link.addClickHandler(new ClickHandler() {
+		VerticalPanel vp = new VerticalPanel();
+		vp.setWidth("100%");
+
+		final Hyperlink post = new Hyperlink("post", "");
+		post.addClickHandler(new ClickHandler() {
 
 			@Override
 			public void onClick(ClickEvent event) {
@@ -201,8 +229,22 @@ public class Online_poster_gwt implements EntryPoint {
 				splitPanel.add(createPostWidget());
 			}
 		});
+		vp.add(post);
+		final Hyperlink hosts = new Hyperlink("hosts", "");
+		hosts.addClickHandler(new ClickHandler() {
 
-		splitPanel.add(link);
+			@Override
+			public void onClick(ClickEvent event) {
+				Widget widget = splitPanel.getRightWidget();
+				if (widget != null) {
+					splitPanel.remove(widget);
+					splitPanel.add(createSitesWidget());
+				}
+			}
+		});
+		vp.add(hosts);
+
+		splitPanel.add(vp);
 		splitPanel.add(createPostWidget());
 	}
 }
