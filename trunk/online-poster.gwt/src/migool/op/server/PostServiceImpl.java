@@ -18,6 +18,7 @@ import migool.op.server.jdo.persist.HostConfig;
 import migool.post.Post;
 import migool.post.category.Categories;
 import migool.post.category.Category;
+import migool.post.internal.Image;
 import migool.util.IOUtil;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -59,9 +60,10 @@ public class PostServiceImpl extends RemoteServiceServlet implements PostService
 		this.post.url = clientPost.url;
 		//public List<String> categories;
 		//public Image image; // TODO
-		
+
 		try {
-			String fileName = clientPost.image;
+			Image image = new Image();
+			image.fileName = clientPost.image;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
