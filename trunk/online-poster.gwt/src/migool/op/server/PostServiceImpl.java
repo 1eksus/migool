@@ -14,10 +14,10 @@ import org.apache.http.entity.mime.content.InputStreamBody;
 import migool.op.client.PostService;
 import migool.op.client.serializable.PostSerializable;
 import migool.op.server.jdo.PMF;
+import migool.op.server.jdo.persist.HostConfig;
 import migool.post.Post;
 import migool.post.category.Categories;
 import migool.post.category.Category;
-import migool.poster.HostConfig;
 import migool.util.IOUtil;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
