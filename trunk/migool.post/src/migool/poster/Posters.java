@@ -21,6 +21,10 @@ public abstract class Posters {
 		posters.add(new _4erda4okCom());
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public static final List<IPoster> get() {
 		return Posters.posters;
 	}
