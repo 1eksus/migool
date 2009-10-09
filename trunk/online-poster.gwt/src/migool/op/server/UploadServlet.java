@@ -35,7 +35,7 @@ public class UploadServlet extends HttpServlet {
 		out.write(image);
 		out.flush();
 		out.close();
-		System.out.println(image);
+		//System.out.println(image);
 	}
 
 	@Override
@@ -54,7 +54,7 @@ public class UploadServlet extends HttpServlet {
 				if (!item.isFormField()) {
 					contentType = item.getContentType();
 					image = IOUtil.toByteArray(stream);
-					out.print(1 + "");
+					out.print("hello");
 				}
 			}
 		} catch (Exception e) {
