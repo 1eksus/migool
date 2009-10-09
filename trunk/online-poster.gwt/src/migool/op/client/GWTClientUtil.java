@@ -10,7 +10,7 @@ import com.google.gwt.user.client.ui.ListBox;
  * @author Denis Migol
  *
  */
-public class GWTClientUtil {
+public final class GWTClientUtil {
 
 	private GWTClientUtil() {
 	}

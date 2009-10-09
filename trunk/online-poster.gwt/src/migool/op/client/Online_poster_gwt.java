@@ -2,6 +2,8 @@ package migool.op.client;
 
 import java.util.List;
 
+import migool.op.client.widget.PostWidget;
+
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;

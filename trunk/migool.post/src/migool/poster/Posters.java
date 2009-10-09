@@ -10,7 +10,7 @@ import migool.poster.host._4erda4okCom;
  * @author Denis Migol
  *
  */
-public abstract class Posters {
+public final class Posters {
 	private Posters() {
 	}
 

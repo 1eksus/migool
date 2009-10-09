@@ -1,9 +1,10 @@
-package migool.op.client;
+package migool.op.client.widget;
 
 import static migool.op.client.GWTClientUtil.*;
 
 import java.util.List;
 
+import migool.op.client.PostServiceAsync;
 import migool.op.client.serializable.PostSerializable;
 
 import com.google.gwt.event.dom.client.ClickEvent;
