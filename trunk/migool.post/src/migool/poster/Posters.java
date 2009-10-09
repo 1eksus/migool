@@ -1,5 +1,6 @@
 package migool.poster;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -8,10 +9,15 @@ import java.util.List;
  *
  */
 public class Posters {
-	private static final List<IPoster> posters;
-	
+	private static final ArrayList<IPoster> posters;
+
 	static {
 		// TODO
-		posters = null;
+		posters = new ArrayList<IPoster>();
+		Package p = Package.getPackage(Posters.class.getPackage().getName() + ".host");
+	}
+
+	public static final List<IPoster> get() {
+		return Posters.posters;
 	}
 }
