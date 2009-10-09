@@ -14,6 +14,8 @@ import migool.post.Post;
 import migool.post.category.Categories;
 import migool.post.category.Category;
 import migool.post.internal.Image;
+import migool.poster.IPoster;
+import migool.poster.Posters;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
@@ -27,12 +29,13 @@ public class PostServiceImpl extends RemoteServiceServlet implements PostService
 
 	PersistenceManager pm = PMF.get().getPersistenceManager();
 	private Post post;
-	private TreeMap<String, HostConfig> hosts;
+	private static final List<IPoster> posters = Posters.get();
+	private TreeMap<String, HostConfig> hostsDB;
 
 	public PostServiceImpl() {
 		super();
 		post = new Post();
-		hosts = new TreeMap<String, HostConfig>();
+		hostsDB = new TreeMap<String, HostConfig>();
 	}
 
 	public List<String> getCategories() {
@@ -43,8 +46,15 @@ public class PostServiceImpl extends RemoteServiceServlet implements PostService
 		return ret;
 	}
 
-	public List<String> getHosts() {
-		return new ArrayList<String>(hosts.keySet());
+	public List<String> getPosters() {
+		ArrayList<String> ret = new ArrayList<String>(posters.size());
+		String host = null;
+		for (IPoster poster : posters) {
+			host = poster.getHost();
+			System.out.println(host);
+			ret.add(host);
+		}
+		return ret;
 	}
 
 	@Override

@@ -1,15 +1,12 @@
 package migool.op.client;
 
-import java.util.List;
-
+import migool.op.client.widget.HostsWidget;
 import migool.op.client.widget.PostWidget;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalSplitPanel;
 import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -25,38 +22,14 @@ public class Online_poster_gwt implements EntryPoint {
 	HorizontalSplitPanel splitPanel = new HorizontalSplitPanel();
 
 	/**
-	 * 
-	 * @return
-	 */
-	private Widget createSitesWidget() {
-		final VerticalPanel vp = new VerticalPanel();
-		vp.setWidth("100%");
-
-		postService.getHosts(new AsyncCallback<List<String>>() {
-			@Override
-			public void onSuccess(List<String> result) {
-				for (String host : result) {
-					vp.add(new HTML(host));
-				}
-			}
-
-			@Override
-			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
-			}
-		});
-		return vp;
-	}
-
-	/**
 	 * This is the entry point method.
 	 */
 	public void onModuleLoad() {
 		RootPanel.get().add(splitPanel);
 		splitPanel.setSize("100%", "100%");
-		splitPanel.setSplitPosition("30%");
-		VerticalPanel vp = new VerticalPanel();
-		vp.setWidth("100%");
+		splitPanel.setSplitPosition("100px");
+		VerticalPanel left = new VerticalPanel();
+		left.setWidth("100%");
 
 		final Hyperlink post = new Hyperlink("post", "");
 		post.addClickHandler(new ClickHandler() {
@@ -70,7 +43,8 @@ public class Online_poster_gwt implements EntryPoint {
 				splitPanel.add(PostWidget.create(postService));
 			}
 		});
-		vp.add(post);
+		left.add(post);
+
 		final Hyperlink hosts = new Hyperlink("hosts", "");
 		hosts.addClickHandler(new ClickHandler() {
 
@@ -79,13 +53,13 @@ public class Online_poster_gwt implements EntryPoint {
 				Widget widget = splitPanel.getRightWidget();
 				if (widget != null) {
 					splitPanel.remove(widget);
-					splitPanel.add(createSitesWidget());
+					splitPanel.add(HostsWidget.create(postService));
 				}
 			}
 		});
-		vp.add(hosts);
+		left.add(hosts);
 
-		splitPanel.add(vp);
+		splitPanel.add(left);
 		splitPanel.add(PostWidget.create(postService));
 	}
 }
