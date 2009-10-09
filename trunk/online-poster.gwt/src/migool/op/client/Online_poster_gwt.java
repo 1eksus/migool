@@ -67,7 +67,6 @@ public class Online_poster_gwt implements EntryPoint {
 				if (widget != null) {
 					splitPanel.remove(widget);
 				}
-				// splitPanel.add(createPostWidget());
 				splitPanel.add(PostWidget.create(postService));
 			}
 		});
@@ -87,7 +86,6 @@ public class Online_poster_gwt implements EntryPoint {
 		vp.add(hosts);
 
 		splitPanel.add(vp);
-		// splitPanel.add(createPostWidget());
 		splitPanel.add(PostWidget.create(postService));
 	}
 }
