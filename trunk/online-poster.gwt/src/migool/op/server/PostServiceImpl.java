@@ -33,8 +33,6 @@ public class PostServiceImpl extends RemoteServiceServlet implements PostService
 		super();
 		post = new Post();
 		hosts = new TreeMap<String, HostConfig>();
-		
-		new Test();
 	}
 
 	public List<String> getCategories() {
