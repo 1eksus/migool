@@ -3,6 +3,7 @@ package migool.op.server;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -39,6 +40,7 @@ public class UploadServlet extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		PrintWriter out = resp.getWriter();
 		try {
 			ServletFileUpload upload = new ServletFileUpload();
 			// Set the UTF-8 encoding to grab the correct uploaded filename, especially for Chinese
@@ -52,6 +54,7 @@ public class UploadServlet extends HttpServlet {
 				if (!item.isFormField()) {
 					contentType = item.getContentType();
 					image = IOUtil.toByteArray(stream);
+					out.print(1 + "");
 				}
 			}
 		} catch (Exception e) {

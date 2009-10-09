@@ -107,6 +107,11 @@ public final class PostWidget {
 		form.addSubmitCompleteHandler(new SubmitCompleteHandler() {
 			@Override
 			public void onSubmitComplete(SubmitCompleteEvent event) {
+				DialogBox db = new DialogBox();
+				db.setText(event.getResults());
+				db.center();
+				db.show();
+				System.out.println(event.getResults());
 				Image image = new Image("/upload");
 				fvp.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 				fvp.add(image);

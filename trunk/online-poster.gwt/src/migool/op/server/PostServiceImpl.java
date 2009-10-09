@@ -1,15 +1,10 @@
 package migool.op.server;
 
-import java.io.ByteArrayInputStream;
-import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
 
 import javax.jdo.PersistenceManager;
-
-import org.apache.http.entity.mime.MultipartEntity;
-import org.apache.http.entity.mime.content.InputStreamBody;
 
 import migool.op.client.PostService;
 import migool.op.client.serializable.PostSerializable;
@@ -19,7 +14,6 @@ import migool.post.Post;
 import migool.post.category.Categories;
 import migool.post.category.Category;
 import migool.post.internal.Image;
-import migool.util.IOUtil;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
