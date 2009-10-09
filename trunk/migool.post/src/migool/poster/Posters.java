@@ -3,18 +3,22 @@ package migool.poster;
 import java.util.ArrayList;
 import java.util.List;
 
+import migool.poster.host._4erda4okCom;
+
 /**
  * 
  * @author Denis Migol
  *
  */
-public class Posters {
+public abstract class Posters {
+	private Posters() {
+	}
+
 	private static final ArrayList<IPoster> posters;
 
 	static {
-		// TODO
 		posters = new ArrayList<IPoster>();
-		Package p = Package.getPackage(Posters.class.getPackage().getName() + ".host");
+		posters.add(new _4erda4okCom());
 	}
 
 	public static final List<IPoster> get() {
