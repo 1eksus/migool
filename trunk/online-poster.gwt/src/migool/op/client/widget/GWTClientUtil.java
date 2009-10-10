@@ -1,4 +1,4 @@
-package migool.op.client;
+package migool.op.client.widget;
 
 import java.util.ArrayList;
 import java.util.List;

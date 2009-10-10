@@ -1,6 +1,6 @@
 package migool.op.client.widget;
 
-import static migool.op.client.GWTClientUtil.*;
+import static migool.op.client.widget.GWTClientUtil.*;
 
 import java.util.List;
 
