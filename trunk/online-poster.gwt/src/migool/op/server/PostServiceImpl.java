@@ -28,13 +28,14 @@ public class PostServiceImpl extends RemoteServiceServlet implements PostService
 
 	PersistenceManager pm = PMF.get().getPersistenceManager();
 	private Post post;
-	private static final List<IPoster> posters = Posters.get();
-	private ArrayList<HostConfig> hosts;
+	private static final List<IPoster> posters = Posters.getPosters();
+	private static final List<String> hosts = Posters.getHosts();
+	private ArrayList<HostConfig> hostConfigs;
 
 	public PostServiceImpl() {
 		super();
 		post = new Post();
-		hosts = new ArrayList<HostConfig>();
+		hostConfigs = new ArrayList<HostConfig>();
 	}
 
 	public List<String> getCategories() {
@@ -45,12 +46,8 @@ public class PostServiceImpl extends RemoteServiceServlet implements PostService
 		return ret;
 	}
 
-	public List<String> getPosters() {
-		ArrayList<String> ret = new ArrayList<String>(posters.size());
-		for (IPoster poster : posters) {
-			ret.add(poster.getHost());
-		}
-		return ret;
+	public List<String> getHosts() {
+		return hosts;
 	}
 
 	@Override

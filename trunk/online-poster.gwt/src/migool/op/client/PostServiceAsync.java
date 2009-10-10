@@ -14,5 +14,5 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 public interface PostServiceAsync {
 	void getCategories(AsyncCallback<List<String>> callback);
 	void setPost(PostSerializable post, AsyncCallback<Void> callback);
-	void getPosters(AsyncCallback<List<String>> callback);
+	void getHosts(AsyncCallback<List<String>> callback);
 }

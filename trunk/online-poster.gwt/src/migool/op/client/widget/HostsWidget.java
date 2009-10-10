@@ -27,7 +27,7 @@ public final class HostsWidget {
 		final VerticalPanel vp = new VerticalPanel();
 		vp.setWidth("100%");
 
-		postService.getPosters(new AsyncCallback<List<String>>() {
+		postService.getHosts(new AsyncCallback<List<String>>() {
 			@Override
 			public void onSuccess(List<String> result) {
 				for (String host : result) {

@@ -16,5 +16,5 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 public interface PostService extends RemoteService {
 	List<String> getCategories();
 	void setPost(PostSerializable post);
-	List<String> getPosters();
+	List<String> getHosts();
 }
