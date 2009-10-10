@@ -15,11 +15,11 @@ public final class Posters {
 	private Posters() {
 	}
 
+	private static final TreeMap<String, IPoster> set = new TreeMap<String, IPoster>();
 	private static final ArrayList<String> hosts;
 	private static final ArrayList<IPoster> posters;
 
 	static {
-		TreeMap<String, IPoster> set = new TreeMap<String, IPoster>();
 		put(set, new _4erda4okCom());
 		
 		hosts = new ArrayList<String>(set.keySet());
@@ -33,6 +33,14 @@ public final class Posters {
 	 */
 	private static final void put(TreeMap<String, IPoster> set, IPoster poster) {
 		set.put(poster.getHost(), poster);
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public static final TreeMap<String, IPoster> get() {
+		return set;
 	}
 
 	/**

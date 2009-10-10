@@ -2,6 +2,7 @@ package migool.op.server;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeMap;
 
 import javax.jdo.PersistenceManager;
 
@@ -28,14 +29,13 @@ public class PostServiceImpl extends RemoteServiceServlet implements PostService
 
 	PersistenceManager pm = PMF.get().getPersistenceManager();
 	private Post post;
-	private static final List<IPoster> posters = Posters.getPosters();
+	private static final TreeMap<String, IPoster> posters = Posters.get();
 	private static final List<String> hosts = Posters.getHosts();
-	private ArrayList<HostConfig> hostConfigs;
+	private TreeMap<String, HostConfig> hostConfigs = new TreeMap<String, HostConfig>();
 
 	public PostServiceImpl() {
 		super();
 		post = new Post();
-		hostConfigs = new ArrayList<HostConfig>();
 	}
 
 	public List<String> getCategories() {
@@ -85,5 +85,22 @@ public class PostServiceImpl extends RemoteServiceServlet implements PostService
 		this.post.platform = clientPost.platform;
 		this.post.free = clientPost.free;
 		this.post.crack = clientPost.crack;
+	}
+
+	@Override
+	public HostConfig getHostConfig(String host) {
+		return hostConfigs.get(host);
+	}
+
+	@Override
+	public void setHostConfig(HostConfig hostConfig) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void post(String host) {
+		// TODO Auto-generated method stub
+		posters.get(host).post(post);
 	}
 }
