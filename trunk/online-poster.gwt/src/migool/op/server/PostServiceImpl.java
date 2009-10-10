@@ -2,7 +2,6 @@ package migool.op.server;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.TreeMap;
 
 import javax.jdo.PersistenceManager;
 
@@ -30,12 +29,12 @@ public class PostServiceImpl extends RemoteServiceServlet implements PostService
 	PersistenceManager pm = PMF.get().getPersistenceManager();
 	private Post post;
 	private static final List<IPoster> posters = Posters.get();
-	private TreeMap<String, HostConfig> hostsDB;
+	private ArrayList<HostConfig> hosts;
 
 	public PostServiceImpl() {
 		super();
 		post = new Post();
-		hostsDB = new TreeMap<String, HostConfig>();
+		hosts = new ArrayList<HostConfig>();
 	}
 
 	public List<String> getCategories() {
@@ -48,11 +47,8 @@ public class PostServiceImpl extends RemoteServiceServlet implements PostService
 
 	public List<String> getPosters() {
 		ArrayList<String> ret = new ArrayList<String>(posters.size());
-		String host = null;
 		for (IPoster poster : posters) {
-			host = poster.getHost();
-			System.out.println(host);
-			ret.add(host);
+			ret.add(poster.getHost());
 		}
 		return ret;
 	}
