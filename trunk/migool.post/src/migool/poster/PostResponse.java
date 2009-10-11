@@ -3,7 +3,7 @@ package migool.poster;
 /**
  * 
  * @author Denis Migol
- *
+ * 
  */
 public final class PostResponse {
 	public static final int OK = 0;
