@@ -56,8 +56,8 @@ public class PostServiceImpl extends RemoteServiceServlet implements PostService
 		this.post.title = clientPost.title;
 		this.post.title = clientPost.title;
 		this.post.url = clientPost.url;
-		//public List<String> categories;
-		//public Image image; // TODO
+		// public List<String> categories;
+		// public Image image; // TODO
 
 		try {
 			Image image = new Image();
@@ -76,9 +76,9 @@ public class PostServiceImpl extends RemoteServiceServlet implements PostService
 		this.post.format = clientPost.format;
 		this.post.language = clientPost.language;
 		this.post.size = clientPost.size;
-		//public List<Image> screens; // TODO
-		//public String fileLinks;
-		//public String tags;
+		// public List<Image> screens; // TODO
+		// public String fileLinks;
+		// public String tags;
 
 		// Warez
 		this.post.developer = clientPost.developer;
@@ -87,7 +87,7 @@ public class PostServiceImpl extends RemoteServiceServlet implements PostService
 		this.post.free = clientPost.free;
 		this.post.crack = clientPost.crack;
 	}
-	
+
 	private static final HostConfigSerializable toHostConfigServializable(HostConfig hostConfig) {
 		HostConfigSerializable ret = new HostConfigSerializable();
 		ret.host = hostConfig.getHost();
@@ -105,7 +105,7 @@ public class PostServiceImpl extends RemoteServiceServlet implements PostService
 	@Override
 	public void setHostConfig(HostConfigSerializable hostConfig) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
