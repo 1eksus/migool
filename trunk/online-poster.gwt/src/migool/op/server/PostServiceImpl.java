@@ -1,16 +1,14 @@
 package migool.op.server;
 
+import static migool.op.server.PostServiceUtil.*;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
 
-import javax.jdo.PersistenceManager;
-
 import migool.op.client.PostService;
 import migool.op.client.serializable.HostConfigSerializable;
 import migool.op.client.serializable.PostSerializable;
-import migool.op.server.jdo.PMF;
-import migool.op.server.jdo.persist.HostConfig;
 import migool.post.Post;
 import migool.post.category.Categories;
 import migool.post.category.Category;
@@ -28,11 +26,10 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 @SuppressWarnings("serial")
 public class PostServiceImpl extends RemoteServiceServlet implements PostService {
 
-	PersistenceManager pm = PMF.get().getPersistenceManager();
 	private Post post;
 	private static final TreeMap<String, IPoster> posters = Posters.get();
 	private static final List<String> hosts = Posters.getHosts();
-	private TreeMap<String, HostConfig> hostConfigs = new TreeMap<String, HostConfig>();
+	private TreeMap<String, HostConfigSerializable> hostConfigs = new TreeMap<String, HostConfigSerializable>();
 
 	public PostServiceImpl() {
 		super();
@@ -88,18 +85,14 @@ public class PostServiceImpl extends RemoteServiceServlet implements PostService
 		this.post.crack = clientPost.crack;
 	}
 
-	private static final HostConfigSerializable toHostConfigServializable(HostConfig hostConfig) {
-		HostConfigSerializable ret = new HostConfigSerializable();
-		ret.host = hostConfig.getHost();
-		ret.username = hostConfig.getUsername();
-		ret.password = hostConfig.getPassword();
-		ret.enabled = hostConfig.isEnabled();
-		return ret;
+	@Override
+	public List<HostConfigSerializable> getHostConfigs() {
+		return new ArrayList<HostConfigSerializable>(hostConfigs.values());
 	}
 
 	@Override
 	public HostConfigSerializable getHostConfig(String host) {
-		return toHostConfigServializable(hostConfigs.get(host));
+		return hostConfigs.get(host);
 	}
 
 	@Override

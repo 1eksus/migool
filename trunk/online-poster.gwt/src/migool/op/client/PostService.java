@@ -21,6 +21,8 @@ public interface PostService extends RemoteService {
 
 	List<String> getHosts();
 
+	public List<HostConfigSerializable> getHostConfigs();
+
 	HostConfigSerializable getHostConfig(String host);
 
 	void setHostConfig(HostConfigSerializable hostConfig);

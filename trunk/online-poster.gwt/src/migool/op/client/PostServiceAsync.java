@@ -19,4 +19,5 @@ public interface PostServiceAsync {
 	void getHostConfig(String host, AsyncCallback<HostConfigSerializable> callback);
 	void setHostConfig(HostConfigSerializable hostConfig, AsyncCallback<Void> callback);
 	void post(String host, AsyncCallback<Void> callback);
+	void getHostConfigs(AsyncCallback<List<HostConfigSerializable>> callback);
 }
