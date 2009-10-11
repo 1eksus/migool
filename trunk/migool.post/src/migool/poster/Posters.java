@@ -1,7 +1,6 @@
 package migool.poster;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.TreeMap;
 
 import migool.poster.host._4erda4okCom;
@@ -47,7 +46,7 @@ public final class Posters {
 	 * 
 	 * @return
 	 */
-	public static final List<IPoster> getPosters() {
+	public static final ArrayList<IPoster> getPosters() {
 		return Posters.posters;
 	}
 
@@ -55,7 +54,7 @@ public final class Posters {
 	 * 
 	 * @return
 	 */
-	public static final List<String> getHosts() {
+	public static final ArrayList<String> getHosts() {
 		return Posters.hosts;
 	}
 }
