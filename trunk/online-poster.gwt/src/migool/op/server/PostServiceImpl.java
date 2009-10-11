@@ -7,6 +7,7 @@ import java.util.TreeMap;
 import javax.jdo.PersistenceManager;
 
 import migool.op.client.PostService;
+import migool.op.client.serializable.HostConfigSerializable;
 import migool.op.client.serializable.PostSerializable;
 import migool.op.server.jdo.PMF;
 import migool.op.server.jdo.persist.HostConfig;
@@ -86,14 +87,23 @@ public class PostServiceImpl extends RemoteServiceServlet implements PostService
 		this.post.free = clientPost.free;
 		this.post.crack = clientPost.crack;
 	}
-
-	@Override
-	public HostConfig getHostConfig(String host) {
-		return hostConfigs.get(host);
+	
+	private static final HostConfigSerializable toHostConfigServializable(HostConfig hostConfig) {
+		HostConfigSerializable ret = new HostConfigSerializable();
+		ret.host = hostConfig.getHost();
+		ret.username = hostConfig.getUsername();
+		ret.password = hostConfig.getPassword();
+		ret.enabled = hostConfig.isEnabled();
+		return ret;
 	}
 
 	@Override
-	public void setHostConfig(HostConfig hostConfig) {
+	public HostConfigSerializable getHostConfig(String host) {
+		return toHostConfigServializable(hostConfigs.get(host));
+	}
+
+	@Override
+	public void setHostConfig(HostConfigSerializable hostConfig) {
 		// TODO Auto-generated method stub
 		
 	}
