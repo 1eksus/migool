@@ -15,9 +15,16 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.conn.params.ConnRouteParams;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.htmlparser.Node;
+import org.htmlparser.Parser;
+import org.htmlparser.filters.AndFilter;
+import org.htmlparser.filters.HasAttributeFilter;
+import org.htmlparser.filters.TagNameFilter;
+import org.htmlparser.util.NodeList;
 
 import migool.grab.IGrabber;
 import migool.http.client.HttpClientFactory;
+import migool.util.DebugUtil;
 
 /**
  * 
@@ -60,26 +67,60 @@ public class RedtubeGrabber implements IGrabber {
 
 	/**
 	 * 
+	 * @param id
 	 * @return
 	 */
-	private static final List<RedtubeGrab> grabPage(HttpClient client, URL url) {
+	private static final String getEmbed(String id) {
+		// TODO get through the url 
+		return "<object height=\"344\" width=\"434\">"
+				+ "<param name=\"movie\" value=\"http://embed.redtube.com/player/\">"
+				+ "<param name=\"FlashVars\" value=\"id=" + id + "&style=redtube\">" + "<embed "
+				+ "src=\"http://embed.redtube.com/player/?id=" + id + "&style=redtube\""
+				+ "pluginspage=\"http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash\""
+				+ "type=\"application/x-shockwave-flash\" height=\"344\" width=\"434\" />" + "</object>";
+	}
+
+	/**
+	 * 
+	 * @return
+	 * @throws IOException
+	 * @throws URISyntaxException
+	 * @throws ClientProtocolException
+	 */
+	private static final List<RedtubeGrab> grabPage(HttpClient client, URL url) throws ClientProtocolException,
+			URISyntaxException, IOException {
 		ArrayList<RedtubeGrab> ret = new ArrayList<RedtubeGrab>();
+		String pageIds = getPage(client, url);
+		// System.out.println(pageIds);
+		try {
+			NodeList divVideous = (new Parser(pageIds)).parse(new AndFilter(new TagNameFilter("div"),
+					new HasAttributeFilter("class", "video")));
+			ret.ensureCapacity(divVideous.size());
+			Node node = null;
+			for (int i = 0; i < divVideous.size(); i++) {
+				node = divVideous.elementAt(i);
+				node.getChildren().extractAllNodesThatMatch(new , recursive)
+				System.out.println(node);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return ret;
 	}
 
 	/**
 	 * 
 	 * @return
-	 * @throws IOException 
-	 * @throws URISyntaxException 
-	 * @throws ClientProtocolException 
+	 * @throws IOException
+	 * @throws URISyntaxException
+	 * @throws ClientProtocolException
 	 */
 	public List<RedtubeGrab> grab() throws ClientProtocolException, URISyntaxException, IOException {
 		String url = this.url.toString();
 		if (isPage(url)) {
 			return grabPage(client, this.url);
 		} else if (isId(url)) {
-			return Arrays.asList(new RedtubeGrab[] {grabId(client, this.url)});
+			return Arrays.asList(new RedtubeGrab[] { grabId(client, this.url) });
 		}
 		return null;
 	}
@@ -100,6 +141,6 @@ public class RedtubeGrabber implements IGrabber {
 			}
 		});
 		RedtubeGrabber grabber = new RedtubeGrabber("http://www.redtube.com/?page=757");
-		
+		grabber.grab();
 	}
 }

@@ -11,6 +11,12 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.htmlparser.Parser;
+import org.htmlparser.filters.AndFilter;
+import org.htmlparser.filters.HasAttributeFilter;
+import org.htmlparser.filters.TagNameFilter;
+import org.htmlparser.util.NodeList;
+import org.htmlparser.util.ParserException;
 
 import migool.util.IOUtil;
 import migool.util.NetUtil;
@@ -59,33 +65,38 @@ public final class RedtubeUtil {
 		return Pattern.compile("http://www\\.redtube\\.com/(\\?page=[0-9]+){0,1}").matcher(url).matches();
 	}
 
-	/**
-	 * 
-	 * @param text
-	 * @return
-	 */
-	public static final String[] getIds(String text) {
-		if (RegexUtil.isMatch("http\\:\\/\\/(www\\.){0,1}redtube\\.com\\/\\?page=[0-9]+", text)) {
-			return getIds(NetUtil.newURL(text));
-		}
-		try {
-			String[][] urls = new Regex(text, "(?<=href=\\'\\/)[0-9]+(?=\\')").getMatches();
-			if (urls == null) {
-				return null;
-			}
-			List<String> ret = new ArrayList<String>(40);
-			for (int i = 0; i < urls.length; i++) {
-				for (int j = 0; j < urls[i].length; j++) {
-					String url = "http://www.redtube.com/" + urls[i][j];
-					if (!ret.contains(url)) {
-						ret.add(url);
-					}
-				}
-			}
-			return ret.toArray(new String[ret.size()]);
-		} catch (Exception e) {
-		}
-		return null;
+//	/**
+//	 * 
+//	 * @param text
+//	 * @return
+//	 */
+//	public static final String[] getIds(String text) {
+//		if (RegexUtil.isMatch("http\\:\\/\\/(www\\.){0,1}redtube\\.com\\/\\?page=[0-9]+", text)) {
+//			return getIds(NetUtil.newURL(text));
+//		}
+//		try {
+//			String[][] urls = new Regex(text, "(?<=href=\\'\\/)[0-9]+(?=\\')").getMatches();
+//			if (urls == null) {
+//				return null;
+//			}
+//			List<String> ret = new ArrayList<String>(40);
+//			for (int i = 0; i < urls.length; i++) {
+//				for (int j = 0; j < urls[i].length; j++) {
+//					String url = "http://www.redtube.com/" + urls[i][j];
+//					if (!ret.contains(url)) {
+//						ret.add(url);
+//					}
+//				}
+//			}
+//			return ret.toArray(new String[ret.size()]);
+//		} catch (Exception e) {
+//		}
+//		return null;
+//	}
+	
+	public static final String[] getIds(String page) {
+		ArrayList<String> ret = new ArrayList<String>();
+		return ret.toArray(new String[ret.size()]);
 	}
 
 	/**
