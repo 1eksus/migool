@@ -15,6 +15,7 @@ import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -111,6 +112,9 @@ public final class HostsWidget {
 				final CheckBox enabled = new CheckBox("enabled");
 				enabled.setValue((hc == null) ? false : hc.enabled);
 				vp.add(enabled);
+				
+				HorizontalPanel hp = new HorizontalPanel();
+				hp.setWidth("100%");
 
 				Button ok = new Button("ok", new ClickHandler() {
 
@@ -132,6 +136,7 @@ public final class HostsWidget {
 									if (text.equals(host)) {
 										int i = 1;
 										final CheckBox cb = new CheckBox();
+										cb.setEnabled(false);
 										ft.setWidget(j, i++, new HTML(hostConfig.username));
 										ft.setWidget(j, i++, new HTML(hostConfig.password));
 										cb.setValue(hostConfig.enabled);
@@ -147,7 +152,18 @@ public final class HostsWidget {
 						});
 					}
 				});
-				vp.add(ok);
+				hp.add(ok);
+				
+				Button cancel = new Button("cancel", new ClickHandler() {
+					
+					@Override
+					public void onClick(ClickEvent event) {
+						db.hide();
+					}
+				});
+				hp.add(cancel);
+				
+				vp.add(hp);
 				db.add(vp);
 				db.center();
 				db.show();
@@ -155,6 +171,7 @@ public final class HostsWidget {
 		});
 		ft.setWidget(numRows, i++, link);
 		CheckBox cb = new CheckBox();
+		cb.setEnabled(false);
 		if (hc != null) {
 			ft.setWidget(numRows, i++, new HTML(hc.username));
 			ft.setWidget(numRows, i++, new HTML(hc.password));
