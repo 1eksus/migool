@@ -1,11 +1,17 @@
 package migool.grab.host.redtube;
 
+import static migool.grab.host.redtube.RedtubeUtil.*;
+
+import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.http.HttpHost;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.conn.params.ConnRouteParams;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -24,14 +30,10 @@ public class RedtubeGrabber implements IGrabber {
 
 	private HttpClient client = HttpClientFactory.newInstance().newHttpClient();
 
-	private String videosPage;
-	private String videoPage;
-	private String embedPage;
-
-	private List<RedtubeGrab> grabs = new ArrayList<RedtubeGrab>();
+	private URL url;
 
 	/**
-	 * @throws MalformedURLException 
+	 * @throws MalformedURLException
 	 * 
 	 */
 	public RedtubeGrabber(String url) throws MalformedURLException {
@@ -43,19 +45,50 @@ public class RedtubeGrabber implements IGrabber {
 	 * @param url
 	 */
 	public RedtubeGrabber(URL url) {
-		String urlString = url.toString();
-		System.out.println(urlString);
+		this.url = url;
 	}
 
-	private void enter() {
-		
+	/**
+	 * 
+	 * @return
+	 */
+	private static final RedtubeGrab grabId(HttpClient client, URL url) {
+		RedtubeGrab ret = new RedtubeGrab();
+		// TODO
+		return ret;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	private static final List<RedtubeGrab> grabPage(HttpClient client, URL url) {
+		ArrayList<RedtubeGrab> ret = new ArrayList<RedtubeGrab>();
+		return ret;
+	}
+
+	/**
+	 * 
+	 * @return
+	 * @throws IOException 
+	 * @throws URISyntaxException 
+	 * @throws ClientProtocolException 
+	 */
+	public List<RedtubeGrab> grab() throws ClientProtocolException, URISyntaxException, IOException {
+		String url = this.url.toString();
+		if (isPage(url)) {
+			return grabPage(client, this.url);
+		} else if (isId(url)) {
+			return Arrays.asList(new RedtubeGrab[] {grabId(client, this.url)});
+		}
+		return null;
 	}
 
 	@Override
 	public String getHost() {
 		return HOST;
 	}
-	
+
 	public static void main(String[] args) throws Exception {
 		HttpClientFactory.setDefault(new HttpClientFactory() {
 			@Override
@@ -67,5 +100,6 @@ public class RedtubeGrabber implements IGrabber {
 			}
 		});
 		RedtubeGrabber grabber = new RedtubeGrabber("http://www.redtube.com/?page=757");
+		
 	}
 }
