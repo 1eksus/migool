@@ -78,8 +78,6 @@ public final class HostsWidget {
 
 	private static final void addRow(final PostServiceAsync postService, final FlexTable ft, final String host,
 			final HostConfigSerializable hc) {
-		int numRows = ft.getRowCount();
-		int i = 0;
 		Hyperlink link = new Hyperlink(host, "");
 		link.addClickHandler(new ClickHandler() {
 
@@ -169,6 +167,9 @@ public final class HostsWidget {
 				db.show();
 			}
 		});
+		
+		int numRows = ft.getRowCount();
+		int i = 0;
 		ft.setWidget(numRows, i++, link);
 		CheckBox cb = new CheckBox();
 		cb.setEnabled(false);
