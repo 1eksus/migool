@@ -92,7 +92,6 @@ public final class PostWidget {
 		final Button upload = new Button("upload", new ClickHandler() {			
 			@Override
 			public void onClick(ClickEvent event) {
-				// TODO Auto-generated method stub
 				form.submit();
 			}
 		});
