@@ -22,6 +22,9 @@ public final class PostServiceUtil {
 	 * @return
 	 */
 	public static final HostConfigSerializable toHostConfigSerializable(HostConfig hostConfig) {
+		if (hostConfig == null) {
+			return null;
+		}
 		HostConfigSerializable ret = new HostConfigSerializable();
 		ret.host = hostConfig.getHost();
 		ret.username = hostConfig.getUsername();
@@ -42,6 +45,23 @@ public final class PostServiceUtil {
 		for (HostConfig hostConfig : hostConfigs) {
 			ret.add(toHostConfigSerializable(hostConfig));
 		}
+		return ret;
+	}
+
+	/**
+	 * 
+	 * @param hostConfig
+	 * @return
+	 */
+	public static final HostConfig toHostConfig(HostConfigSerializable hostConfig) {
+		if (hostConfig == null) {
+			return null;
+		}
+		HostConfig ret = new HostConfig();
+		ret.setHost(hostConfig.host);
+		ret.setUsername(hostConfig.username);
+		ret.setPassword(hostConfig.password);
+		ret.setEnabled(hostConfig.enabled);
 		return ret;
 	}
 }

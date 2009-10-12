@@ -4,11 +4,13 @@ import static migool.op.server.PostServiceUtil.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.TreeMap;
 
 import migool.op.client.PostService;
 import migool.op.client.serializable.HostConfigSerializable;
 import migool.op.client.serializable.PostSerializable;
+import migool.op.server.jdo.JDOUtil;
 import migool.post.Post;
 import migool.post.category.Categories;
 import migool.post.category.Category;
@@ -34,6 +36,9 @@ public class PostServiceImpl extends RemoteServiceServlet implements PostService
 	public PostServiceImpl() {
 		super();
 		post = new Post();
+		for (String host : hosts) {
+			hostConfigs.put(host, toHostConfigSerializable(JDOUtil.getHostConfigByHost(host)));
+		}
 	}
 
 	public List<String> getCategories() {
@@ -86,8 +91,8 @@ public class PostServiceImpl extends RemoteServiceServlet implements PostService
 	}
 
 	@Override
-	public List<HostConfigSerializable> getHostConfigs() {
-		return new ArrayList<HostConfigSerializable>(hostConfigs.values());
+	public Map<String, HostConfigSerializable> getHostConfigs() {
+		return hostConfigs;
 	}
 
 	@Override
@@ -97,8 +102,8 @@ public class PostServiceImpl extends RemoteServiceServlet implements PostService
 
 	@Override
 	public void setHostConfig(HostConfigSerializable hostConfig) {
-		// TODO Auto-generated method stub
-
+		hostConfigs.put(hostConfig.host, hostConfig);
+		JDOUtil.addHostConfig(toHostConfig(hostConfig));
 	}
 
 	@Override

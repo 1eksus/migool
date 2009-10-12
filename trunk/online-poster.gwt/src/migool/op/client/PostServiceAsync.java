@@ -1,6 +1,7 @@
 package migool.op.client;
 
 import java.util.List;
+import java.util.Map;
 
 import migool.op.client.serializable.HostConfigSerializable;
 import migool.op.client.serializable.PostSerializable;
@@ -19,5 +20,5 @@ public interface PostServiceAsync {
 	void getHostConfig(String host, AsyncCallback<HostConfigSerializable> callback);
 	void setHostConfig(HostConfigSerializable hostConfig, AsyncCallback<Void> callback);
 	void post(String host, AsyncCallback<Void> callback);
-	void getHostConfigs(AsyncCallback<List<HostConfigSerializable>> callback);
+	void getHostConfigs(AsyncCallback<Map<String, HostConfigSerializable>> callback);
 }

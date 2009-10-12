@@ -1,6 +1,7 @@
 package migool.op.client;
 
 import java.util.List;
+import java.util.Map;
 
 import migool.op.client.serializable.HostConfigSerializable;
 import migool.op.client.serializable.PostSerializable;
@@ -21,7 +22,7 @@ public interface PostService extends RemoteService {
 
 	List<String> getHosts();
 
-	public List<HostConfigSerializable> getHostConfigs();
+	public Map<String, HostConfigSerializable> getHostConfigs();
 
 	HostConfigSerializable getHostConfig(String host);
 
