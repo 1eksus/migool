@@ -21,4 +21,6 @@ public class PublUcozPost {
 	public String aemail;
 	public String asite;
 	public String source;
+	public boolean is_pending = false;
+	public boolean coms_allowed = true;
 }

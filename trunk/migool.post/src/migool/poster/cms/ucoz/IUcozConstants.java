@@ -106,4 +106,7 @@ public interface IUcozConstants {
 
 	public static final String DESCRIPTION = "description"; // description1..?
 	public static final String DESCRIPTION1 = DESCRIPTION + _1;
+	
+	public static final String IS_PENDING = "is_pending";
+	public static final String COMS_ALLOWED = "coms_allowed";
 }
