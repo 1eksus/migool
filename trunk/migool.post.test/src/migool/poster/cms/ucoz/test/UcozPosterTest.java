@@ -105,7 +105,7 @@ public class UcozPosterTest {
 //	}
 
 	@Test
-	public void testPostPublUcozPost() {
+	public void testPostPublUcozPost() throws Exception {
 		PostResponse response = poster.post(PublUcozPostData.get());
 		assertNotNull(response);
 		assertEquals(response.getCode(), PostResponse.OK);

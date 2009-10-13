@@ -1,5 +1,7 @@
 package migool.poster.cms.ucoz;
 
+import static migool.poster.cms.ucoz.IUcozConstants.*;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -62,7 +64,7 @@ public class UcozPoster implements ICMSPoster {
 		params.add(new BasicNameValuePair("user", lp.getLogin()));
 		params.add(new BasicNameValuePair("password", lp.getPassword()));
 
-		HttpPost request = new HttpPost(site + IUcozConstants.LOGIN_POST_PATH);
+		HttpPost request = new HttpPost(site + LOGIN_POST_PATH);
 		request.setEntity(new UrlEncodedFormEntity(params));
 		html = IOUtil.toString(client.execute(request).getEntity().getContent());
 		
@@ -156,8 +158,13 @@ public class UcozPoster implements ICMSPoster {
 	 * 
 	 * @param post
 	 * @return
+	 * @throws IOException 
+	 * @throws ClientProtocolException 
 	 */
-	public final PostResponse post(PublUcozPost post) {
+	public final PostResponse post(PublUcozPost post) throws ClientProtocolException, IOException {
+		HttpGet get = new HttpGet(site + PUBL_ADD_PATH);
+		HttpResponse response = client.execute(get);
+		String html = IOUtil.toString(response.getEntity().getContent());
 		// TODO
 		return null;
 	}
