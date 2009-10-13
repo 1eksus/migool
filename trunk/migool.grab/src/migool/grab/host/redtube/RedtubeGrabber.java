@@ -20,11 +20,14 @@ import org.htmlparser.Parser;
 import org.htmlparser.filters.AndFilter;
 import org.htmlparser.filters.HasAttributeFilter;
 import org.htmlparser.filters.TagNameFilter;
+import org.htmlparser.tags.ImageTag;
+import org.htmlparser.tags.LinkTag;
 import org.htmlparser.util.NodeList;
 
 import migool.grab.IGrabber;
 import migool.http.client.HttpClientFactory;
 import migool.util.DebugUtil;
+import migool.util.Regex;
 
 /**
  * 
@@ -70,7 +73,7 @@ public class RedtubeGrabber implements IGrabber {
 	 * @param id
 	 * @return
 	 */
-	private static final String getEmbed(String id) {
+	private static final String getEmbed(int id) {
 		// TODO get through the url 
 		return "<object height=\"344\" width=\"434\">"
 				+ "<param name=\"movie\" value=\"http://embed.redtube.com/player/\">"
@@ -78,6 +81,15 @@ public class RedtubeGrabber implements IGrabber {
 				+ "src=\"http://embed.redtube.com/player/?id=" + id + "&style=redtube\""
 				+ "pluginspage=\"http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash\""
 				+ "type=\"application/x-shockwave-flash\" height=\"344\" width=\"434\" />" + "</object>";
+	}
+
+	/**
+	 * 
+	 * @param link
+	 * @return
+	 */
+	private static final int extractId(String link) {
+		return (isId(link)) ? Integer.parseInt(new Regex(link, "[\\d]+$").getMatches()[0][0]): -1;
 	}
 
 	/**
@@ -93,14 +105,32 @@ public class RedtubeGrabber implements IGrabber {
 		String pageIds = getPage(client, url);
 		// System.out.println(pageIds);
 		try {
-			NodeList divVideous = (new Parser(pageIds)).parse(new AndFilter(new TagNameFilter("div"),
-					new HasAttributeFilter("class", "video")));
-			ret.ensureCapacity(divVideous.size());
-			Node node = null;
-			for (int i = 0; i < divVideous.size(); i++) {
-				node = divVideous.elementAt(i);
-				node.getChildren().extractAllNodesThatMatch(new , recursive)
-				System.out.println(node);
+			NodeList videoThumbs = (new Parser(pageIds)).parse(new AndFilter(new TagNameFilter("ul"),
+					new HasAttributeFilter("class", "videoThumbs")));
+			NodeList lis = videoThumbs.extractAllNodesThatMatch(new TagNameFilter("li"), true);
+			ret.ensureCapacity(lis.size());
+
+			Node li = null;
+			RedtubeGrab grab = null;
+			int id = -1;
+			LinkTag a = null;
+			for (int i = 0; i < lis.size(); i++) {
+				li = lis.elementAt(i);
+				a = (LinkTag)li.getChildren().extractAllNodesThatMatch(new TagNameFilter("a"), true).elementAt(i);
+				id = extractId(a.extractLink());
+				if (id > 0) {
+					System.out.println(id);
+					grab = new RedtubeGrab();
+					grab.share = "http://www.redtube.com/" + id;
+					grab.title = a.getAttribute("title");
+					grab.thumb = ((ImageTag)a.getChildren().extractAllNodesThatMatch(new TagNameFilter("img"), true).elementAt(0)).getImageURL();
+					
+					grab.duration = li.getChildren().extractAllNodesThatMatch(new AndFilter(new TagNameFilter("span"), new HasAttributeFilter("class", "d")), true).elementAt(0).getText();
+					grab.embed = getEmbed(id);
+					
+					ret.add(grab);
+					System.out.println(grab);
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
