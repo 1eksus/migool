@@ -22,11 +22,11 @@ import org.htmlparser.filters.HasAttributeFilter;
 import org.htmlparser.filters.TagNameFilter;
 import org.htmlparser.tags.ImageTag;
 import org.htmlparser.tags.LinkTag;
+import org.htmlparser.tags.Span;
 import org.htmlparser.util.NodeList;
 
 import migool.grab.IGrabber;
 import migool.http.client.HttpClientFactory;
-import migool.util.DebugUtil;
 import migool.util.Regex;
 
 /**
@@ -89,7 +89,7 @@ public class RedtubeGrabber implements IGrabber {
 	 * @return
 	 */
 	private static final int extractId(String link) {
-		return (isId(link)) ? Integer.parseInt(new Regex(link, "[\\d]+$").getMatches()[0][0]): -1;
+		return Integer.parseInt(new Regex(link, "[\\d]+$").getMatches()[0][0]);
 	}
 
 	/**
@@ -116,7 +116,7 @@ public class RedtubeGrabber implements IGrabber {
 			LinkTag a = null;
 			for (int i = 0; i < lis.size(); i++) {
 				li = lis.elementAt(i);
-				a = (LinkTag)li.getChildren().extractAllNodesThatMatch(new TagNameFilter("a"), true).elementAt(i);
+				a = (LinkTag)li.getChildren().extractAllNodesThatMatch(new TagNameFilter("a"), true).elementAt(0);
 				id = extractId(a.extractLink());
 				if (id > 0) {
 					System.out.println(id);
@@ -124,8 +124,8 @@ public class RedtubeGrabber implements IGrabber {
 					grab.share = "http://www.redtube.com/" + id;
 					grab.title = a.getAttribute("title");
 					grab.thumb = ((ImageTag)a.getChildren().extractAllNodesThatMatch(new TagNameFilter("img"), true).elementAt(0)).getImageURL();
-					
-					grab.duration = li.getChildren().extractAllNodesThatMatch(new AndFilter(new TagNameFilter("span"), new HasAttributeFilter("class", "d")), true).elementAt(0).getText();
+					// TODO thumbs
+					grab.duration = ((Span)li.getChildren().extractAllNodesThatMatch(new AndFilter(new TagNameFilter("span"), new HasAttributeFilter("class", "d")), true).elementAt(0)).getStringText();
 					grab.embed = getEmbed(id);
 					
 					ret.add(grab);
@@ -170,7 +170,7 @@ public class RedtubeGrabber implements IGrabber {
 				return client;
 			}
 		});
-		RedtubeGrabber grabber = new RedtubeGrabber("http://www.redtube.com/?page=757");
+		RedtubeGrabber grabber = new RedtubeGrabber("http://www.redtube.com/?page=758");
 		grabber.grab();
 	}
 }
