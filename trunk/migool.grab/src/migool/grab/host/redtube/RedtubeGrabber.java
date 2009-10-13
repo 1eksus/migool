@@ -8,6 +8,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.http.HttpHost;
@@ -105,10 +106,17 @@ public class RedtubeGrabber implements IGrabber {
 		String pageIds = getPage(client, url);
 		// System.out.println(pageIds);
 		try {
-			NodeList videoThumbs = (new Parser(pageIds)).parse(new AndFilter(new TagNameFilter("ul"),
+			Parser parser = new Parser(pageIds);
+			NodeList videoThumbs = parser.parse(new AndFilter(new TagNameFilter("ul"),
 					new HasAttributeFilter("class", "videoThumbs")));
 			NodeList lis = videoThumbs.extractAllNodesThatMatch(new TagNameFilter("li"), true);
 			ret.ensureCapacity(lis.size());
+
+			// parse pics
+			HashMap<Integer, Integer[]> pics = new HashMap<Integer, Integer[]>();
+			System.out.println(parser.parse(new TagNameFilter("script")));
+			String script = parser.parse(new TagNameFilter("script")).elementAt(1).toHtml();
+			System.out.println(script);
 
 			Node li = null;
 			RedtubeGrab grab = null;
