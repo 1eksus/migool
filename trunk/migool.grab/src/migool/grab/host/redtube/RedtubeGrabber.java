@@ -179,7 +179,6 @@ public class RedtubeGrabber implements IGrabber {
 				a = (LinkTag)li.getChildren().extractAllNodesThatMatch(new TagNameFilter("a"), true).elementAt(0);
 				id = extractId(a.extractLink());
 				if (id > 0) {
-					System.out.println(id);
 					grab = new RedtubeGrab();
 					grab.share = "http://www.redtube.com/" + id;
 					grab.title = a.getAttribute("title");
@@ -187,9 +186,7 @@ public class RedtubeGrabber implements IGrabber {
 					grab.thumbs = getThumbs(grab.thumb, pics.get(id));
 					grab.duration = ((Span)li.getChildren().extractAllNodesThatMatch(new AndFilter(new TagNameFilter("span"), new HasAttributeFilter("class", "d")), true).elementAt(0)).getStringText();
 					grab.embed = getEmbed(id);
-
 					ret.add(grab);
-					System.out.println(grab);
 				}
 			}
 		} catch (Exception e) {
