@@ -39,7 +39,8 @@ public final class CryptoUtil {
 	 */
 	public static final String toHexString(byte[] b) {
 		//String hex = "";
-		StringBuffer hex = new StringBuffer();
+		//StringBuffer hex = new StringBuffer();
+		StringBuffer sb = new StringBuffer();
 		int msb;
 
 		int lsb = 0;
@@ -49,9 +50,10 @@ public final class CryptoUtil {
 			msb = ((int) b[i] & 0x000000FF) / 16;
 			lsb = ((int) b[i] & 0x000000FF) % 16;
 			//hex = hex + HEX_CHARS[msb] + HEX_CHARS[lsb];
-			hex.append(HEX_CHARS[msb] + HEX_CHARS[lsb]);
+			sb.append(HEX_CHARS[msb]);
+			sb.append(HEX_CHARS[lsb]);
 		}
 		//return (hex);
-		return hex.toString();
+		return sb.toString();
 	}
 }
