@@ -158,7 +158,6 @@ public class RedtubeGrabber implements IGrabber {
 			URISyntaxException, IOException {
 		ArrayList<RedtubeGrab> ret = new ArrayList<RedtubeGrab>();
 		String pageIds = getPage(client, url);
-		// System.out.println(pageIds);
 		try {
 			Parser parser = new Parser(pageIds);
 			NodeList videoThumbs = parser.parse(new AndFilter(new TagNameFilter("ul"),
