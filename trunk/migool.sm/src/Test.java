@@ -31,9 +31,10 @@ public class Test {
 		int[] ind = new int[count];
 		for (i = 0; i < count; i++) { // for each index
 			for (ind[i] = 0; ind[i] < length; ind[i]++) {
-				System.out.println(toString(ind));
+				for (j = 0; j < i; j++) {
+					System.out.println(toString(ind));
+				}
 			}
-			ind[i] = length - 1;
 		}
 		return ret;
 	}
