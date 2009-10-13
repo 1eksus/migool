@@ -179,7 +179,7 @@ public final class RedtubeUtil {
 		return pathnr;
 	}
 
-	private static String appendPrefixWithZeros(String s, int l) {
+	public static String appendPrefixWithZeros(String s, int l) {
 		l -= s.length();
 		for (int i = 0; i < l; i++) {
 			s = "0" + s;
