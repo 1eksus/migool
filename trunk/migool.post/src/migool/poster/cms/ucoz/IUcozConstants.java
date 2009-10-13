@@ -59,9 +59,9 @@ public interface IUcozConstants {
 	public static final String CAT = "cat";
 	public static final String TITLE = "title";
 	public static final String BRIEF = "brief";
-	// public static final String FORMAT_BRIEF = "format_brief";
+	public static final String FORMAT_BRIEF = "format_brief";
 	public static final String MESSAGE = "message";
-	// public static final String FORMAT_MESSAGE = "format_message";
+	public static final String FORMAT_MESSAGE = "format_message";
 	// !!!
 	public static final String FILE = "file"; // file1..?
 	// public static final String FILE1 = "file1";

@@ -13,7 +13,9 @@ public class PublUcozPost {
 	public String ocat;
 	public String title;
 	public String brief;
+	public boolean format_brief = true;
 	public String message;
+	public boolean format_message = true;
 	public List<Image> files;
 	public String aname;
 	public String aemail;
