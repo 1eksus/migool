@@ -1,6 +1,7 @@
 package migool.poster.cms.ucoz;
 
 import static migool.poster.cms.ucoz.IUcozConstants.*;
+import static migool.poster.cms.ucoz.UcozUtil.*;
 import static migool.util.HtmlParserUtil.*;
 import static migool.util.IOUtil.*;
 
@@ -19,7 +20,6 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.message.BasicNameValuePair;
-import org.htmlparser.Node;
 import org.htmlparser.Parser;
 import org.htmlparser.filters.AndFilter;
 import org.htmlparser.filters.HasAttributeFilter;
@@ -31,8 +31,10 @@ import org.htmlparser.util.NodeList;
 import migool.host.auth.LoginPassword;
 import migool.host.auth.LoginResponse;
 import migool.http.client.HttpClientFactory;
+import migool.post.internal.Image;
 import migool.poster.PostResponse;
 import migool.poster.cms.ICMSPoster;
+import migool.poster.cms.ucoz.UcozUtil.CategoryEntity;
 import migool.poster.cms.ucoz.post.BlogUcozPost;
 import migool.poster.cms.ucoz.post.BoardUcozPost;
 import migool.poster.cms.ucoz.post.DirUcozPost;
@@ -193,6 +195,53 @@ public class UcozPoster implements ICMSPoster {
 		setInputs(nl, params);
 
 		// TODO filling post
+		// TODO category
+		List<CategoryEntity> cats = getCategories(html);
+		params.put(OCAT, cats.get(0).value);
+
+		// title
+		fillInputText(params, form, TITLE, post.title);
+
+		// brief
+		fillTextArea(params, form, BRIEF, post.brief);
+
+		// format_brief
+		fillInputCheckbox(params, form, FORMAT_BRIEF, post.format_brief);
+
+		// html_brief
+		fillInputCheckbox(params, form, HTML_BRIEF, post.html_brief);
+
+		// message
+		fillTextArea(params, form, MESSAGE, post.message);
+
+		// format_message
+		fillInputCheckbox(params, form, FORMAT_MESSAGE, post.format_message);
+
+		// html_message
+		fillInputCheckbox(params, form, HTML_MESSAGE, post.html_message);
+
+		// TODO files
+//		if () {
+//			
+//		}
+
+		// aname
+		fillInputText(params, form, ANAME, post.aname);
+
+		// aemail
+		fillInputText(params, form, AEMAIL, post.aemail);
+
+		// asite
+		fillInputText(params, form, ASITE, post.asite);
+
+		// source
+		fillInputText(params, form, SOURCE, post.source);
+
+		// is_pending
+		fillInputCheckbox(params, form, IS_PENDING, post.is_pending);
+
+		// coms_allowed
+		fillInputCheckbox(params, form, COMS_ALLOWED, post.coms_allowed);
 
 		// do request
 		//HttpPost request = new HttpPost(url);

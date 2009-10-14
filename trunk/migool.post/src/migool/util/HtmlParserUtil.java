@@ -41,6 +41,12 @@ public final class HtmlParserUtil {
 	public static final String INPUT = "input";
 	public static final String VALUE = "value";
 	public static final String NAME = "name";
+	public static final String CLASS = "class";
+	public static final String CHECKBOX = "checkbox";
+	public static final String RADIO = "radio";
+	public static final String LABEL = "label";
+	public static final String FOR = "for";
+	public static final String ID = "id";
 
 	public static final NodeFilter PASSWORD_INPUT_FILTER = new AndFilter(new TagNameFilter(INPUT), new HasAttributeFilter(TYPE, PASSWORD));
 
@@ -226,5 +232,44 @@ public final class HtmlParserUtil {
 			}
 		}
 		return ret;
+	}
+	
+	/**
+	 * 
+	 * @param params
+	 * @param form
+	 * @param name
+	 * @param value
+	 */
+	public static final void fillTextArea(Map<String, String> params, FormTag form, String name, String value) {
+		if (form.getTextAreaTag(name) != null) {
+			params.put(name, value);
+		}
+	}
+
+	/**
+	 * 
+	 * @param params
+	 * @param form
+	 * @param name
+	 * @param value
+	 */
+	public static final void fillInputText(Map<String, String> params, FormTag form, String name, String value) {
+		if (form.getInputTag(name) != null) {
+			params.put(name, value);
+		}		
+	}
+
+	/**
+	 * 
+	 * @param params
+	 * @param form
+	 * @param name
+	 * @param value
+	 */
+	public static final void fillInputCheckbox(Map<String, String> params, FormTag form, String name, boolean value) {
+		if (form.getInputTag(name) != null && value) {
+			params.put(name, "1");
+		}
 	}
 }

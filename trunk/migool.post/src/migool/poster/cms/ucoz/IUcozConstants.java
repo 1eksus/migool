@@ -129,8 +129,8 @@ public interface IUcozConstants {
 	public static final String PDA = "pda";
 
 	public static final String SUBJECT = "subject";
-	public static final String NAME = "name";
-	public static final String NAME1 = NAME + _1;
+	//public static final String NAME = "name";
+	//public static final String NAME1 = NAME + _1;
 
 	public static final String ICQ = "icq";
 	public static final String COUNTRY = "country";
