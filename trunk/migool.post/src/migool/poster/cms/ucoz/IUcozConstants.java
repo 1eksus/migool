@@ -146,4 +146,6 @@ public interface IUcozConstants {
 
 	public static final String IS_PENDING = "is_pending";
 	public static final String COMS_ALLOWED = "coms_allowed";
+
+	public static final String ADDFORM = "addform";
 }

@@ -1,10 +1,15 @@
 package migool.poster.cms.ucoz;
 
 import static migool.poster.cms.ucoz.IUcozConstants.*;
+import static migool.util.HtmlParserUtil.*;
+import static migool.util.IOUtil.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -14,7 +19,14 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.message.BasicNameValuePair;
+import org.htmlparser.Node;
+import org.htmlparser.Parser;
+import org.htmlparser.filters.AndFilter;
+import org.htmlparser.filters.HasAttributeFilter;
+import org.htmlparser.filters.NotFilter;
+import org.htmlparser.filters.TagNameFilter;
 import org.htmlparser.tags.FormTag;
+import org.htmlparser.util.NodeList;
 
 import migool.host.auth.LoginPassword;
 import migool.host.auth.LoginResponse;
@@ -48,7 +60,7 @@ public class UcozPoster implements ICMSPoster {
 	public UcozPoster(String host) {
 		this.host = host;
 		this.site = LinkUtil.createHttpRoot(host);
-		//this.client = new DefaultHttpClient();
+		// this.client = new DefaultHttpClient();
 		this.client = HttpClientFactory.newInstance().newHttpClient();
 	}
 
@@ -67,7 +79,7 @@ public class UcozPoster implements ICMSPoster {
 		HttpPost request = new HttpPost(site + LOGIN_POST_PATH);
 		request.setEntity(new UrlEncodedFormEntity(params));
 		html = IOUtil.toString(client.execute(request).getEntity().getContent());
-		
+
 		html = IOUtil.toString(client.execute(get).getEntity().getContent());
 
 		form = HtmlParserUtil.getLoginForm(html);
@@ -158,13 +170,38 @@ public class UcozPoster implements ICMSPoster {
 	 * 
 	 * @param post
 	 * @return
-	 * @throws IOException 
-	 * @throws ClientProtocolException 
+	 * @throws IOException
+	 * @throws ClientProtocolException
 	 */
-	public final PostResponse post(PublUcozPost post) throws ClientProtocolException, IOException {
-		HttpGet get = new HttpGet(site + PUBL_ADD_PATH);
+	public final PostResponse post(PublUcozPost post) throws ClientProtocolException, IOException, Exception {
+		String url = site + PUBL_ADD_PATH;
+		HttpGet get = new HttpGet(url);
 		HttpResponse response = client.execute(get);
 		String html = IOUtil.toString(response.getEntity().getContent());
+		// TODO
+		FormTag form = (FormTag)(new Parser(html)).extractAllNodesThatMatch(new AndFilter(new TagNameFilter("form"), new HasAttributeFilter("name", ADDFORM))).elementAt(0);
+		if (form == null) {
+			return new PostResponse(PostResponse.ERROR, null);
+		}
+		List<String> names = getNameAttributeValues(getChildTags(form, Arrays.asList(new String[]{"input", "select", "textarea"})));
+		System.out.println(names);
+		Map<String, String> params = new HashMap<String, String>();
+
+		// filling for default values:
+		setHiddenInputs(form, params);
+		NodeList nl = getNotHiddenInputs(form).extractAllNodesThatMatch(new NotFilter(new HasAttributeFilter("name", "nview")));
+		setInputs(nl, params);
+
+		// TODO filling post
+
+		// do request
+		//HttpPost request = new HttpPost(url);
+		HttpPost request = new HttpPost(form.extractFormLocn());
+		// TODO charset detection ?
+		request.setEntity(new UrlEncodedFormEntity(toListNameValuePair(names, params), "UTF-8"));
+		request.setHeader("Referer", url);
+		response = client.execute(request);
+		html = IOUtil.toString(response.getEntity().getContent());
 		// TODO
 		return null;
 	}

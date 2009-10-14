@@ -74,11 +74,11 @@ public final class DlePoster implements IDlePoster, IImageShare {
 		InputTag input = getInputTag(form, IDleConstants.LOGIN_INPUTS);
 		String login = lp.getLogin();
 		if (input != null) {
-			params.add(new BasicNameValuePair(input.getAttribute("name"), login));
+			params.add(new BasicNameValuePair(input.getAttribute(NAME), login));
 		}
 		input = getInputTag(form, IDleConstants.PASS_INPUTS);
 		if (input != null) {
-			params.add(new BasicNameValuePair(input.getAttribute("name"), lp.getPassword()));
+			params.add(new BasicNameValuePair(input.getAttribute(NAME), lp.getPassword()));
 		}
 		setHiddenInputs(form, params);
 
@@ -100,7 +100,7 @@ public final class DlePoster implements IDlePoster, IImageShare {
 		FormTag form = (FormTag) (new Parser(html)).parse(new AndFilter(new TagNameFilter("form"), new HasChildFilter(new HasAttributeFilter("type", "file"), true))).elementAt(0);
 		MultipartEntity entity = new MultipartEntity();
 		InputTag file = (InputTag) form.getFormInputs().extractAllNodesThatMatch(new HasAttributeFilter("type", "file"), true).elementAt(0);
-		entity.addPart(file.getAttribute("name"), new InputStreamBody(new ByteArrayInputStream(img.bytes), img.fileName));
+		entity.addPart(file.getAttribute(NAME), new InputStreamBody(new ByteArrayInputStream(img.bytes), img.fileName));
 		setHiddenInputs(form, entity);
 
 		HttpPost post = new HttpPost(url);
@@ -124,29 +124,29 @@ public final class DlePoster implements IDlePoster, IImageShare {
 		HttpResponse response = client.execute(get);
 		String html = IOUtil.toString(response.getEntity().getContent());
 
-		FormTag form = (FormTag) (new Parser(html)).parse(new AndFilter(new TagNameFilter("form"), new HasAttributeFilter("name", IDleConstants.ENTRYFORM))).elementAt(0);
+		FormTag form = (FormTag) (new Parser(html)).parse(new AndFilter(new TagNameFilter("form"), new HasAttributeFilter(NAME, IDleConstants.ENTRYFORM))).elementAt(0);
 		List<String> names = getNameAttributeValues(getChildTags(form, Arrays.asList(new String[]{"input", "select", "textarea"})));
-		System.out.println(names);
+//		System.out.println(names);
 		Map<String, String> params = new HashMap<String, String>();
 
 		// filling for default values:
 		setHiddenInputs(form, params);
-		NodeList nl = getNotHiddenInputs(form).extractAllNodesThatMatch(new NotFilter(new HasAttributeFilter("name", "nview")));
+		NodeList nl = getNotHiddenInputs(form).extractAllNodesThatMatch(new NotFilter(new HasAttributeFilter(NAME, "nview")));
 		setInputs(nl, params);
 
 		// filling post:
 		// title
 		InputTag input = form.getInputTag(IDleConstants.TITLE);
 		if (input != null) {
-			params.put(input.getAttribute("name"), post.title);
+			params.put(input.getAttribute(NAME), post.title);
 		}
 		// URL
 		input = form.getInputTag(IDleConstants.ALT_NAME);
 		if (input != null) {
-			params.put(input.getAttribute("name"), post.url);
+			params.put(input.getAttribute(NAME), post.url);
 		}
 		// TODO category
-		SelectTag select = (SelectTag) form.getChildren().extractAllNodesThatMatch(new HasAttributeFilter("name", "catlist[]"), true).elementAt(0);
+		SelectTag select = (SelectTag) form.getChildren().extractAllNodesThatMatch(new HasAttributeFilter(NAME, "catlist[]"), true).elementAt(0);
 		if (select != null) {
 			Map<String, String> cats = getSelectOptions(select);
 			System.out.println(cats);
@@ -155,18 +155,18 @@ public final class DlePoster implements IDlePoster, IImageShare {
 		// tags
 		input = form.getInputTag(IDleConstants.TAGS);
 		if (input != null) {
-			params.put(input.getAttribute("name"), TagUtil.toString(post.tags));
+			params.put(input.getAttribute(NAME), TagUtil.toString(post.tags));
 		}
 		// short story
 		nl = form.getFormTextareas();
-		TextareaTag textarea = (TextareaTag) nl.extractAllNodesThatMatch(new HasAttributeFilter("name", IDleConstants.SHORT_STORY)).elementAt(0);
+		TextareaTag textarea = (TextareaTag) nl.extractAllNodesThatMatch(new HasAttributeFilter(NAME, IDleConstants.SHORT_STORY)).elementAt(0);
 		if (textarea != null) {
-			params.put(textarea.getAttribute("name"), post.shortStory);
+			params.put(textarea.getAttribute(NAME), post.shortStory);
 		}
 		// full story
-		textarea = (TextareaTag) nl.extractAllNodesThatMatch(new HasAttributeFilter("name", IDleConstants.FULL_STORY)).elementAt(0);
+		textarea = (TextareaTag) nl.extractAllNodesThatMatch(new HasAttributeFilter(NAME, IDleConstants.FULL_STORY)).elementAt(0);
 		if (textarea != null) {
-			params.put(textarea.getAttribute("name"), post.fullStory);
+			params.put(textarea.getAttribute(NAME), post.fullStory);
 		}
 		// other inputs
 		Properties inputs = post.inputs;
@@ -174,26 +174,26 @@ public final class DlePoster implements IDlePoster, IImageShare {
 			String k = null;
 			for (Object key : inputs.keySet()) {
 				k = key.toString();
-				nl = form.getChildren().extractAllNodesThatMatch(new HasAttributeFilter("name", k));
+				nl = form.getChildren().extractAllNodesThatMatch(new HasAttributeFilter(NAME, k));
 				if (nl.size() > 0) {
 					params.put(k, inputs.getProperty(k));
 				}
 			}
 		}
 
-		// convert into request
-		List<NameValuePair> p = new ArrayList<NameValuePair>(names.size());
-		for (String name : names) {
-			String value = params.get(name);
-			if (value != null) {
-				p.add(new BasicNameValuePair(name, params.get(name)));
-			}
-		}
+//		// convert into request
+//		List<NameValuePair> p = new ArrayList<NameValuePair>(names.size());
+//		for (String name : names) {
+//			String value = params.get(name);
+//			if (value != null) {
+//				p.add(new BasicNameValuePair(name, params.get(name)));
+//			}
+//		}
 
 		// do request
 		HttpPost request = new HttpPost(url);
 		// TODO charset detection
-		request.setEntity(new UrlEncodedFormEntity(p, "windows-1251"));
+		request.setEntity(new UrlEncodedFormEntity(toListNameValuePair(names, params), "windows-1251"));
 		request.setHeader("Referer", url);
 		response = client.execute(request);
 
@@ -202,7 +202,7 @@ public final class DlePoster implements IDlePoster, IImageShare {
 		if (StringUtil.contains(html, IDleConstants.ERROR_MESSAGES)) {
 			return new PostResponse(PostResponse.NOT_POSTED, null);
 		}
-		form = (FormTag) (new Parser(html)).parse(new AndFilter(new TagNameFilter("form"), new HasAttributeFilter("name", IDleConstants.ENTRYFORM))).elementAt(0);
+		form = (FormTag) (new Parser(html)).parse(new AndFilter(new TagNameFilter("form"), new HasAttributeFilter(NAME, IDleConstants.ENTRYFORM))).elementAt(0);
 		
 		return (form == null) ? new PostResponse(PostResponse.OK, null): new PostResponse(PostResponse.NOT_POSTED, null);
 	}

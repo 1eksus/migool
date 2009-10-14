@@ -1,0 +1,26 @@
+jkd498	1
+jkd428	1
+ocat	3
+title	nazvanie
+brief	kratkoe_opisanie
+edttbrief	2
+format_brief	1
+html_brief	1
+message	polniy_text
+edttmessage	2
+format_message	1
+html_message	1
+file1	filename="x_33a27bb7.jpg" Content-Type: image/jpeg
+h1	$IMAGE1$
+iws1	400
+ihs1	500
+aname	imya
+aemail	email@mail.ru
+asite	site.ru
+source	ssilkanaistochnik.ru
+tags	
+user	
+coms_allowed	1
+a	12
+ssid	216356354246253534047
+_wi	1
