@@ -184,7 +184,6 @@ public class UcozPoster implements ICMSPoster {
 		HttpGet get = new HttpGet(url);
 		HttpResponse response = client.execute(get);
 		String html = IOUtil.toString(response.getEntity().getContent());
-		// TODO
 		FormTag form = (FormTag)(new Parser(html)).extractAllNodesThatMatch(new AndFilter(new TagNameFilter("form"), new HasAttributeFilter("name", ADDFORM))).elementAt(0);
 		if (form == null) {
 			return new PostResponse(PostResponse.ERROR, null);
@@ -199,7 +198,7 @@ public class UcozPoster implements ICMSPoster {
 		NodeList nl = getNotHiddenInputs(form).extractAllNodesThatMatch(new NotFilter(new HasAttributeFilter("name", "nview")));
 		setInputs(nl, params);
 
-		// TODO filling post
+		// filling post
 		// TODO category
 		List<CategoryEntity> cats = getCategories(html);
 		params.put(OCAT, cats.get(0).value);
