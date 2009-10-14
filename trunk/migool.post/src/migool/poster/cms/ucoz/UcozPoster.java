@@ -232,7 +232,7 @@ public class UcozPoster implements ICMSPoster {
 				maxFiles = MAX_FILES;
 			}
 			int postFiles = files.size();
-			int size = (maxFiles > postFiles) ? maxFiles : postFiles;
+			int size = (maxFiles < postFiles) ? maxFiles : postFiles;
 			Image img = null;
 			for (int i = 0; i < size; i++) {
 				img = files.get(i);

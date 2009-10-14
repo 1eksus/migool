@@ -112,10 +112,10 @@ public final class UcozUtil {
 		String script = null;
 		for (int i = 0; i < size; i++) {
 			script = ((ScriptTag) scripts.elementAt(i)).getChildrenHTML();
-			if (EmptyChecker.isNotNullOrEmpty(script) && script.contains("num>=")) {
-				return Integer.parseInt((new Regex(script, "(?<=num\\>\\=)[0-9]+").getMatches()[0][0]));
+			if (EmptyChecker.isNotNullOrEmpty(script) && script.contains("num<")) {
+				return Integer.parseInt((new Regex(script, "(?<=num\\<)[0-9]+").getMatches()[0][0]));
 			}
 		}
-		return -1;
+		return 1;
 	}
 }
