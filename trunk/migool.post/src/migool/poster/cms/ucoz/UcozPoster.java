@@ -3,7 +3,6 @@ package migool.poster.cms.ucoz;
 import static migool.poster.cms.ucoz.IUcozConstants.*;
 import static migool.poster.cms.ucoz.UcozUtil.*;
 import static migool.util.HtmlParserUtil.*;
-import static migool.util.IOUtil.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -31,7 +30,6 @@ import org.htmlparser.util.NodeList;
 import migool.host.auth.LoginPassword;
 import migool.host.auth.LoginResponse;
 import migool.http.client.HttpClientFactory;
-import migool.post.internal.Image;
 import migool.poster.PostResponse;
 import migool.poster.cms.ICMSPoster;
 import migool.poster.cms.ucoz.UcozUtil.CategoryEntity;
@@ -44,9 +42,11 @@ import migool.poster.cms.ucoz.post.LoadUcozPost;
 import migool.poster.cms.ucoz.post.NewsUcozPost;
 import migool.poster.cms.ucoz.post.PhotoUcozPost;
 import migool.poster.cms.ucoz.post.PublUcozPost;
+import migool.util.EmptyChecker;
 import migool.util.HtmlParserUtil;
 import migool.util.IOUtil;
 import migool.util.LinkUtil;
+import migool.util.Regex;
 
 /**
  * 
@@ -251,8 +251,12 @@ public class UcozPoster implements ICMSPoster {
 		request.setHeader("Referer", url);
 		response = client.execute(request);
 		html = IOUtil.toString(response.getEntity().getContent());
-		// TODO
-		return null;
+		if (EmptyChecker.isNotNullOrEmpty(html) && html.contains("<div class=\"myWinSuccess\">")) {
+			String postUrl = (new Regex(html, "http://.*/publ/[0-9\\-]*")).getMatches()[0][0];
+			return new PostResponse(PostResponse.OK, postUrl);
+		} else {
+			return new PostResponse(PostResponse.OK, null);
+		}
 	}
 
 	public String getHost() {
