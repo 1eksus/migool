@@ -110,9 +110,17 @@ public final class HtmlParserUtil {
 	 */
 	public static void setInputs(NodeList inputs, Map<String, String> params) {
 		InputTag input = null;
+		String name = null;
+		String value = null;
 		for (int i = 0; i < inputs.size(); i++) {
 			input = (InputTag) inputs.elementAt(i);
-			params.put(input.getAttribute(NAME), input.getAttribute(VALUE));
+			name = input.getAttribute(NAME);
+			if (name != null) {
+				value = input.getAttribute(VALUE);
+				if (value != null) {
+					params.put(name, value);
+				}
+			}
 		}
 	}
 
@@ -323,8 +331,11 @@ public final class HtmlParserUtil {
 	 * @throws UnsupportedEncodingException
 	 */
 	public static final void fillParams(MultipartEntity entity, Map<String, String> params) throws UnsupportedEncodingException {
+		System.out.println(params.keySet());
 		for (String name : params.keySet()) {
-			entity.addPart(name, new StringBody(params.get(name)));
+			//if (name != null) {
+				entity.addPart(name, new StringBody(params.get(name)));
+			//}
 		}
 	}
 }

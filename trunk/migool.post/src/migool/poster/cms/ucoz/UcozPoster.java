@@ -270,11 +270,12 @@ public class UcozPoster implements ICMSPoster {
 		request.setHeader("Referer", url);
 		response = client.execute(request);
 		html = IOUtil.toString(response.getEntity().getContent());
+		System.out.println(html);
 		if (EmptyChecker.isNotNullOrEmpty(html) && html.contains("<div class=\"myWinSuccess\">")) {
 			String postUrl = (new Regex(html, "http://.*/publ/[0-9\\-]*")).getMatches()[0][0];
 			return new PostResponse(PostResponse.OK, postUrl);
 		} else {
-			return new PostResponse(PostResponse.OK, null);
+			return new PostResponse(PostResponse.ERROR, null);
 		}
 	}
 
