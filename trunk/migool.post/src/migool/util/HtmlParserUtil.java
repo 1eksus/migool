@@ -34,7 +34,15 @@ import org.htmlparser.util.ParserException;
  */
 public final class HtmlParserUtil {
 
-	public static final NodeFilter PASSWORD_INPUT_FILTER = new AndFilter(new TagNameFilter("input"), new HasAttributeFilter("type", "password"));
+	public static final String HIDDEN = "hidden";
+	public static final String FORM = "form";
+	public static final String PASSWORD = "password";
+	public static final String TYPE = "type";
+	public static final String INPUT = "input";
+	public static final String VALUE = "value";
+	public static final String NAME = "name";
+
+	public static final NodeFilter PASSWORD_INPUT_FILTER = new AndFilter(new TagNameFilter(INPUT), new HasAttributeFilter(TYPE, PASSWORD));
 
 	private HtmlParserUtil() {
 	}
@@ -48,7 +56,7 @@ public final class HtmlParserUtil {
 		Parser parser;
 		try {
 			parser = new Parser(html);
-			NodeList nl = parser.parse(new AndFilter(new TagNameFilter("form"), new HasChildFilter(PASSWORD_INPUT_FILTER, true)));
+			NodeList nl = parser.parse(new AndFilter(new TagNameFilter(FORM), new HasChildFilter(PASSWORD_INPUT_FILTER, true)));
 			if (nl.size() == 1) {
 				return (FormTag) nl.elementAt(0);
 			}
@@ -84,7 +92,7 @@ public final class HtmlParserUtil {
 		InputTag input = null;
 		for (int i = 0; i < inputs.size(); i++) {
 			input = (InputTag) inputs.elementAt(i);
-			params.add(new BasicNameValuePair(input.getAttribute("name"), input.getAttribute("value")));
+			params.add(new BasicNameValuePair(input.getAttribute(NAME), input.getAttribute(VALUE)));
 		}		
 	}
 
@@ -97,7 +105,7 @@ public final class HtmlParserUtil {
 		InputTag input = null;
 		for (int i = 0; i < inputs.size(); i++) {
 			input = (InputTag) inputs.elementAt(i);
-			params.put(input.getAttribute("name"), input.getAttribute("value"));
+			params.put(input.getAttribute(NAME), input.getAttribute(VALUE));
 		}
 	}
 
@@ -107,7 +115,7 @@ public final class HtmlParserUtil {
 	 * @return
 	 */
 	public static NodeList getHiddenInputs(FormTag form) {
-		return form.getFormInputs().extractAllNodesThatMatch(new AndFilter(new TagNameFilter("input"), new HasAttributeFilter("type", "hidden")), true);
+		return form.getFormInputs().extractAllNodesThatMatch(new AndFilter(new TagNameFilter(INPUT), new HasAttributeFilter(TYPE, HIDDEN)), true);
 	}
 
 	/**
@@ -116,7 +124,7 @@ public final class HtmlParserUtil {
 	 * @return
 	 */
 	public static NodeList getNotHiddenInputs(FormTag form) {
-		return form.getFormInputs().extractAllNodesThatMatch(new AndFilter(new TagNameFilter("input"), new NotFilter(new HasAttributeFilter("type", "hidden"))), true);
+		return form.getFormInputs().extractAllNodesThatMatch(new AndFilter(new TagNameFilter(INPUT), new NotFilter(new HasAttributeFilter(TYPE, HIDDEN))), true);
 	}
 
 	/**
@@ -148,7 +156,7 @@ public final class HtmlParserUtil {
 		for (int i = 0; i < hiddens.size(); i++) {
 			input = (InputTag) hiddens.elementAt(i);
 			try {
-				entity.addPart(input.getAttribute("name"), new StringBody(input.getAttribute("value")));
+				entity.addPart(input.getAttribute(NAME), new StringBody(input.getAttribute(VALUE)));
 			} catch (UnsupportedEncodingException e) {
 			}
 		}
@@ -195,9 +203,26 @@ public final class HtmlParserUtil {
 	public static List<String> getNameAttributeValues(NodeList nl) {
 		List<String> ret = new ArrayList<String>(nl.size());
 		for (int i = 0; i < nl.size(); i++) {
-			String name = ((TagNode)nl.elementAt(i)).getAttribute("name");
+			String name = ((TagNode)nl.elementAt(i)).getAttribute(NAME);
 			if (name != null) {
 				ret.add(name);
+			}
+		}
+		return ret;
+	}
+
+	/**
+	 * 
+	 * @param names
+	 * @param params
+	 * @return
+	 */
+	public static final List<NameValuePair> toListNameValuePair(List<String> names, Map<String, String> params) {
+		ArrayList<NameValuePair> ret = new ArrayList<NameValuePair>(names.size());
+		for (String name : names) {
+			String value = params.get(name);
+			if (value != null) {
+				ret.add(new BasicNameValuePair(name, params.get(name)));
 			}
 		}
 		return ret;
