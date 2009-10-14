@@ -47,6 +47,7 @@ public final class HtmlParserUtil {
 	public static final String LABEL = "label";
 	public static final String FOR = "for";
 	public static final String ID = "id";
+	public static final String SCRIPT = "script";
 
 	public static final NodeFilter PASSWORD_INPUT_FILTER = new AndFilter(new TagNameFilter(INPUT), new HasAttributeFilter(TYPE, PASSWORD));
 
@@ -242,10 +243,24 @@ public final class HtmlParserUtil {
 	 * @param value
 	 */
 	public static final void fillTextArea(Map<String, String> params, FormTag form, String name, String value) {
-		if (form.getTextAreaTag(name) != null) {
+		if (form.getTextAreaTag(name) != null & EmptyChecker.isNotNullOrEmpty(value)) {
 			params.put(name, value);
 		}
 	}
+
+//	/**
+//	 * 
+//	 * @param entity
+//	 * @param form
+//	 * @param name
+//	 * @param value
+//	 * @throws UnsupportedEncodingException
+//	 */
+//	public static final void fillTextArea(MultipartEntity entity, FormTag form, String name, String value) throws UnsupportedEncodingException {
+//		if (form.getTextAreaTag(name) != null) {
+//			entity.addPart(name, new StringBody(value));
+//		}
+//	}
 
 	/**
 	 * 
@@ -255,10 +270,24 @@ public final class HtmlParserUtil {
 	 * @param value
 	 */
 	public static final void fillInputText(Map<String, String> params, FormTag form, String name, String value) {
-		if (form.getInputTag(name) != null) {
+		if (form.getInputTag(name) != null & EmptyChecker.isNotNullOrEmpty(value)) {
 			params.put(name, value);
 		}		
 	}
+
+//	/**
+//	 * 
+//	 * @param entity
+//	 * @param form
+//	 * @param name
+//	 * @param value
+//	 * @throws UnsupportedEncodingException
+//	 */
+//	public static final void fillInputText(MultipartEntity entity, FormTag form, String name, String value) throws UnsupportedEncodingException {
+//		if (form.getInputTag(name) != null) {
+//			entity.addPart(name, new StringBody(value));
+//		}		
+//	}
 
 	/**
 	 * 
@@ -270,6 +299,32 @@ public final class HtmlParserUtil {
 	public static final void fillInputCheckbox(Map<String, String> params, FormTag form, String name, boolean value) {
 		if (form.getInputTag(name) != null && value) {
 			params.put(name, "1");
+		}
+	}
+
+//	/**
+//	 * 
+//	 * @param entity
+//	 * @param form
+//	 * @param name
+//	 * @param value
+//	 * @throws UnsupportedEncodingException
+//	 */
+//	public static final void fillInputCheckbox(MultipartEntity entity, FormTag form, String name, boolean value) throws UnsupportedEncodingException {
+//		if (form.getInputTag(name) != null && value) {
+//			entity.addPart(name, new StringBody("1"));
+//		}
+//	}
+
+	/**
+	 * 
+	 * @param entity
+	 * @param params
+	 * @throws UnsupportedEncodingException
+	 */
+	public static final void fillParams(MultipartEntity entity, Map<String, String> params) throws UnsupportedEncodingException {
+		for (String name : params.keySet()) {
+			entity.addPart(name, new StringBody(params.get(name)));
 		}
 	}
 }

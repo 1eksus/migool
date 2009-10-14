@@ -4,6 +4,7 @@ import static migool.poster.cms.ucoz.IUcozConstants.*;
 import static migool.poster.cms.ucoz.UcozUtil.*;
 import static migool.util.HtmlParserUtil.*;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,6 +19,8 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.content.InputStreamBody;
 import org.apache.http.message.BasicNameValuePair;
 import org.htmlparser.Parser;
 import org.htmlparser.filters.AndFilter;
@@ -30,6 +33,7 @@ import org.htmlparser.util.NodeList;
 import migool.host.auth.LoginPassword;
 import migool.host.auth.LoginResponse;
 import migool.http.client.HttpClientFactory;
+import migool.post.internal.Image;
 import migool.poster.PostResponse;
 import migool.poster.cms.ICMSPoster;
 import migool.poster.cms.ucoz.UcozUtil.CategoryEntity;
@@ -187,6 +191,7 @@ public class UcozPoster implements ICMSPoster {
 		}
 		List<String> names = getNameAttributeValues(getChildTags(form, Arrays.asList(new String[]{"input", "select", "textarea"})));
 		System.out.println(names);
+		MultipartEntity entity = new MultipartEntity();
 		Map<String, String> params = new HashMap<String, String>();
 
 		// filling for default values:
@@ -220,10 +225,23 @@ public class UcozPoster implements ICMSPoster {
 		// html_message
 		fillInputCheckbox(params, form, HTML_MESSAGE, post.html_message);
 
-		// TODO files
-//		if () {
-//			
-//		}
+		// files
+		List<Image> files = post.files;
+		if (files != null && files.size() > 0) {
+			int maxFiles = getMaxFilesPublPost(html);
+			if (maxFiles > MAX_FILES) {
+				maxFiles = MAX_FILES;
+			}
+			int postFiles = files.size();
+			int size = (maxFiles > postFiles) ? maxFiles : postFiles;
+			Image img = null;
+			for (int i = 0; i < size; i++) {
+				img = files.get(i);
+				if (img != null) {
+					entity.addPart(FILES[i], new InputStreamBody(new ByteArrayInputStream(img.bytes), img.fileName));
+				}
+			}
+		}
 
 		// aname
 		fillInputText(params, form, ANAME, post.aname);
@@ -247,7 +265,9 @@ public class UcozPoster implements ICMSPoster {
 		//HttpPost request = new HttpPost(url);
 		HttpPost request = new HttpPost(form.extractFormLocn());
 		// TODO charset detection ?
-		request.setEntity(new UrlEncodedFormEntity(toListNameValuePair(names, params), "UTF-8"));
+		//request.setEntity(new UrlEncodedFormEntity(toListNameValuePair(names, params), "UTF-8"));
+		fillParams(entity, params);
+		request.setEntity(entity);
 		request.setHeader("Referer", url);
 		response = client.execute(request);
 		html = IOUtil.toString(response.getEntity().getContent());

@@ -80,6 +80,7 @@ public interface IUcozConstants {
 	public static final String HTML_MESSAGE = "html_message";
 	// !!!
 	public static final String FILE = "file"; // file1..?
+	public static final int MAX_FILES = 20;
 	public static final String FILE1 = FILE + _1;
 	public static final String FILE2 = FILE + _2;
 	public static final String FILE3 = FILE + _3;

@@ -5,16 +5,18 @@ import static migool.util.HtmlParserUtil.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+
+import migool.util.EmptyChecker;
+import migool.util.Regex;
 
 import org.htmlparser.NodeFilter;
 import org.htmlparser.Parser;
 import org.htmlparser.filters.AndFilter;
 import org.htmlparser.filters.HasAttributeFilter;
 import org.htmlparser.filters.TagNameFilter;
-import org.htmlparser.tags.FormTag;
 import org.htmlparser.tags.InputTag;
 import org.htmlparser.tags.LabelTag;
+import org.htmlparser.tags.ScriptTag;
 import org.htmlparser.util.NodeList;
 import org.htmlparser.util.ParserException;
 
@@ -96,5 +98,24 @@ public final class UcozUtil {
 			ret.add(new CategoryEntity(value, title, radio));
 		}
 		return ret;
+	}
+
+	/**
+	 * 
+	 * @param html
+	 * @return
+	 * @throws ParserException
+	 */
+	public static final int getMaxFilesPublPost(String html) throws ParserException {
+		NodeList scripts = (new Parser(html)).extractAllNodesThatMatch(new TagNameFilter(SCRIPT));
+		int size = scripts.size();
+		String script = null;
+		for (int i = 0; i < size; i++) {
+			script = ((ScriptTag) scripts.elementAt(i)).getChildrenHTML();
+			if (EmptyChecker.isNotNullOrEmpty(script) && script.contains("num>=")) {
+				return Integer.parseInt((new Regex(script, "(?<=num\\>\\=)[0-9]+").getMatches()[0][0]));
+			}
+		}
+		return -1;
 	}
 }
