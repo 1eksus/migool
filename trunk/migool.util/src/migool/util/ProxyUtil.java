@@ -32,6 +32,11 @@ public final class ProxyUtil {
 		public int getPort() {
 			return port;
 		}
+
+		@Override
+		public String toString() {
+			return "Proxy [host=" + host + ", port=" + port + "]";
+		}
 	}
 
 	/**
