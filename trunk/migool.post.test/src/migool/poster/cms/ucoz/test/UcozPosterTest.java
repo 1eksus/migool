@@ -35,7 +35,7 @@ public class UcozPosterTest {
 				return client;
 			}
 		});
-		poster = new UcozPoster("ucoztest.at.ua");
+		poster = new UcozPoster("pornohouse.net.ru");
 	}
 
 	@Before
@@ -48,7 +48,7 @@ public class UcozPosterTest {
 
 	@Test
 	public void testLogin() throws Exception {
-		LoginResponse response = poster.login(new LoginPassword("migooltest@gmail.com", "Migool_Test"));
+		LoginResponse response = poster.login(new LoginPassword("gribur@mail.ru", "Z3tCd2fw"));
 		assertNotNull(response);
 		assertEquals(response.getCode(), LoginResponse.OK);
 
@@ -104,12 +104,12 @@ public class UcozPosterTest {
 //		fail("Not yet implemented");
 //	}
 
-	@Test
-	public void testPostPublUcozPost() throws Exception {
-		PostResponse response = poster.post(PublUcozPostData.get());
-		assertNotNull(response);
-		assertEquals(response.getCode(), PostResponse.OK);
-		System.out.println(response.getCode());
-		System.out.println(response.getUrl());
-	}
+//	@Test
+//	public void testPostPublUcozPost() throws Exception {
+//		PostResponse response = poster.post(PublUcozPostData.get());
+//		assertNotNull(response);
+//		assertEquals(response.getCode(), PostResponse.OK);
+//		System.out.println(response.getCode());
+//		System.out.println(response.getUrl());
+//	}
 }

@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 
 import org.apache.http.NameValuePair;
@@ -50,6 +51,7 @@ public final class HtmlParserUtil {
 	public static final String SCRIPT = "script";
 
 	public static final NodeFilter PASSWORD_INPUT_FILTER = new AndFilter(new TagNameFilter(INPUT), new HasAttributeFilter(TYPE, PASSWORD));
+	public static final NodeFilter SCRIPT_FILTER = new TagNameFilter(SCRIPT);
 
 	private HtmlParserUtil() {
 	}
@@ -226,13 +228,25 @@ public final class HtmlParserUtil {
 		return ret;
 	}
 
-	/**
-	 * 
-	 * @param names
-	 * @param params
-	 * @return
-	 */
-	public static final List<NameValuePair> toListNameValuePair(List<String> names, Map<String, String> params) {
+//	/**
+//	 * 
+//	 * @param names
+//	 * @param params
+//	 * @return
+//	 */
+//	public static final List<NameValuePair> toListNameValuePair(List<String> names, Map<String, String> params) {
+//		ArrayList<NameValuePair> ret = new ArrayList<NameValuePair>(names.size());
+//		for (String name : names) {
+//			String value = params.get(name);
+//			if (value != null) {
+//				ret.add(new BasicNameValuePair(name, params.get(name)));
+//			}
+//		}
+//		return ret;
+//	}
+	
+	public static final List<NameValuePair> toListNameValuePair(Map<String, String> params) {
+		Set<String> names = params.keySet();
 		ArrayList<NameValuePair> ret = new ArrayList<NameValuePair>(names.size());
 		for (String name : names) {
 			String value = params.get(name);

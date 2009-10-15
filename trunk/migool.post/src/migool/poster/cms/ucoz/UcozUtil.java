@@ -6,6 +6,7 @@ import static migool.util.HtmlParserUtil.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import migool.host.auth.LoginResponse;
 import migool.util.EmptyChecker;
 import migool.util.Regex;
 
@@ -107,7 +108,7 @@ public final class UcozUtil {
 	 * @throws ParserException
 	 */
 	public static final int getMaxFilesPublPost(String html) throws ParserException {
-		NodeList scripts = (new Parser(html)).extractAllNodesThatMatch(new TagNameFilter(SCRIPT));
+		NodeList scripts = (new Parser(html)).extractAllNodesThatMatch(SCRIPT_FILTER);
 		int size = scripts.size();
 		String script = null;
 		for (int i = 0; i < size; i++) {
@@ -117,5 +118,44 @@ public final class UcozUtil {
 			}
 		}
 		return 1;
+	}
+
+	/**
+	 * 
+	 * @param s
+	 * @return
+	 */
+	public static final String _dC(String s) {
+		String r = "";
+		int l = s.length() - 1;
+		int k = Character.digit(s.charAt(l), 10);
+		for (int i = 0; i < l; i++) {
+			int c = s.charAt(i) - k;
+			if (c < 32) {
+				c = (127 - (32 - c));
+			}
+			r += (char) c;
+		}
+		return r;
+		// <input type="hidden" name="rgh3399178859" value="525752">
+		// <input type="hidden" name="ewh3399178859" value="897993">
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public static final LoginResponse checkLogin(String html) {
+		if (getLoginForm(html) != null) {
+			return new LoginResponse(LoginResponse.ERROR);
+		}
+		String[] add_pathes = new String[] { NEWS_ADD_PATH, LOAD_ADD_PATH, PUBL_ADD_PATH, BLOG_ADD_PATH,
+				PHOTO_ADD_PATH, DIR_ADD_PATH, BOARD_ADD_PATH, GB_ADD_PATH, FAQ_ADD_PATH };
+		for (String path : add_pathes) {
+			if (html.contains(path)) {
+				return new LoginResponse(LoginResponse.OK);
+			}
+		}
+		return new LoginResponse(LoginResponse.ERROR);
 	}
 }

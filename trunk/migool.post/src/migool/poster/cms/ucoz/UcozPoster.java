@@ -5,13 +5,11 @@ import static migool.poster.cms.ucoz.UcozUtil.*;
 import static migool.util.HtmlParserUtil.*;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -19,13 +17,14 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.mime.ByteArrayInputStreamBody;
 import org.apache.http.entity.mime.MultipartEntity;
-import org.apache.http.message.BasicNameValuePair;
 import org.htmlparser.Parser;
 import org.htmlparser.filters.AndFilter;
 import org.htmlparser.filters.HasAttributeFilter;
 import org.htmlparser.filters.NotFilter;
 import org.htmlparser.filters.TagNameFilter;
 import org.htmlparser.tags.FormTag;
+import org.htmlparser.tags.InputTag;
+import org.htmlparser.tags.ScriptTag;
 import org.htmlparser.util.NodeList;
 
 import migool.host.auth.LoginPassword;
@@ -67,7 +66,7 @@ public class UcozPoster implements ICMSPoster {
 		// this.client = new DefaultHttpClient();
 		this.client = HttpClientFactory.newInstance().newHttpClient();
 	}
-
+	
 	public LoginResponse login(LoginPassword lp) throws ClientProtocolException, IOException, Exception {
 		HttpGet get = new HttpGet(site);
 		HttpResponse response = client.execute(get);
@@ -75,17 +74,47 @@ public class UcozPoster implements ICMSPoster {
 
 		// fill the form
 		FormTag form = HtmlParserUtil.getLoginForm(html);
-		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		//List<NameValuePair> params = new ArrayList<NameValuePair>();
+		Map<String, String> params = new HashMap<String, String>();
+		boolean isUserOff = false;
+		if (form == null) {
+			isUserOff = true;
+			response = client.execute(new HttpGet(site + ADMIN_PATH));
+			html = IOUtil.toString(response.getEntity().getContent());
+			form = HtmlParserUtil.getLoginForm(html);
+			if (form == null) {
+				return new LoginResponse(LoginResponse.ERROR);
+			}
+			//params.add(new BasicNameValuePair("t", "1"));
+			params.put("t", "1");
+			NodeList scripts = form.getChildren().extractAllNodesThatMatch(SCRIPT_FILTER, true);
+			for (int i = 0; i < scripts.size(); i++) {
+				String script = ((ScriptTag) scripts.elementAt(i)).getChildrenHTML();
+				if (EmptyChecker.isNotNullOrEmpty(script) && script.contains("_dC")) {
+					String rx = (new Regex(script, "(?<=_dC\\(\\').*(?=\\'\\)\\;)")).getMatches()[0][0];
+					rx = rx.replace("\\'", "\'");
+					InputTag input = (InputTag) (new Parser(_dC(rx))).parse(new TagNameFilter("input")).elementAt(0);
+					//params.add(new BasicNameValuePair(input.getAttribute(NAME), input.getAttribute(VALUE)));
+					params.put(input.getAttribute(NAME), input.getAttribute(VALUE));
+				}
+			}
+		}
 		HtmlParserUtil.setHiddenInputs(form, params);
-		params.add(new BasicNameValuePair("user", lp.getLogin()));
-		params.add(new BasicNameValuePair("password", lp.getPassword()));
+		params.put("a", "2");
+		//params.add(new BasicNameValuePair("user", lp.getLogin()));
+		params.put("user", lp.getLogin());
+		//params.add(new BasicNameValuePair("password", lp.getPassword()));
+		params.put("password", lp.getPassword());
 
 		HttpPost request = new HttpPost(site + LOGIN_POST_PATH);
-		request.setEntity(new UrlEncodedFormEntity(params));
+		request.setEntity(new UrlEncodedFormEntity(toListNameValuePair(params)));
 		html = IOUtil.toString(client.execute(request).getEntity().getContent());
+		//client.execute(request);
 
 		html = IOUtil.toString(client.execute(get).getEntity().getContent());
-
+		if (isUserOff) {
+			return checkLogin(html);
+		}
 		form = HtmlParserUtil.getLoginForm(html);
 		return (form == null) ? new LoginResponse(LoginResponse.OK) : new LoginResponse(LoginResponse.NOT_LOGGED);
 	}

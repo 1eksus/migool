@@ -1,6 +1,9 @@
 package pornohouse.net.ru;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -8,6 +11,7 @@ import java.util.List;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.conn.EofSensorInputStream;
 
 import migool.grab.host.redtube.RedtubeGrab;
 import migool.http.client.HttpClientFactory;
@@ -23,6 +27,20 @@ import migool.util.IOUtil;
 public final class PornohouseUtil {
 	private PornohouseUtil() {
 	}
+	
+	private static final byte[] toByteArray(InputStream in) throws IOException {
+		if (in instanceof EofSensorInputStream) {
+			EofSensorInputStream newIn = (EofSensorInputStream) in;
+			ByteArrayOutputStream bo = new ByteArrayOutputStream();
+			int read = -1;
+			while ((read = newIn.read()) > -1) {
+				bo.write(read);
+			}
+			newIn.close();
+			return bo.toByteArray();
+		}
+		return IOUtil.toByteArray(in);
+	}
 
 	private static final List<Image> toListImage(List<String> urls) {
 		ArrayList<Image> ret = new ArrayList<Image>(urls.size());
@@ -35,7 +53,8 @@ public final class PornohouseUtil {
 			try {
 				response = client.execute(get);
 				img = new Image();
-				img.bytes = IOUtil.toByteArray(response.getEntity().getContent());
+				//img.bytes = IOUtil.toByteArray(response.getEntity().getContent());
+				img.bytes = toByteArray(response.getEntity().getContent());
 				img.fileName = (new File(url)).getName();
 				ret.add(img);
 			} catch (Exception e) {
@@ -62,7 +81,16 @@ public final class PornohouseUtil {
 	}
 
 	public static final PublUcozPost toPublUcozPost(PornohousePost post) {
-		// TODO
-		return null;
+		PublUcozPost ret = new PublUcozPost();
+		ret.format_message = false;
+		ret.source = post.url;
+		// TODO categories
+		ret.ocat = ((post.categories == null) || (post.categories.size() == 0)) ? "1": "1";
+		ret.title = post.title;
+		ret.brief = post.brief;
+		ret.message = post.embed;
+		ret.asite = post.duration;
+		ret.files = post.images;
+		return ret;
 	}
 }

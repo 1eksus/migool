@@ -125,7 +125,7 @@ public final class DlePoster implements IDlePoster, IImageShare {
 		String html = IOUtil.toString(response.getEntity().getContent());
 
 		FormTag form = (FormTag) (new Parser(html)).parse(new AndFilter(new TagNameFilter("form"), new HasAttributeFilter(NAME, IDleConstants.ENTRYFORM))).elementAt(0);
-		List<String> names = getNameAttributeValues(getChildTags(form, Arrays.asList(new String[]{"input", "select", "textarea"})));
+		//List<String> names = getNameAttributeValues(getChildTags(form, Arrays.asList(new String[]{"input", "select", "textarea"})));
 //		System.out.println(names);
 		Map<String, String> params = new HashMap<String, String>();
 
@@ -193,7 +193,7 @@ public final class DlePoster implements IDlePoster, IImageShare {
 		// do request
 		HttpPost request = new HttpPost(url);
 		// TODO charset detection
-		request.setEntity(new UrlEncodedFormEntity(toListNameValuePair(names, params), "windows-1251"));
+		request.setEntity(new UrlEncodedFormEntity(toListNameValuePair(params), "windows-1251"));
 		request.setHeader("Referer", url);
 		response = client.execute(request);
 

@@ -13,6 +13,8 @@ public interface IUcozConstants {
 
 	public static final String LOGIN_POST_PATH = "/index/sub";
 
+	public static final String ADMIN_PATH = "/admin";
+
 	public static final String NEWS_PATH = "/news";
 	public static final String LOAD_PATH = "/load";
 	public static final String PUBL_PATH = "/publ";
