@@ -26,15 +26,15 @@ public class UcozPosterTest {
 	private static final UcozPoster poster;
 
 	static {
-//		HttpClientFactory.setDefault(new HttpClientFactory() {
-//			@Override
-//			public HttpClient newHttpClient() {
-//				final HttpClient client = new DefaultHttpClient();
-//				final HttpHost hcProxyHost = new HttpHost("127.0.0.1", 8081);
-//				client.getParams().setParameter(ConnRouteParams.DEFAULT_PROXY, hcProxyHost);
-//				return client;
-//			}
-//		});
+		HttpClientFactory.setDefault(new HttpClientFactory() {
+			@Override
+			public HttpClient newHttpClient() {
+				final HttpClient client = new DefaultHttpClient();
+				final HttpHost hcProxyHost = new HttpHost("127.0.0.1", 8081);
+				client.getParams().setParameter(ConnRouteParams.DEFAULT_PROXY, hcProxyHost);
+				return client;
+			}
+		});
 		poster = new UcozPoster("ucoztest.at.ua");
 	}
 
@@ -109,5 +109,7 @@ public class UcozPosterTest {
 		PostResponse response = poster.post(PublUcozPostData.get());
 		assertNotNull(response);
 		assertEquals(response.getCode(), PostResponse.OK);
+		System.out.println(response.getCode());
+		System.out.println(response.getUrl());
 	}
 }
