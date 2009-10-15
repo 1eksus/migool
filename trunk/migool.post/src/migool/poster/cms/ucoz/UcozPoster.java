@@ -4,10 +4,8 @@ import static migool.poster.cms.ucoz.IUcozConstants.*;
 import static migool.poster.cms.ucoz.UcozUtil.*;
 import static migool.util.HtmlParserUtil.*;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +19,6 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.mime.ByteArrayInputStreamBody;
 import org.apache.http.entity.mime.MultipartEntity;
-import org.apache.http.entity.mime.content.InputStreamBody;
 import org.apache.http.message.BasicNameValuePair;
 import org.htmlparser.Parser;
 import org.htmlparser.filters.AndFilter;
@@ -189,8 +186,7 @@ public class UcozPoster implements ICMSPoster {
 		if (form == null) {
 			return new PostResponse(PostResponse.ERROR, null);
 		}
-		List<String> names = getNameAttributeValues(getChildTags(form, Arrays.asList(new String[]{"input", "select", "textarea"})));
-		System.out.println(names);
+		//List<String> names = getNameAttributeValues(getChildTags(form, Arrays.asList(new String[]{"input", "select", "textarea"})));
 		MultipartEntity entity = new MultipartEntity();
 		Map<String, String> params = new HashMap<String, String>();
 
@@ -271,7 +267,6 @@ public class UcozPoster implements ICMSPoster {
 		request.setHeader("Referer", url);
 		response = client.execute(request);
 		html = IOUtil.toString(response.getEntity().getContent());
-		System.out.println(html);
 		if (EmptyChecker.isNotNullOrEmpty(html) && html.contains("<div class=\"myWinSuccess\">")) {
 			String postUrl = (new Regex(html, "http://.*/publ/[0-9\\-]*")).getMatches()[0][0];
 			return new PostResponse(PostResponse.OK, postUrl);

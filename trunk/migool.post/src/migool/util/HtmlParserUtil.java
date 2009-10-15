@@ -331,7 +331,6 @@ public final class HtmlParserUtil {
 	 * @throws UnsupportedEncodingException
 	 */
 	public static final void fillParams(MultipartEntity entity, Map<String, String> params) throws UnsupportedEncodingException {
-		System.out.println(params.keySet());
 		for (String name : params.keySet()) {
 			//if (name != null) {
 				entity.addPart(name, new StringBody(params.get(name)));
