@@ -282,6 +282,9 @@ public class UcozPoster implements ICMSPoster {
 
 		// is_pending
 		fillInputCheckbox(params, form, IS_PENDING, post.is_pending);
+		if (!post.is_pending) {
+			params.remove(IS_PENDING);
+		}
 
 		// coms_allowed
 		fillInputCheckbox(params, form, COMS_ALLOWED, post.coms_allowed);

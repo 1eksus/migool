@@ -54,7 +54,6 @@ public class Main {
 			setProxy(ProxyUtil.parse(args[3]));
 		}
 
-		//System.out.println(CONFIG);
 		RedtubeGrabber grabber = new RedtubeGrabber(CONFIG.url);
 		List<RedtubeGrab> grabs = grabber.grab();
 		PornohousePost post = null;
