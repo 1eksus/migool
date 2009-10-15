@@ -17,12 +17,9 @@ public final class ProxyUtil {
 	 *
 	 */
 	public static class Proxy {
-		private String host;
-		private int port;
+		private final String host;
+		private final int port;
 
-		public Proxy() {
-		}
-		
 		public Proxy(String host, int port) {
 			this.host = host;
 			this.port = port;
