@@ -19,6 +19,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.mime.ByteArrayInputStreamBody;
 import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.content.InputStreamBody;
 import org.apache.http.message.BasicNameValuePair;
@@ -237,7 +238,7 @@ public class UcozPoster implements ICMSPoster {
 			for (int i = 0; i < size; i++) {
 				img = files.get(i);
 				if (img != null) {
-					entity.addPart(FILES[i], new InputStreamBody(new ByteArrayInputStream(img.bytes), img.fileName));
+					entity.addPart(FILES[i], new ByteArrayInputStreamBody(img.bytes, img.fileName));
 				}
 			}
 		}
