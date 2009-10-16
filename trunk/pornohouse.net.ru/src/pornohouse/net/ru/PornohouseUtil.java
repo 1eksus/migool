@@ -74,8 +74,8 @@ public final class PornohouseUtil {
 		ret.duration = grab.duration;
 		String[] thumbs = grab.thumbs;
 		ArrayList<String> urls = new ArrayList<String>(thumbs.length + 1);
-		urls.addAll(Arrays.asList(thumbs));
 		urls.add(grab.thumb);
+		urls.addAll(Arrays.asList(thumbs));
 		ret.images = toListImage(urls);
 		return ret;
 	}
