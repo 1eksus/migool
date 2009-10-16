@@ -5,7 +5,6 @@ import static org.junit.Assert.*;
 import migool.host.auth.LoginPassword;
 import migool.host.auth.LoginResponse;
 import migool.http.client.HttpClientFactory;
-import migool.poster.PostResponse;
 import migool.poster.cms.ucoz.UcozPoster;
 
 import org.apache.http.HttpHost;
