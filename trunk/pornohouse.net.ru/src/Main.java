@@ -27,7 +27,7 @@ public class Main {
 	public static final Config CONFIG = new Config(); 
 
 	private static final void printUsage() {
-		System.out.println("Usage: " + Main.class.getName() + " username password url [proxy]");
+		System.out.println("Usage: " + Main.class.getName() + " username password url [proxy [host]]");
 	}
 
 	private static final void setProxy(final Proxy proxy) {
@@ -52,18 +52,22 @@ public class Main {
 		CONFIG.url = args[2];
 		if (args.length > 3) {
 			setProxy(ProxyUtil.parse(args[3]));
+			if (args.length > 4) {
+				CONFIG.host = args[4];
+			}
 		}
 
 		RedtubeGrabber grabber = new RedtubeGrabber(CONFIG.url);
 		List<RedtubeGrab> grabs = grabber.grab();
 		PornohousePost post = null;
 		if (grabs.size() > 0) {
-			UcozPoster poster = new UcozPoster("pornohouse.net.ru");
+			//UcozPoster poster = new UcozPoster("pornohouse.net.ru");
+			UcozPoster poster = new UcozPoster(CONFIG.host);
 			poster.login(new LoginPassword(CONFIG.username, CONFIG.password));
 			for (RedtubeGrab grab : grabs) {
 				post = toPornohousePost(grab);
-				System.out.println(post + "\n");
-				poster.post(toPublUcozPost(post));
+				System.out.println(post);
+				System.out.println(poster.post(toPublUcozPost(post)).getCode() + "\n");
 			}
 		} else {
 			System.out.println("none posted");

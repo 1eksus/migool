@@ -7,9 +7,10 @@ public class Config {
 	public String username;
 	public String password;
 	public String url;
+	public String host = "pornohouse.net.ru";
 
 	@Override
 	public String toString() {
-		return "Config [password=" + password + ", url=" + url + ", username=" + username + "]";
+		return "Config [host=" + host + ", password=" + password + ", url=" + url + ", username=" + username + "]";
 	}
 }
