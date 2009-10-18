@@ -5,6 +5,7 @@ import java.util.List;
 import migool.grab.host.redtube.RedtubeGrab;
 import migool.grab.host.redtube.RedtubeGrabber;
 import migool.host.auth.LoginPassword;
+import migool.host.auth.LoginResponse;
 import migool.http.client.HttpClientFactory;
 import migool.poster.cms.ucoz.UcozPoster;
 import migool.util.ProxyUtil;
@@ -56,6 +57,8 @@ public class Main {
 				CONFIG.host = args[4];
 			}
 		}
+		
+		System.out.println(CONFIG);
 
 		RedtubeGrabber grabber = new RedtubeGrabber(CONFIG.url);
 		List<RedtubeGrab> grabs = grabber.grab();
@@ -63,11 +66,19 @@ public class Main {
 		if (grabs.size() > 0) {
 			//UcozPoster poster = new UcozPoster("pornohouse.net.ru");
 			UcozPoster poster = new UcozPoster(CONFIG.host);
-			poster.login(new LoginPassword(CONFIG.username, CONFIG.password));
-			for (RedtubeGrab grab : grabs) {
-				post = toPornohousePost(grab);
-				System.out.println(post);
-				System.out.println(poster.post(toPublUcozPost(post)).getCode() + "\n");
+			LoginResponse login = poster.login(new LoginPassword(CONFIG.username, CONFIG.password));
+			if (login.getCode() == LoginResponse.OK) {
+				//for (RedtubeGrab grab : grabs) {
+				int size = grabs.size();
+				for (int i = size - 1; i >= 0; i--) {
+					RedtubeGrab grab = grabs.get(i);
+					System.out.println(grab);
+					post = toPornohousePost(grab);
+					System.out.println(post);
+					System.out.println(poster.post(toPublUcozPost(post)).getCode() + "\n");
+				}
+			} else {
+				System.out.println("Can't login into " + CONFIG.host);
 			}
 		} else {
 			System.out.println("none posted");
