@@ -11,6 +11,12 @@ import migool.post.Post;
 public interface IPoster extends IHostClient {
 	/**
 	 * 
+	 * @return
+	 */
+	PosterInfo getPosterInfo();
+
+	/**
+	 * 
 	 * @param post
 	 * @return
 	 */
