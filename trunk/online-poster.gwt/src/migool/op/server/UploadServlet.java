@@ -29,7 +29,7 @@ public class UploadServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		OutputStream out = resp.getOutputStream();
-		
+
 		resp.setHeader("Pragma", "no-cache");
 		resp.setContentType(contentType);
 		out.write(image);
@@ -55,6 +55,8 @@ public class UploadServlet extends HttpServlet {
 					contentType = item.getContentType();
 					image = IOUtil.toByteArray(stream);
 					out.print("hello");
+					out.flush();
+					out.close();
 				}
 			}
 		} catch (Exception e) {
