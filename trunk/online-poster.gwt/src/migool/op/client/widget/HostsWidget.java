@@ -19,7 +19,6 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.Widget;
 
 /**
  * 
@@ -35,30 +34,6 @@ public final class HostsWidget extends FlexTable {
 		setWidth("100%");
 
 		setHeaders();
-	}
-
-	private final void setHeaders() {
-		int i = 0;
-		setWidget(0, i++, new HTML("host"));
-		setWidget(0, i++, new HTML("username"));
-		setWidget(0, i++, new HTML("password"));
-		setWidget(0, i++, new HTML("enabled"));
-	}
-
-	/**
-	 * 
-	 * @param postService
-	 * @return
-	 */
-	public static final Widget create(final PostServiceAsync postService) {
-		final FlexTable ft = new FlexTable();
-		ft.setWidth("100%");
-
-		int i = 0;
-		ft.setWidget(0, i++, new HTML("host"));
-		ft.setWidget(0, i++, new HTML("username"));
-		ft.setWidget(0, i++, new HTML("password"));
-		ft.setWidget(0, i++, new HTML("enabled"));
 
 		final ArrayList<String> hosts = new ArrayList<String>();
 		postService.getHosts(new AsyncCallback<List<String>>() {
@@ -79,7 +54,7 @@ public final class HostsWidget extends FlexTable {
 			@Override
 			public void onSuccess(Map<String, HostConfigSerializable> result) {
 				for (String host : hosts) {
-					addRow(postService, ft, host, result.get(host));
+					addRow(host, result.get(host));
 				}
 			}
 
@@ -88,117 +63,159 @@ public final class HostsWidget extends FlexTable {
 				// TODO Auto-generated method stub
 			}
 		});
-		return ft;
 	}
 
-	private static final void addRow(final PostServiceAsync postService, final FlexTable ft, final String host,
-			final HostConfigSerializable hc) {
+	private final void setHeaders() {
+		int i = 0;
+		setWidget(0, i++, new HTML("host"));
+		setWidget(0, i++, new HTML("username"));
+		setWidget(0, i++, new HTML("password"));
+		setWidget(0, i++, new HTML("enabled"));
+	}
+
+	/**
+	 * 
+	 * @author Denis Migol
+	 * 
+	 */
+	private final class SettingsDialog extends DialogBox {
+		private final String host;
+		private final HostConfigSerializable hc;
+
+		private final TextBox username;
+		private final TextBox password;
+		private final CheckBox enabled;
+		
+		public SettingsDialog(final String host, final HostConfigSerializable hc) {
+			super(false, true);
+
+			this.host = host;
+			this.hc = hc;
+
+			setText("Settings");
+			VerticalPanel vp = new VerticalPanel();
+			vp.setWidth("100%");
+
+			vp.add(new HTML("host"));
+
+			TextBox hosttext = new TextBox();
+			hosttext.setText(host);
+			hosttext.setReadOnly(true);
+			vp.add(hosttext);
+
+			vp.add(new HTML("username"));
+
+			username = new TextBox();
+			//username.setText((hc == null) ? "" : hc.username);
+			vp.add(username);
+
+			vp.add(new HTML("password"));
+
+			password = new TextBox();
+			//password.setText((hc == null) ? "" : hc.password);
+			vp.add(password);
+
+			enabled = new CheckBox("enabled");
+			//enabled.setValue((hc == null) ? false : hc.enabled);
+			vp.add(enabled);
+			
+			setHostConfig();
+
+			HorizontalPanel hp = new HorizontalPanel();
+			hp.setWidth("100%");
+
+			Button ok = new Button("ok", new ClickHandler() {
+
+				@Override
+				public void onClick(ClickEvent event) {
+					hide();
+					final HostConfigSerializable hostConfig = getHostConfig();
+
+					postService.setHostConfig(hostConfig, new AsyncCallback<Void>() {
+
+						@Override
+						public void onSuccess(Void result) {
+							int rowCount = getRowCount();
+							for (int j = 0; j < rowCount; j++) {
+								String text = HostsWidget.this.getText(j, 0);
+								if (text.equals(host)) {
+									int i = 1;
+									final CheckBox cb = new CheckBox();
+									cb.setEnabled(false);
+									HostsWidget.this.setWidget(j, i++, new HTML(hostConfig.username));
+									HostsWidget.this.setWidget(j, i++, new HTML(hostConfig.password));
+									cb.setValue(hostConfig.enabled);
+									HostsWidget.this.setWidget(j, i++, cb);
+								}
+							}
+						}
+
+						@Override
+						public void onFailure(Throwable caught) {
+							// TODO Auto-generated method stub
+						}
+					});
+				}
+			});
+			hp.add(ok);
+
+			Button cancel = new Button("cancel", new ClickHandler() {
+
+				@Override
+				public void onClick(ClickEvent event) {
+					hide();
+				}
+			});
+			hp.add(cancel);
+
+			vp.add(hp);
+			add(vp);
+			center();
+			show();
+		}
+		
+		private void setHostConfig() {
+			username.setText((hc == null) ? "" : hc.username);
+			password.setText((hc == null) ? "" : hc.password);
+			enabled.setValue((hc == null) ? false : hc.enabled);
+		}
+		
+		private HostConfigSerializable getHostConfig() {
+			HostConfigSerializable ret = new HostConfigSerializable();
+			ret.host = host;
+			ret.username = username.getText();
+			ret.password = password.getText();
+			ret.enabled = enabled.getValue();
+			return ret;
+		}
+	}
+
+	private final void addRow(final String host, final HostConfigSerializable hc) {
 		Hyperlink link = new Hyperlink(host, "");
 		link.addClickHandler(new ClickHandler() {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				final DialogBox db = new DialogBox(false, true);
-				db.setText("Settings");
-				VerticalPanel vp = new VerticalPanel();
-				vp.setWidth("100%");
-
-				vp.add(new HTML("host"));
-
-				TextBox hosttext = new TextBox();
-				hosttext.setText(host);
-				hosttext.setReadOnly(true);
-				vp.add(hosttext);
-
-				vp.add(new HTML("username"));
-
-				final TextBox username = new TextBox();
-				username.setText((hc == null) ? "" : hc.username);
-				vp.add(username);
-
-				vp.add(new HTML("password"));
-
-				final TextBox password = new TextBox();
-				password.setText((hc == null) ? "" : hc.password);
-				vp.add(password);
-
-				final CheckBox enabled = new CheckBox("enabled");
-				enabled.setValue((hc == null) ? false : hc.enabled);
-				vp.add(enabled);
-				
-				HorizontalPanel hp = new HorizontalPanel();
-				hp.setWidth("100%");
-
-				Button ok = new Button("ok", new ClickHandler() {
-
-					@Override
-					public void onClick(ClickEvent event) {
-						db.hide();
-						final HostConfigSerializable hostConfig = new HostConfigSerializable();
-						hostConfig.host = host;
-						hostConfig.username = username.getText();
-						hostConfig.password = password.getText();
-						hostConfig.enabled = enabled.getValue();
-
-						postService.setHostConfig(hostConfig, new AsyncCallback<Void>() {
-
-							@Override
-							public void onSuccess(Void result) {
-								for (int j = 0; j < ft.getRowCount(); j++) {
-									String text = ft.getText(j, 0);
-									if (text.equals(host)) {
-										int i = 1;
-										final CheckBox cb = new CheckBox();
-										cb.setEnabled(false);
-										ft.setWidget(j, i++, new HTML(hostConfig.username));
-										ft.setWidget(j, i++, new HTML(hostConfig.password));
-										cb.setValue(hostConfig.enabled);
-										ft.setWidget(j, i++, cb);
-									}
-								}
-							}
-
-							@Override
-							public void onFailure(Throwable caught) {
-								// TODO Auto-generated method stub
-							}
-						});
-					}
-				});
-				hp.add(ok);
-				
-				Button cancel = new Button("cancel", new ClickHandler() {
-					
-					@Override
-					public void onClick(ClickEvent event) {
-						db.hide();
-					}
-				});
-				hp.add(cancel);
-				
-				vp.add(hp);
-				db.add(vp);
-				db.center();
-				db.show();
+				new SettingsDialog(host, hc);
 			}
 		});
-		
-		int numRows = ft.getRowCount();
+
+		int rowCount = getRowCount();
 		int i = 0;
-		ft.setWidget(numRows, i++, link);
+		setWidget(rowCount, i++, link);
 		CheckBox cb = new CheckBox();
 		cb.setEnabled(false);
 		if (hc != null) {
-			ft.setWidget(numRows, i++, new HTML(hc.username));
-			ft.setWidget(numRows, i++, new HTML(hc.password));
+			setWidget(rowCount, i++, new HTML(hc.username));
+			setWidget(rowCount, i++, new HTML(hc.password));
 			cb.setValue(hc.enabled);
-			ft.setWidget(numRows, i++, cb);
+			setWidget(rowCount, i++, cb);
 		} else {
-			ft.setWidget(numRows, i++, new HTML(""));
-			ft.setWidget(numRows, i++, new HTML(""));
+			setWidget(rowCount, i++, new HTML(""));
+			setWidget(rowCount, i++, new HTML(""));
 			cb.setEnabled(false);
 			cb.setValue(false);
-			ft.setWidget(numRows, i++, cb);
+			setWidget(rowCount, i++, cb);
 		}
 	}
 }
