@@ -4,25 +4,21 @@ import migool.op.client.PostServiceAsync;
 
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.Widget;
 
 /**
  * 
  * @author Denis Migol
  *
  */
-public class CaptchaDialogWidget {
+public class CaptchaDialog extends DialogBox {
 
 	/**
 	 * 
 	 * @return
 	 */
-	public Widget create(final PostServiceAsync postService) {
-		// TODO
-		DialogBox db = new DialogBox();
+	public CaptchaDialog(final PostServiceAsync postService) {
+		super(false, true);
 		VerticalPanel vp = new VerticalPanel();
-		
-		db.add(vp);
-		return db;
+		add(vp);
 	}
 }
