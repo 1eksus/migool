@@ -26,8 +26,23 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Denis Migol
  * 
  */
-public final class HostsWidget {
-	private HostsWidget() {
+public final class HostsWidget extends FlexTable {
+	private final PostServiceAsync postService;
+
+	public HostsWidget(final PostServiceAsync postService) {
+		super();
+		this.postService = postService;
+		setWidth("100%");
+
+		setHeaders();
+	}
+
+	private final void setHeaders() {
+		int i = 0;
+		setWidget(0, i++, new HTML("host"));
+		setWidget(0, i++, new HTML("username"));
+		setWidget(0, i++, new HTML("password"));
+		setWidget(0, i++, new HTML("enabled"));
 	}
 
 	/**
