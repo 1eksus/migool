@@ -53,7 +53,8 @@ public class Online_poster_gwt implements EntryPoint {
 				Widget widget = splitPanel.getRightWidget();
 				if (widget != null) {
 					splitPanel.remove(widget);
-					splitPanel.add(HostsWidget.create(postService));
+					//splitPanel.add(HostsWidget.create(postService));
+					splitPanel.add(new HostsWidget(postService));
 				}
 			}
 		});
