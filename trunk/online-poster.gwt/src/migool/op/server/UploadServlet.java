@@ -25,8 +25,8 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
  */
 @SuppressWarnings("serial")
 public class UploadServlet extends HttpServlet {
-	private String contentType;
-	private byte[] image;
+//	private String contentType;
+//	private byte[] image;
 
 	/**
 	 * 
@@ -40,27 +40,54 @@ public class UploadServlet extends HttpServlet {
 
 	private HashMap<String, FileEntity> files = new HashMap<String, FileEntity>();
 
+	/**
+	 * 
+	 * @param fileName
+	 * @return
+	 */
 	private String nextId(String fileName) {
-		String name = (new File(fileName)).getName();
-		int pos = name.lastIndexOf('.');
-		if (pos > -1) {
-			return files.size() + name.substring(pos, name.length());
-		} else {
+//		String name = (new File(fileName)).getName();
+//		int pos = name.lastIndexOf('.');
+//		if (pos > -1) {
+//			return files.size() + name.substring(pos, name.length());
+//		} else {
 			return files.size() + "";
+//		}
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	private String getId(String uri) {
+		if ("".equals(uri) || uri == null) {
+			return null;
+		}
+		int pos = uri.lastIndexOf('/');
+		int length = uri.length();
+		if ((pos > -1) && (pos < (length - 1))) {
+			return uri.substring(pos + 1, length);
+		} else {
+			return "";
 		}
 	}
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		System.out.println(req.getRequestURI());
-		OutputStream out = resp.getOutputStream();
-
-		resp.setHeader("Pragma", "no-cache");
-		resp.setContentType(contentType);
-		out.write(image);
-		out.flush();
-		out.close();
-		//System.out.println(image);
+		String id = getId(req.getRequestURI());
+		System.out.println(id);
+		if (files.containsKey(id)) {
+			FileEntity file = files.get(id);
+			OutputStream out = resp.getOutputStream();
+			resp.setHeader("Pragma", "no-cache");
+//			resp.setContentType(contentType);
+//			out.write(image);
+			resp.setContentType(file.contentType);
+			out.write(file.bytes);
+			out.flush();
+			out.close();
+			//System.out.println(image);
+		}
 	}
 
 	@Override
@@ -77,13 +104,12 @@ public class UploadServlet extends HttpServlet {
 				FileItemStream item = iter.next();
 				InputStream stream = item.openStream();
 				if (!item.isFormField()) {
-					contentType = item.getContentType();
-					image = IOUtil.toByteArray(stream);
-
+//					contentType = item.getContentType();
+//					image = IOUtil.toByteArray(stream);
 					FileEntity file = new FileEntity();
 					file.contentType = item.getContentType();
 					file.bytes = IOUtil.toByteArray(stream);
-					String fileId = nextId(item.getFieldName());
+					String fileId = nextId(item.getName());
 					files.put(fileId, file);
 					out.print(fileId);
 					out.flush();

@@ -148,8 +148,10 @@ public final class PostWidget extends VerticalPanel {
 		form.addSubmitCompleteHandler(new SubmitCompleteHandler() {
 			@Override
 			public void onSubmitComplete(SubmitCompleteEvent event) {
-				System.out.println(event.getResults());
-				Image image = new Image(UPLOAD2);
+				String results = event.getResults();
+				System.out.println(results);
+				//Image image = new Image(UPLOAD2);
+				Image image = new Image("/upload/" + results);
 				fvp.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 				fvp.add(image);
 				
