@@ -1,9 +1,11 @@
 package migool.op.server;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.util.HashMap;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -26,8 +28,31 @@ public class UploadServlet extends HttpServlet {
 	private String contentType;
 	private byte[] image;
 
+	/**
+	 * 
+	 * @author Denis Migol
+	 *
+	 */
+	private static final class FileEntity {
+		String contentType;
+		byte[] bytes;
+	}
+
+	private HashMap<String, FileEntity> files = new HashMap<String, FileEntity>();
+
+	private String nextId(String fileName) {
+		String name = (new File(fileName)).getName();
+		int pos = name.lastIndexOf('.');
+		if (pos > -1) {
+			return files.size() + name.substring(pos, name.length());
+		} else {
+			return files.size() + "";
+		}
+	}
+
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		System.out.println(req.getRequestURI());
 		OutputStream out = resp.getOutputStream();
 
 		resp.setHeader("Pragma", "no-cache");
@@ -54,13 +79,20 @@ public class UploadServlet extends HttpServlet {
 				if (!item.isFormField()) {
 					contentType = item.getContentType();
 					image = IOUtil.toByteArray(stream);
-					out.print("hello");
+
+					FileEntity file = new FileEntity();
+					file.contentType = item.getContentType();
+					file.bytes = IOUtil.toByteArray(stream);
+					String fileId = nextId(item.getFieldName());
+					files.put(fileId, file);
+					out.print(fileId);
 					out.flush();
-					out.close();
 				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			out.close();
 		}
 	}
 }
