@@ -13,8 +13,7 @@ public class PostSerializable implements Serializable {
 	public String title;
 	public String url;
 	public List<String> categories;
-	//public Image image; // TODO
-	public String image;
+	public String imageUrl;
 
 	public String begStory;
 	public String endStory;

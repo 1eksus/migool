@@ -101,7 +101,8 @@ public class UploadServlet extends HttpServlet {
 					file.bytes = IOUtil.toByteArray(stream);
 					String fileId = nextId(item.getName());
 					files.put(fileId, file);
-					out.print(req.getServletPath() + "/" + fileId);
+					//out.print(req.getServletPath() + "/" + fileId);
+					out.print(req.getRequestURL() + "/" + fileId);
 					out.flush();
 				}
 			}

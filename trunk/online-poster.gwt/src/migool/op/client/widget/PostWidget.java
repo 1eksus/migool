@@ -117,55 +117,7 @@ public final class PostWidget extends VerticalPanel {
 
 		add(new HTML(PICTURE_TITLE));
 
-		final FormPanel form = new FormPanel();
-		add(form);
-		form.setAction(UPLOAD2);
-		form.setEncoding(FormPanel.ENCODING_MULTIPART);
-		form.setMethod(FormPanel.METHOD_POST);
-
-		final VerticalPanel fvp = new VerticalPanel();
-		form.add(fvp);
-		fvp.setWidth(_100);
-		final FileUpload image = new FileUpload();
-		image.setName(IMAGE);
-		image.setWidth(_100);
-		fvp.add(image);
-		
-		final Button upload = new Button(UPLOAD_TITLE, new ClickHandler() {			
-			@Override
-			public void onClick(ClickEvent event) {
-				form.submit();
-			}
-		});
-		fvp.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
-		fvp.add(upload);
-		//vp.add(image);
-		form.addSubmitHandler(new SubmitHandler() {
-			@Override
-			public void onSubmit(SubmitEvent event) {
-				// TODO Auto-generated method stub
-			}
-		});
-		final Image img = new Image("");
-		img.setVisible(false);
-		fvp.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
-		fvp.add(img);
-		form.addSubmitCompleteHandler(new SubmitCompleteHandler() {
-			@Override
-			public void onSubmitComplete(SubmitCompleteEvent event) {
-				imageUrl = event.getResults();
-				img.setVisible(true);
-				System.out.println(imageUrl);
-				img.setUrl(imageUrl);
-				final CaptchaDialog cd = new CaptchaDialog(imageUrl, new CaptchaDialog.Callback() {
-					@Override
-					public void onResult() {
-						System.out.println(getResult());
-					}
-				});
-				cd.show();
-			}
-		});
+		add(createImageForm());
 
 		add(new HTML(MESSAGE_TITLE));
 
@@ -257,6 +209,10 @@ public final class PostWidget extends VerticalPanel {
 		add(post);
 	}
 
+	/**
+	 * 
+	 * @param cats
+	 */
 	private void fillCategories(final ListBox cats) {
 		service.getCategories(new AsyncCallback<List<String>>() {
 			@Override
@@ -272,6 +228,66 @@ public final class PostWidget extends VerticalPanel {
 		});
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
+	private FormPanel createImageForm() {
+		final FormPanel form = new FormPanel();
+		form.setAction(UPLOAD2);
+		form.setEncoding(FormPanel.ENCODING_MULTIPART);
+		form.setMethod(FormPanel.METHOD_POST);
+
+		final VerticalPanel fvp = new VerticalPanel();
+		form.add(fvp);
+		fvp.setWidth(_100);
+		final FileUpload image = new FileUpload();
+		image.setName(IMAGE);
+		image.setWidth(_100);
+		fvp.add(image);
+		
+		final Button upload = new Button(UPLOAD_TITLE, new ClickHandler() {			
+			@Override
+			public void onClick(ClickEvent event) {
+				form.submit();
+			}
+		});
+		fvp.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
+		fvp.add(upload);
+		//vp.add(image);
+		form.addSubmitHandler(new SubmitHandler() {
+			@Override
+			public void onSubmit(SubmitEvent event) {
+				// TODO Auto-generated method stub
+			}
+		});
+		final Image img = new Image("");
+		img.setVisible(false);
+		fvp.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+		fvp.add(img);
+		form.addSubmitCompleteHandler(new SubmitCompleteHandler() {
+			@Override
+			public void onSubmitComplete(SubmitCompleteEvent event) {
+				imageUrl = event.getResults();
+				img.setVisible(true);
+				System.out.println(imageUrl);
+				img.setUrl(imageUrl);
+				final CaptchaDialog cd = new CaptchaDialog(imageUrl, new CaptchaDialog.Callback() {
+					@Override
+					public void onResult() {
+						System.out.println(getResult());
+					}
+				});
+				cd.show();
+			}
+		});
+		return form;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
 	private PostSerializable getPost() {
 		PostSerializable post = new PostSerializable();
 
@@ -282,6 +298,7 @@ public final class PostWidget extends VerticalPanel {
 		// TODO
 		// public Image image; // TODO
 		//post.image = image.getFilename();
+		post.imageUrl = imageUrl;
 
 		String storyText = story.getText();
 		if (!"".equals(storyText)) {

@@ -7,6 +7,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import org.apache.http.client.HttpClient;
+import org.apache.http.conn.GAEConnectionManager;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.BasicHttpParams;
+
+import migool.http.client.HttpClientFactory;
 import migool.op.client.PostService;
 import migool.op.client.serializable.HostConfigSerializable;
 import migool.op.client.serializable.PostSerializable;
@@ -14,7 +20,6 @@ import migool.op.server.jdo.JDOUtil;
 import migool.post.Post;
 import migool.post.category.Categories;
 import migool.post.category.Category;
-import migool.post.internal.Image;
 import migool.poster.IPoster;
 import migool.poster.Posters;
 
@@ -27,6 +32,16 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
  */
 @SuppressWarnings("serial")
 public class PostServiceImpl extends RemoteServiceServlet implements PostService {
+	
+	static {
+		HttpClientFactory.setDefault(new HttpClientFactory() {
+			
+			@Override
+			public HttpClient newHttpClient() {
+				return new DefaultHttpClient(new GAEConnectionManager(), new BasicHttpParams());
+			}
+		});
+	}
 
 	private Post post;
 	private static final TreeMap<String, IPoster> posters = Posters.get();
@@ -58,15 +73,18 @@ public class PostServiceImpl extends RemoteServiceServlet implements PostService
 		this.post.title = clientPost.title;
 		this.post.title = clientPost.title;
 		this.post.url = clientPost.url;
+		// TODO
 		// public List<String> categories;
 		// public Image image; // TODO
 
-		try {
-			Image image = new Image();
-			image.fileName = clientPost.image;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+//		try {
+//			Image image = new Image();
+//			image.fileName = clientPost.image;
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+		post.image = getImage(clientPost.imageUrl, "image");
+		System.out.println(post.image);
 
 		this.post.begStory = clientPost.begStory;
 		this.post.endStory = clientPost.endStory;
