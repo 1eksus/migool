@@ -98,6 +98,7 @@ public final class PostWidget extends VerticalPanel {
 
 	private void createBody() {
 		setWidth(_100);
+		setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 
 		add(new HTML(TITLE_TITLE));
 

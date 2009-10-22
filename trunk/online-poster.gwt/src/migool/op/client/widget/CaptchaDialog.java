@@ -51,6 +51,8 @@ public class CaptchaDialog extends DialogBox {
 	private final String imageUrl;
 	private final Callback callback;
 	
+	private final TextBox input = new TextBox();
+	
 	public CaptchaDialog(String imageUrl, Callback callback) {
 		super(false, true);
 		// super.setTitle("Title");
@@ -75,7 +77,7 @@ public class CaptchaDialog extends DialogBox {
 		Image img = new Image(imageUrl);
 		vp.add(img);
 		
-		final TextBox input = new TextBox();
+		//final TextBox input = new TextBox();
 		input.addKeyUpHandler(new KeyUpHandler() {
 			
 			@Override
@@ -95,6 +97,16 @@ public class CaptchaDialog extends DialogBox {
 			}
 		});
 		vp.add(button);
+		// Focus the cursor on the input when the dialog loads
+		input.setFocus(true);
+		input.selectAll();
 		center();
+	}
+	
+	@Override
+	public void show() {
+		super.show();
+		input.setFocus(true);
+		input.selectAll();		
 	}
 }
