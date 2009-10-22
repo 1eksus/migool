@@ -1,6 +1,5 @@
 package migool.op.server;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -25,9 +24,6 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
  */
 @SuppressWarnings("serial")
 public class UploadServlet extends HttpServlet {
-//	private String contentType;
-//	private byte[] image;
-
 	/**
 	 * 
 	 * @author Denis Migol
@@ -75,18 +71,14 @@ public class UploadServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String id = getId(req.getRequestURI());
-		System.out.println(id);
 		if (files.containsKey(id)) {
 			FileEntity file = files.get(id);
 			OutputStream out = resp.getOutputStream();
 			resp.setHeader("Pragma", "no-cache");
-//			resp.setContentType(contentType);
-//			out.write(image);
 			resp.setContentType(file.contentType);
 			out.write(file.bytes);
 			out.flush();
 			out.close();
-			//System.out.println(image);
 		}
 	}
 
@@ -104,8 +96,6 @@ public class UploadServlet extends HttpServlet {
 				FileItemStream item = iter.next();
 				InputStream stream = item.openStream();
 				if (!item.isFormField()) {
-//					contentType = item.getContentType();
-//					image = IOUtil.toByteArray(stream);
 					FileEntity file = new FileEntity();
 					file.contentType = item.getContentType();
 					file.bytes = IOUtil.toByteArray(stream);

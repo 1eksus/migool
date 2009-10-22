@@ -145,17 +145,18 @@ public final class PostWidget extends VerticalPanel {
 				// TODO Auto-generated method stub
 			}
 		});
+		final Image img = new Image("");
+		img.setVisible(false);
+		fvp.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+		fvp.add(img);
 		form.addSubmitCompleteHandler(new SubmitCompleteHandler() {
 			@Override
 			public void onSubmitComplete(SubmitCompleteEvent event) {
-				String results = event.getResults();
-				System.out.println(results);
-				//Image image = new Image(UPLOAD2);
-				Image image = new Image("/upload/" + results);
-				fvp.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
-				fvp.add(image);
-				
-				upload.setEnabled(false); // ???
+				imageUrl = "/upload/" + event.getResults();
+				img.setVisible(true);
+				System.out.println(imageUrl);
+				img.setUrl(imageUrl);
+				//upload.setEnabled(false);
 			}
 		});
 
