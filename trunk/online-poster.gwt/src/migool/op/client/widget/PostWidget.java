@@ -239,6 +239,7 @@ public final class PostWidget extends VerticalPanel {
 		form.setMethod(FormPanel.METHOD_POST);
 
 		final VerticalPanel fvp = new VerticalPanel();
+		fvp.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
 		form.add(fvp);
 		fvp.setWidth(_100);
 		final FileUpload image = new FileUpload();
@@ -252,7 +253,6 @@ public final class PostWidget extends VerticalPanel {
 				form.submit();
 			}
 		});
-		fvp.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
 		fvp.add(upload);
 		//vp.add(image);
 		form.addSubmitHandler(new SubmitHandler() {
