@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import migool.op.client.serializable.HostConfigSerializable;
+import migool.op.client.serializable.PostResponseSerializable;
 import migool.op.client.serializable.PostSerializable;
 
 import com.google.gwt.user.client.rpc.RemoteService;
@@ -28,5 +29,5 @@ public interface PostService extends RemoteService {
 
 	void setHostConfig(HostConfigSerializable hostConfig);
 
-	void post(String host);
+	PostResponseSerializable post(String host);
 }

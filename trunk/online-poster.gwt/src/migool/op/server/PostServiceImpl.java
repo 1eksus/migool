@@ -15,12 +15,14 @@ import org.apache.http.params.BasicHttpParams;
 import migool.http.client.HttpClientFactory;
 import migool.op.client.PostService;
 import migool.op.client.serializable.HostConfigSerializable;
+import migool.op.client.serializable.PostResponseSerializable;
 import migool.op.client.serializable.PostSerializable;
 import migool.op.server.jdo.JDOUtil;
 import migool.post.Post;
 import migool.post.category.Categories;
 import migool.post.category.Category;
 import migool.poster.IPoster;
+import migool.poster.PostResponse;
 import migool.poster.Posters;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -125,8 +127,9 @@ public class PostServiceImpl extends RemoteServiceServlet implements PostService
 	}
 
 	@Override
-	public void post(String host) {
+	public PostResponseSerializable post(String host) {
 		// TODO Auto-generated method stub
-		posters.get(host).post(post);
+		PostResponse response = posters.get(host).post(post);
+		return toPostResponseSerializable(response);
 	}
 }

@@ -13,8 +13,10 @@ import org.apache.http.client.methods.HttpGet;
 import migool.entity.ImageEntity;
 import migool.http.client.HttpClientFactory;
 import migool.op.client.serializable.HostConfigSerializable;
+import migool.op.client.serializable.PostResponseSerializable;
 import migool.op.server.jdo.persist.HostConfig;
 import migool.post.internal.Image;
+import migool.poster.PostResponse;
 import migool.util.EmptyChecker;
 import migool.util.IOUtil;
 
@@ -139,6 +141,15 @@ public final class PostServiceUtil {
 			log.throwing(PostServiceUtil.class.getName(), "getImage", e);
 			e.printStackTrace();
 		}
+		return null;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public static final PostResponseSerializable toPostResponseSerializable(PostResponse response) {
+		// TODO
 		return null;
 	}
 }

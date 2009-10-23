@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import migool.op.client.serializable.HostConfigSerializable;
+import migool.op.client.serializable.PostResponseSerializable;
 import migool.op.client.serializable.PostSerializable;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -19,6 +20,6 @@ public interface PostServiceAsync {
 	void getHosts(AsyncCallback<List<String>> callback);
 	void getHostConfig(String host, AsyncCallback<HostConfigSerializable> callback);
 	void setHostConfig(HostConfigSerializable hostConfig, AsyncCallback<Void> callback);
-	void post(String host, AsyncCallback<Void> callback);
+	void post(String host, AsyncCallback<PostResponseSerializable> callback);
 	void getHostConfigs(AsyncCallback<Map<String, HostConfigSerializable>> callback);
 }
