@@ -51,8 +51,6 @@ public final class PostWidget extends VerticalPanel {
 	private static final String MESSAGE_TITLE = "Текст новости";
 
 	private static final String UPLOAD_TITLE = "upload";
-	private static final String _100 = "100%";
-
 	private static final String IMAGE = "image";
 	private static final String UPLOAD2 = "/upload";
 	private static final String PICTURE_TITLE = "Картинка";
@@ -263,7 +261,6 @@ public final class PostWidget extends VerticalPanel {
 		});
 		final Image img = new Image("");
 		img.setVisible(false);
-		//fvp.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		fvp.add(img);
 		form.addSubmitCompleteHandler(new SubmitCompleteHandler() {
 			@Override
@@ -295,9 +292,6 @@ public final class PostWidget extends VerticalPanel {
 		post.url = url.getText();
 		post.categories = getSelectedItemsText(cats);
 
-		// TODO
-		// public Image image; // TODO
-		//post.image = image.getFilename();
 		post.imageUrl = imageUrl;
 
 		String storyText = story.getText();

@@ -12,6 +12,8 @@ import com.google.gwt.user.client.ui.ListBox;
  */
 public final class GWTClientUtil {
 
+	static final String _100 = "100%";
+
 	private GWTClientUtil() {
 	}
 
