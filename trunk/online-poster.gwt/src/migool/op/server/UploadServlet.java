@@ -38,26 +38,28 @@ public class UploadServlet extends HttpServlet {
 	private static final int FIRST_FILE = 0;
 	private int currentFile = FIRST_FILE;
 	private final HashMap<String, FileEntity> files = new HashMap<String, FileEntity>();
-
-	/**
-	 * 
-	 * @param fileName
-	 * @return
-	 */
-	private String nextId(String fileName) {
-		//currentFile = files.size();
+	
+	private String nextId() {
 		if (currentFile >= MAX_FILES) {
 			currentFile = FIRST_FILE;
 		}
+		return currentFile++ + "";
+	}
+
+//	/**
+//	 * 
+//	 * @param fileName
+//	 * @return
+//	 */
+//	private String nextId(String fileName) {
 //		String name = (new File(fileName)).getName();
 //		int pos = name.lastIndexOf('.');
 //		if (pos > -1) {
-//			return files.size() + name.substring(pos, name.length());
+//			return nextId() + name.substring(pos, name.length());
 //		} else {
-			//return files.size() + "";
-			return currentFile++ + "";
+//			return nextId();
 //		}
-	}
+//	}
 
 	/**
 	 * 
@@ -107,7 +109,8 @@ public class UploadServlet extends HttpServlet {
 					FileEntity file = new FileEntity();
 					file.contentType = item.getContentType();
 					file.bytes = IOUtil.toByteArray(stream);
-					String fileId = nextId(item.getName());
+					//String fileId = nextId(item.getName());
+					String fileId = nextId();
 					files.put(fileId, file);
 					//out.print(req.getServletPath() + "/" + fileId);
 					out.print(req.getRequestURL() + "/" + fileId);
