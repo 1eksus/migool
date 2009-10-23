@@ -34,8 +34,9 @@ public class UploadServlet extends HttpServlet {
 		byte[] bytes;
 	}
 
-	private static final int MAX_FILES = 1000;
-	private int currentFile = 0;
+	private static final int MAX_FILES = 500;
+	private static final int FIRST_FILE = 0;
+	private int currentFile = FIRST_FILE;
 	private final HashMap<String, FileEntity> files = new HashMap<String, FileEntity>();
 
 	/**
@@ -44,9 +45,9 @@ public class UploadServlet extends HttpServlet {
 	 * @return
 	 */
 	private String nextId(String fileName) {
-		currentFile = files.size();
+		//currentFile = files.size();
 		if (currentFile >= MAX_FILES) {
-			currentFile = 0;
+			currentFile = FIRST_FILE;
 		}
 //		String name = (new File(fileName)).getName();
 //		int pos = name.lastIndexOf('.');
@@ -54,7 +55,7 @@ public class UploadServlet extends HttpServlet {
 //			return files.size() + name.substring(pos, name.length());
 //		} else {
 			//return files.size() + "";
-			return currentFile + "";
+			return currentFile++ + "";
 //		}
 	}
 
