@@ -17,6 +17,7 @@ import com.google.gwt.user.client.ui.FlexTable;
 public class PostResultWidget extends FlexTable {
 	private final PostServiceAsync service;
 	private final Map<String, HostConfigSerializable> hosts = new HashMap<String, HostConfigSerializable>();
+	//private final Map<String, HostConfigSerializable> hosts = new Hashtable<String, HostConfigSerializable>();
 
 	/**
 	 * 
