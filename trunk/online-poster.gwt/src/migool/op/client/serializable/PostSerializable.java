@@ -25,7 +25,7 @@ public class PostSerializable implements Serializable {
 	public String format;
 	public String language;
 	public String size;
-	//public List<Image> screens; // TODO
+	public List<String> screens;
 	public String fileLinks;
 	public String tags;
 
