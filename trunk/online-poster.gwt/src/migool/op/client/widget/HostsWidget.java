@@ -261,13 +261,12 @@ public final class HostsWidget extends FlexTable {
 			public void onValueChange(ValueChangeEvent<Boolean> event) {
 				if (hc != null) {
 					hc.enabled = event.getValue();
-					final String host = hc.host;
 					service.setHostConfig(hc, new AsyncCallback<Void>() {
 
 						@Override
 						public void onSuccess(Void result) {
 							changeRow(row, hc);
-							hostConfigs.put(host, hc);
+							hostConfigs.put(hc.host, hc);
 						}
 
 						@Override
