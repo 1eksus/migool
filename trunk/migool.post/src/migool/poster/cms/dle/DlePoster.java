@@ -37,7 +37,7 @@ import migool.host.auth.LoginPassword;
 import migool.host.auth.LoginResponse;
 import migool.http.client.HttpClientFactory;
 import migool.post.internal.Image;
-import migool.post.tag.TagUtil;
+import migool.post.util.PostUtil;
 import migool.poster.PostResponse;
 import migool.share.image.IImageShare;
 import migool.share.image.ImageShareResponse;
@@ -154,7 +154,7 @@ public final class DlePoster implements IDlePoster, IImageShare {
 		// tags
 		input = form.getInputTag(IDleConstants.TAGS);
 		if (input != null) {
-			params.put(input.getAttribute(NAME), TagUtil.toString(post.tags));
+			params.put(input.getAttribute(NAME), PostUtil.toString(post.tags));
 		}
 		// short story
 		nl = form.getFormTextareas();
