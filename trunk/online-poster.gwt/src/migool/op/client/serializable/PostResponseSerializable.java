@@ -12,10 +12,14 @@ public class PostResponseSerializable implements Serializable {
 	public static final int OK = 0;
 	public static final int ERROR = 1;
 	public static final int NOT_POSTED = 2;
-
+	
 	public int code;
 	public String message;
 	public String url;
+	
+	public PostResponseSerializable() {
+		this(0, null, null);
+	}
 
 	public PostResponseSerializable(int code, String message, String url) {
 		this.code = code;
