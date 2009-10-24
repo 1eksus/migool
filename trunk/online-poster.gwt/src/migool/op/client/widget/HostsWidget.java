@@ -10,6 +10,8 @@ import migool.op.client.serializable.HostConfigSerializable;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
+import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
@@ -249,10 +251,33 @@ public final class HostsWidget extends FlexTable {
 	 * @param col
 	 * @param hc
 	 */
-	private final void changeRow(int row, final HostConfigSerializable hc) {
+	private final void changeRow(final int row, final HostConfigSerializable hc) {
 		int i = 1;
-		CheckBox cb = new CheckBox();
-		cb.setEnabled(false);
+		final CheckBox cb = new CheckBox();
+		//cb.setEnabled(false);
+		cb.addValueChangeHandler(new ValueChangeHandler<Boolean>() {
+			
+			@Override
+			public void onValueChange(ValueChangeEvent<Boolean> event) {
+				if (hc != null) {
+					hc.enabled = event.getValue();
+					final String host = hc.host;
+					service.setHostConfig(hc, new AsyncCallback<Void>() {
+
+						@Override
+						public void onSuccess(Void result) {
+							changeRow(row, hc);
+							hostConfigs.put(host, hc);
+						}
+
+						@Override
+						public void onFailure(Throwable caught) {
+							// TODO Auto-generated method stub
+						}
+					});
+				}
+			}
+		});
 		if (hc != null) {
 			setWidget(row, i++, new HTML(hc.username));
 			setWidget(row, i++, new HTML(hc.password));
