@@ -9,6 +9,7 @@ import migool.host.auth.LoginResponse;
 import migool.post.Post;
 import migool.poster.IPoster;
 import migool.poster.PostResponse;
+import migool.poster.PosterInfo;
 
 /**
  * 
@@ -32,6 +33,12 @@ public class _4ppcNet implements IPoster {
 
 	@Override
 	public LoginResponse login(LoginPassword lp) throws ClientProtocolException, IOException, Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PosterInfo getPosterInfo() {
 		// TODO Auto-generated method stub
 		return null;
 	}

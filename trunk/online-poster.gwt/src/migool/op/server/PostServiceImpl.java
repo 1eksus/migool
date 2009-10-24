@@ -22,7 +22,6 @@ import migool.post.Post;
 import migool.post.category.Categories;
 import migool.post.category.Category;
 import migool.poster.IPoster;
-import migool.poster.PostResponse;
 import migool.poster.Posters;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -34,10 +33,10 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
  */
 @SuppressWarnings("serial")
 public class PostServiceImpl extends RemoteServiceServlet implements PostService {
-	
+
 	static {
 		HttpClientFactory.setDefault(new HttpClientFactory() {
-			
+
 			@Override
 			public HttpClient newHttpClient() {
 				return new DefaultHttpClient(new GAEConnectionManager(), new BasicHttpParams());
@@ -72,42 +71,37 @@ public class PostServiceImpl extends RemoteServiceServlet implements PostService
 
 	@Override
 	public void setPost(PostSerializable clientPost) {
-		this.post.title = clientPost.title;
-		this.post.title = clientPost.title;
-		this.post.url = clientPost.url;
+		Post post = new Post();
+		post.title = clientPost.title;
+		post.title = clientPost.title;
+		post.url = clientPost.url;
 		// TODO
 		// public List<String> categories;
-		// public Image image; // TODO
-
-//		try {
-//			Image image = new Image();
-//			image.fileName = clientPost.image;
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
 		post.image = getImage(clientPost.imageUrl, "image");
 		System.out.println(post.image);
 
-		this.post.begStory = clientPost.begStory;
-		this.post.endStory = clientPost.endStory;
+		post.begStory = clientPost.begStory;
+		post.endStory = clientPost.endStory;
 
-		this.post.name = clientPost.name;
-		this.post.originalName = clientPost.originalName;
-		this.post.version = clientPost.version;
-		this.post.year = clientPost.year;
-		this.post.format = clientPost.format;
-		this.post.language = clientPost.language;
-		this.post.size = clientPost.size;
+		post.name = clientPost.name;
+		post.originalName = clientPost.originalName;
+		post.version = clientPost.version;
+		post.year = clientPost.year;
+		post.format = clientPost.format;
+		post.language = clientPost.language;
+		post.size = clientPost.size;
 		// public List<Image> screens; // TODO
 		// public String fileLinks;
-		// public String tags;
+		post.tags = clientPost.tags;
 
 		// Warez
-		this.post.developer = clientPost.developer;
-		this.post.os = clientPost.os;
-		this.post.platform = clientPost.platform;
-		this.post.free = clientPost.free;
-		this.post.crack = clientPost.crack;
+		post.developer = clientPost.developer;
+		post.os = clientPost.os;
+		post.platform = clientPost.platform;
+		post.free = clientPost.free;
+		post.crack = clientPost.crack;
+
+		this.post = post;
 	}
 
 	@Override
@@ -128,8 +122,6 @@ public class PostServiceImpl extends RemoteServiceServlet implements PostService
 
 	@Override
 	public PostResponseSerializable post(String host) {
-		// TODO Auto-generated method stub
-		PostResponse response = posters.get(host).post(post);
-		return toPostResponseSerializable(response);
+		return toPostResponseSerializable(posters.get(host).post(post));
 	}
 }
