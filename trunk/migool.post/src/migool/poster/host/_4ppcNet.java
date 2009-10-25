@@ -21,7 +21,7 @@ public class _4ppcNet implements IPoster {
 	public static final String HOST = "4ppc.net";
 
 	@Override
-	public PostResponse post(Post post) {
+	public PostResponse post(Post post, PosterInfo info) {
 		// TODO Auto-generated method stub
 		return null;
 	}

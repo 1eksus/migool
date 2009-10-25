@@ -21,7 +21,7 @@ public class _44ukRu implements IPoster {
 	public static final String HOST = "44uk.ru";
 
 	@Override
-	public PostResponse post(Post post) {
+	public PostResponse post(Post post, PosterInfo info) {
 		// TODO Auto-generated method stub
 		return null;
 	}

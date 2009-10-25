@@ -20,5 +20,5 @@ public interface IPoster extends IHostClient {
 	 * @param post
 	 * @return
 	 */
-	PostResponse post(Post post);
+	PostResponse post(Post post, PosterInfo info);
 }

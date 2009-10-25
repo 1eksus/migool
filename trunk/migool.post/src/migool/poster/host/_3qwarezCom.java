@@ -21,7 +21,7 @@ public class _3qwarezCom implements IPoster {
 	public static final String HOST = "3qwarez.com";
 
 	@Override
-	public PostResponse post(Post post) {
+	public PostResponse post(Post post, PosterInfo info) {
 		// TODO Auto-generated method stub
 		return null;
 	}
