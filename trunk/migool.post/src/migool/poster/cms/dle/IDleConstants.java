@@ -32,5 +32,7 @@ public interface IDleConstants {
 	public static final String ADD = "add";
 	public static final String MOD = "mod";
 	
-	public static final String[] ERROR_MESSAGES = new String[] {"Внимание, обнаружена ошибка", "ANTISPAM: User ID not valid"}; 
+	public static final String NVIEW = "nview";
+	
+	public static final String[] ERROR_MESSAGES = new String[] {"пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ", "ANTISPAM: User ID not valid"}; 
 }

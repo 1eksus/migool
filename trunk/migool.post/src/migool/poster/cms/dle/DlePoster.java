@@ -71,7 +71,8 @@ public final class DlePoster implements IDlePoster, IImageShare {
 	}
 
 	public LoginResponse login(LoginPassword lp) throws ClientProtocolException, IOException, Exception {
-		String html = clientW.getToString(site);
+		String url = site;
+		String html = clientW.getToString(url);
 
 		FormTag form = getLoginForm(html);
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -86,10 +87,10 @@ public final class DlePoster implements IDlePoster, IImageShare {
 		}
 		setHiddenInputs(form, params);
 
-		HttpPost request = new HttpPost(site);
+		HttpPost request = new HttpPost(url);
 		request.setEntity(new UrlEncodedFormEntity(params));
 		clientW.requestToVoid(request);
-		html = clientW.getToString(site);
+		html = clientW.getToString(url);
 		return (html.contains(login)) ? new LoginResponse(LoginResponse.OK) : new LoginResponse(LoginResponse.ERROR);
 	}
 
@@ -127,12 +128,12 @@ public final class DlePoster implements IDlePoster, IImageShare {
 		String url = postUrl;
 		String html = clientW.getToString(url);
 
-		FormTag form = (FormTag) (new Parser(html)).parse(new AndFilter(new TagNameFilter("form"), new HasAttributeFilter(NAME, ENTRYFORM))).elementAt(0);
+		FormTag form = (FormTag) (new Parser(html)).parse(new AndFilter(new TagNameFilter(FORM), new HasAttributeFilter(NAME, ENTRYFORM))).elementAt(0);
 		Map<String, String> params = new HashMap<String, String>();
 
 		// filling for default values:
 		setHiddenInputs(form, params);
-		NodeList nl = getNotHiddenInputs(form).extractAllNodesThatMatch(new NotFilter(new HasAttributeFilter(NAME, "nview")));
+		NodeList nl = getNotHiddenInputs(form).extractAllNodesThatMatch(new NotFilter(new HasAttributeFilter(NAME, NVIEW)));
 		setInputs(nl, params);
 
 		// filling post:
@@ -187,6 +188,7 @@ public final class DlePoster implements IDlePoster, IImageShare {
 		request.setEntity(new UrlEncodedFormEntity(toListNameValuePair(params), clientW.getCharset()));
 		request.setHeader(REFERER, url);
 		html = clientW.requestToString(request);
+
 		System.out.println(html);
 		if (StringUtil.contains(html, ERROR_MESSAGES)) {
 			return new PostResponse(PostResponse.NOT_POSTED, null);

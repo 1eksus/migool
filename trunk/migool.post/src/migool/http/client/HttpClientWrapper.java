@@ -21,6 +21,10 @@ public final class HttpClientWrapper {
 	private final HttpClient client;
 	private String charset;
 	private boolean isFirstRequest = true;
+	
+	public HttpClientWrapper() {
+		this(HttpClientFactory.get().newHttpClient());
+	}
 
 	/**
 	 * 
