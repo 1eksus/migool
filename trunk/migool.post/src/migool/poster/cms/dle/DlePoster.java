@@ -59,10 +59,15 @@ public final class DlePoster implements IDlePoster, IImageShare {
 	private final String site;
 	private final HttpClient client;
 
+	private String postUrl;
+	private String uploadUrl;
+
 	public DlePoster(String host) {
 		this.host = host;
 		this.site = LinkUtil.createHttpRoot(host);
 		this.client = HttpClientFactory.get().newHttpClient();
+		postUrl = site + IDleConstants.ADD_NEWS_PATH;
+		uploadUrl = site + IDleConstants.UPLOAD_PATH;
 	}
 
 	public LoginResponse login(LoginPassword lp) throws ClientProtocolException, IOException, Exception {
@@ -91,7 +96,7 @@ public final class DlePoster implements IDlePoster, IImageShare {
 	}
 
 	public ImageShareResponse upload(Image img) throws ClientProtocolException, IOException, Exception {
-		String url = site + IDleConstants.UPLOAD_PATH;
+		String url = uploadUrl;
 		HttpUriRequest request = new HttpGet(url);
 		HttpResponse response = client.execute(request);
 		String html = IOUtil.toString(response.getEntity().getContent());
@@ -117,8 +122,14 @@ public final class DlePoster implements IDlePoster, IImageShare {
 		return ret;
 	}
 
-	public PostResponse post(IDlePost post) throws ClientProtocolException, IOException, Exception {
-		String url = site + IDleConstants.ADD_NEWS_PATH;
+	@Override
+	public PosterInfo getPosterInfo() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public PostResponse post(IDlePost post, PosterInfo info) throws ClientProtocolException, IOException, Exception {
+		String url = postUrl;
 		HttpGet get = new HttpGet(url);
 		HttpResponse response = client.execute(get);
 		String html = IOUtil.toString(response.getEntity().getContent());
@@ -197,11 +208,5 @@ public final class DlePoster implements IDlePoster, IImageShare {
 
 	public String getHost() {
 		return host;
-	}
-
-	@Override
-	public PosterInfo getPosterInfo() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 }
