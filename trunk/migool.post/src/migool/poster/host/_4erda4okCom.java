@@ -10,6 +10,7 @@ import migool.post.Post;
 import migool.poster.IPoster;
 import migool.poster.PostResponse;
 import migool.poster.PosterInfo;
+import migool.poster.cms.dle.DlePoster;
 
 /**
  * 
@@ -19,6 +20,8 @@ import migool.poster.PosterInfo;
 public class _4erda4okCom implements IPoster {
 
 	public static final String HOST = "4erda4ok.com";
+
+	private final DlePoster poster = new DlePoster(HOST);
 
 	@Override
 	public PostResponse post(Post post, PosterInfo info) {
@@ -33,13 +36,11 @@ public class _4erda4okCom implements IPoster {
 
 	@Override
 	public LoginResponse login(LoginPassword lp) throws ClientProtocolException, IOException, Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return poster.login(lp);
 	}
 
 	@Override
 	public PosterInfo getPosterInfo() {
-		// TODO Auto-generated method stub
-		return null;
+		return poster.getPosterInfo();
 	}
 }

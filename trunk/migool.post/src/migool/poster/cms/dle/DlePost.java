@@ -8,7 +8,7 @@ import migool.post.category.Category;
 /**
  * 
  * @author Denis Migol
- *
+ * 
  */
 public class DlePost {
 	public String title;
@@ -20,6 +20,6 @@ public class DlePost {
 	public String fullStory;
 
 	public List<String> tags;
-	
+
 	public Properties inputs;
 }

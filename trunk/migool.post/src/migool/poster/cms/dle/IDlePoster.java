@@ -22,7 +22,7 @@ public interface IDlePoster extends ICMSPoster {
 	 * @throws IOException 
 	 * @throws ClientProtocolException 
 	 */
-	PostResponse post(DlePost post) throws ClientProtocolException, IOException, Exception;
+	PostResponse post(IDlePost post) throws ClientProtocolException, IOException, Exception;
 
 	/**
 	 * 

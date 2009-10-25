@@ -118,15 +118,13 @@ public final class DlePoster implements IDlePoster, IImageShare {
 		return ret;
 	}
 
-	public PostResponse post(DlePost post) throws ClientProtocolException, IOException, Exception {
+	public PostResponse post(IDlePost post) throws ClientProtocolException, IOException, Exception {
 		String url = site + IDleConstants.ADD_NEWS_PATH;
 		HttpGet get = new HttpGet(url);
 		HttpResponse response = client.execute(get);
 		String html = IOUtil.toString(response.getEntity().getContent());
 
 		FormTag form = (FormTag) (new Parser(html)).parse(new AndFilter(new TagNameFilter("form"), new HasAttributeFilter(NAME, IDleConstants.ENTRYFORM))).elementAt(0);
-		//List<String> names = getNameAttributeValues(getChildTags(form, Arrays.asList(new String[]{"input", "select", "textarea"})));
-//		System.out.println(names);
 		Map<String, String> params = new HashMap<String, String>();
 
 		// filling for default values:
@@ -138,12 +136,12 @@ public final class DlePoster implements IDlePoster, IImageShare {
 		// title
 		InputTag input = form.getInputTag(IDleConstants.TITLE);
 		if (input != null) {
-			params.put(input.getAttribute(NAME), post.title);
+			params.put(input.getAttribute(NAME), post.getTitle());
 		}
 		// URL
 		input = form.getInputTag(IDleConstants.ALT_NAME);
 		if (input != null) {
-			params.put(input.getAttribute(NAME), post.url);
+			params.put(input.getAttribute(NAME), post.getUrl());
 		}
 		// TODO category
 		SelectTag select = (SelectTag) form.getChildren().extractAllNodesThatMatch(new HasAttributeFilter(NAME, "catlist[]"), true).elementAt(0);
@@ -155,21 +153,21 @@ public final class DlePoster implements IDlePoster, IImageShare {
 		// tags
 		input = form.getInputTag(IDleConstants.TAGS);
 		if (input != null) {
-			params.put(input.getAttribute(NAME), PostUtil.toString(post.tags));
+			params.put(input.getAttribute(NAME), PostUtil.toString(post.getTags()));
 		}
 		// short story
 		nl = form.getFormTextareas();
 		TextareaTag textarea = (TextareaTag) nl.extractAllNodesThatMatch(new HasAttributeFilter(NAME, IDleConstants.SHORT_STORY)).elementAt(0);
 		if (textarea != null) {
-			params.put(textarea.getAttribute(NAME), post.shortStory);
+			params.put(textarea.getAttribute(NAME), post.getShortStory());
 		}
 		// full story
 		textarea = (TextareaTag) nl.extractAllNodesThatMatch(new HasAttributeFilter(NAME, IDleConstants.FULL_STORY)).elementAt(0);
 		if (textarea != null) {
-			params.put(textarea.getAttribute(NAME), post.fullStory);
+			params.put(textarea.getAttribute(NAME), post.getFullStory());
 		}
 		// other inputs
-		Properties inputs = post.inputs;
+		Properties inputs = post.getInputs();
 		if (inputs != null) {
 			String k = null;
 			for (Object key : inputs.keySet()) {
@@ -180,15 +178,6 @@ public final class DlePoster implements IDlePoster, IImageShare {
 				}
 			}
 		}
-
-//		// convert into request
-//		List<NameValuePair> p = new ArrayList<NameValuePair>(names.size());
-//		for (String name : names) {
-//			String value = params.get(name);
-//			if (value != null) {
-//				p.add(new BasicNameValuePair(name, params.get(name)));
-//			}
-//		}
 
 		// do request
 		HttpPost request = new HttpPost(url);
