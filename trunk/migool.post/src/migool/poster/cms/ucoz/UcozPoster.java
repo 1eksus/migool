@@ -66,7 +66,7 @@ public class UcozPoster implements ICMSPoster {
 		// this.client = new DefaultHttpClient();
 		this.client = HttpClientFactory.newInstance().newHttpClient();
 	}
-	
+
 	public LoginResponse login(LoginPassword lp) throws ClientProtocolException, IOException, Exception {
 		HttpGet get = new HttpGet(site);
 		HttpResponse response = client.execute(get);
@@ -74,7 +74,7 @@ public class UcozPoster implements ICMSPoster {
 
 		// fill the form
 		FormTag form = HtmlParserUtil.getLoginForm(html);
-		//List<NameValuePair> params = new ArrayList<NameValuePair>();
+		// List<NameValuePair> params = new ArrayList<NameValuePair>();
 		Map<String, String> params = new HashMap<String, String>();
 		boolean isUserOff = false;
 		if (form == null) {
@@ -85,7 +85,7 @@ public class UcozPoster implements ICMSPoster {
 			if (form == null) {
 				return new LoginResponse(LoginResponse.ERROR);
 			}
-			//params.add(new BasicNameValuePair("t", "1"));
+			// params.add(new BasicNameValuePair("t", "1"));
 			params.put("t", "1");
 			NodeList scripts = form.getChildren().extractAllNodesThatMatch(SCRIPT_FILTER, true);
 			for (int i = 0; i < scripts.size(); i++) {
@@ -94,22 +94,24 @@ public class UcozPoster implements ICMSPoster {
 					String rx = (new Regex(script, "(?<=_dC\\(\\').*(?=\\'\\)\\;)")).getMatches()[0][0];
 					rx = rx.replace("\\'", "\'");
 					InputTag input = (InputTag) (new Parser(_dC(rx))).parse(new TagNameFilter("input")).elementAt(0);
-					//params.add(new BasicNameValuePair(input.getAttribute(NAME), input.getAttribute(VALUE)));
+					// params.add(new
+					// BasicNameValuePair(input.getAttribute(NAME),
+					// input.getAttribute(VALUE)));
 					params.put(input.getAttribute(NAME), input.getAttribute(VALUE));
 				}
 			}
 		}
 		HtmlParserUtil.setHiddenInputs(form, params);
 		params.put("a", "2");
-		//params.add(new BasicNameValuePair("user", lp.getLogin()));
+		// params.add(new BasicNameValuePair("user", lp.getLogin()));
 		params.put("user", lp.getLogin());
-		//params.add(new BasicNameValuePair("password", lp.getPassword()));
+		// params.add(new BasicNameValuePair("password", lp.getPassword()));
 		params.put("password", lp.getPassword());
 
 		HttpPost request = new HttpPost(site + LOGIN_POST_PATH);
 		request.setEntity(new UrlEncodedFormEntity(toListNameValuePair(params)));
 		html = IOUtil.toString(client.execute(request).getEntity().getContent());
-		//client.execute(request);
+		// client.execute(request);
 
 		html = IOUtil.toString(client.execute(get).getEntity().getContent());
 		if (isUserOff) {
@@ -211,17 +213,20 @@ public class UcozPoster implements ICMSPoster {
 		HttpGet get = new HttpGet(url);
 		HttpResponse response = client.execute(get);
 		String html = IOUtil.toString(response.getEntity().getContent());
-		FormTag form = (FormTag)(new Parser(html)).extractAllNodesThatMatch(new AndFilter(new TagNameFilter("form"), new HasAttributeFilter("name", ADDFORM))).elementAt(0);
+		FormTag form = (FormTag) (new Parser(html)).extractAllNodesThatMatch(
+				new AndFilter(new TagNameFilter("form"), new HasAttributeFilter("name", ADDFORM))).elementAt(0);
 		if (form == null) {
 			return new PostResponse(PostResponse.ERROR, null);
 		}
-		//List<String> names = getNameAttributeValues(getChildTags(form, Arrays.asList(new String[]{"input", "select", "textarea"})));
+		// List<String> names = getNameAttributeValues(getChildTags(form,
+		// Arrays.asList(new String[]{"input", "select", "textarea"})));
 		MultipartEntity entity = new MultipartEntity();
 		Map<String, String> params = new HashMap<String, String>();
 
 		// filling for default values:
 		setHiddenInputs(form, params);
-		NodeList nl = getNotHiddenInputs(form).extractAllNodesThatMatch(new NotFilter(new HasAttributeFilter("name", "nview")));
+		NodeList nl = getNotHiddenInputs(form).extractAllNodesThatMatch(
+				new NotFilter(new HasAttributeFilter("name", "nview")));
 		setInputs(nl, params);
 
 		// filling post
@@ -290,10 +295,11 @@ public class UcozPoster implements ICMSPoster {
 		fillInputCheckbox(params, form, COMS_ALLOWED, post.coms_allowed);
 
 		// do request
-		//HttpPost request = new HttpPost(url);
+		// HttpPost request = new HttpPost(url);
 		HttpPost request = new HttpPost(form.extractFormLocn());
 		// TODO charset detection ?
-		//request.setEntity(new UrlEncodedFormEntity(toListNameValuePair(names, params), "UTF-8"));
+		// request.setEntity(new UrlEncodedFormEntity(toListNameValuePair(names,
+		// params), "UTF-8"));
 		fillParams(entity, params);
 		request.setEntity(entity);
 		request.setHeader("Referer", url);

@@ -39,6 +39,7 @@ import migool.http.client.HttpClientFactory;
 import migool.post.internal.Image;
 import migool.post.util.PostUtil;
 import migool.poster.PostResponse;
+import migool.poster.PosterInfo;
 import migool.share.image.IImageShare;
 import migool.share.image.ImageShareResponse;
 import migool.util.EmptyChecker;
@@ -208,5 +209,11 @@ public final class DlePoster implements IDlePoster, IImageShare {
 
 	public String getHost() {
 		return host;
+	}
+
+	@Override
+	public PosterInfo getPosterInfo() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
