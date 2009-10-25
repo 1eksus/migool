@@ -8,6 +8,8 @@ import migool.util.EmptyChecker;
  *
  */
 public final class HttpClientUtil {
+	public static final String REFERER = "Referer";
+	
 	private static final String CHARSET = "charset=";
 
 	private HttpClientUtil() {

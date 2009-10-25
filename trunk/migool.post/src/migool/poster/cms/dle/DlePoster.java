@@ -1,5 +1,7 @@
 package migool.poster.cms.dle;
 
+import static migool.poster.cms.dle.IDleConstants.*;
+import static migool.util.HttpUtil.*;
 import static migool.util.HtmlParserUtil.*;
 
 import java.io.ByteArrayInputStream;
@@ -51,7 +53,6 @@ import migool.util.StringUtil;
  *
  */
 public final class DlePoster implements IDlePoster, IImageShare {
-
 	private String host;
 	private final String site;
 	private final HttpClient client;
@@ -65,8 +66,8 @@ public final class DlePoster implements IDlePoster, IImageShare {
 		this.site = LinkUtil.createHttpRoot(host);
 		this.client = HttpClientFactory.get().newHttpClient();
 		clientW = new HttpClientWrapper(client);
-		postUrl = site + IDleConstants.ADD_NEWS_PATH;
-		uploadUrl = site + IDleConstants.UPLOAD_PATH;
+		postUrl = site + ADD_NEWS_PATH;
+		uploadUrl = site + UPLOAD_PATH;
 	}
 
 	public LoginResponse login(LoginPassword lp) throws ClientProtocolException, IOException, Exception {
@@ -74,12 +75,12 @@ public final class DlePoster implements IDlePoster, IImageShare {
 
 		FormTag form = getLoginForm(html);
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
-		InputTag input = getInputTag(form, IDleConstants.LOGIN_INPUTS);
+		InputTag input = getInputTag(form, LOGIN_INPUTS);
 		String login = lp.getLogin();
 		if (input != null) {
 			params.add(new BasicNameValuePair(input.getAttribute(NAME), login));
 		}
-		input = getInputTag(form, IDleConstants.PASS_INPUTS);
+		input = getInputTag(form, PASS_INPUTS);
 		if (input != null) {
 			params.add(new BasicNameValuePair(input.getAttribute(NAME), lp.getPassword()));
 		}
@@ -126,7 +127,7 @@ public final class DlePoster implements IDlePoster, IImageShare {
 		String url = postUrl;
 		String html = clientW.getToString(url);
 
-		FormTag form = (FormTag) (new Parser(html)).parse(new AndFilter(new TagNameFilter("form"), new HasAttributeFilter(NAME, IDleConstants.ENTRYFORM))).elementAt(0);
+		FormTag form = (FormTag) (new Parser(html)).parse(new AndFilter(new TagNameFilter("form"), new HasAttributeFilter(NAME, ENTRYFORM))).elementAt(0);
 		Map<String, String> params = new HashMap<String, String>();
 
 		// filling for default values:
@@ -136,12 +137,12 @@ public final class DlePoster implements IDlePoster, IImageShare {
 
 		// filling post:
 		// title
-		InputTag input = form.getInputTag(IDleConstants.TITLE);
+		InputTag input = form.getInputTag(TITLE);
 		if (input != null) {
 			params.put(input.getAttribute(NAME), post.getTitle());
 		}
 		// URL
-		input = form.getInputTag(IDleConstants.ALT_NAME);
+		input = form.getInputTag(ALT_NAME);
 		if (input != null) {
 			params.put(input.getAttribute(NAME), post.getUrl());
 		}
@@ -153,18 +154,18 @@ public final class DlePoster implements IDlePoster, IImageShare {
 			params.put("catlist[]", "1");
 		}
 		// tags
-		input = form.getInputTag(IDleConstants.TAGS);
+		input = form.getInputTag(TAGS);
 		if (input != null) {
 			params.put(input.getAttribute(NAME), PostUtil.toString(post.getTags()));
 		}
 		// short story
 		nl = form.getFormTextareas();
-		TextareaTag textarea = (TextareaTag) nl.extractAllNodesThatMatch(new HasAttributeFilter(NAME, IDleConstants.SHORT_STORY)).elementAt(0);
+		TextareaTag textarea = (TextareaTag) nl.extractAllNodesThatMatch(new HasAttributeFilter(NAME, SHORT_STORY)).elementAt(0);
 		if (textarea != null) {
 			params.put(textarea.getAttribute(NAME), post.getShortStory());
 		}
 		// full story
-		textarea = (TextareaTag) nl.extractAllNodesThatMatch(new HasAttributeFilter(NAME, IDleConstants.FULL_STORY)).elementAt(0);
+		textarea = (TextareaTag) nl.extractAllNodesThatMatch(new HasAttributeFilter(NAME, FULL_STORY)).elementAt(0);
 		if (textarea != null) {
 			params.put(textarea.getAttribute(NAME), post.getFullStory());
 		}
@@ -184,13 +185,13 @@ public final class DlePoster implements IDlePoster, IImageShare {
 		// do request
 		HttpPost request = new HttpPost(url);
 		request.setEntity(new UrlEncodedFormEntity(toListNameValuePair(params), clientW.getCharset()));
-		request.setHeader("Referer", url);
+		request.setHeader(REFERER, url);
 		html = clientW.requestToString(request);
 		System.out.println(html);
-		if (StringUtil.contains(html, IDleConstants.ERROR_MESSAGES)) {
+		if (StringUtil.contains(html, ERROR_MESSAGES)) {
 			return new PostResponse(PostResponse.NOT_POSTED, null);
 		}
-		form = (FormTag) (new Parser(html)).parse(new AndFilter(new TagNameFilter("form"), new HasAttributeFilter(NAME, IDleConstants.ENTRYFORM))).elementAt(0);
+		form = (FormTag) (new Parser(html)).parse(new AndFilter(new TagNameFilter("form"), new HasAttributeFilter(NAME, ENTRYFORM))).elementAt(0);
 
 		return (form == null) ? new PostResponse(PostResponse.OK, null): new PostResponse(PostResponse.NOT_POSTED, null);
 	}
