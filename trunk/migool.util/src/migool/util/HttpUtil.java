@@ -16,21 +16,18 @@ import migool.util.StringUtil;
  * 
  */
 public final class HttpUtil {
-//	public static final String METHOD_GET = "GET";
-//	public static final String METHOD_POST = "POST";
-//	public static final String METHOD_HEAD = "HEAD";
-//	public static final String METHOD_OPTIONS = "OPTIONS";
-//	public static final String METHOD_PUT = "PUT";
-//	public static final String METHOD_DELETE = "DELETE";
-//	public static final String METHOD_TRACE = "TRACE";
-//
 	public static final String CONTENT_LENGTH = "Content-Length";
+	
+	public static final String REFERER = "Referer";
 
 	public static final String COOKIE = "Cookie";
 
 	public static final String SET_COOKIE = "Set-Cookie";
 	public static final String SEMICOLON = ";";
 	public static final String COOKIES_SEPARATOR = "; ";
+	
+	private HttpUtil() {
+	}
 
 	public static String getCookies(HttpURLConnection connection) {
 		StringBuilder cookies = new StringBuilder();
