@@ -1,6 +1,12 @@
 package migool.poster.cms.dle.test;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Properties;
+
 import migool.host.auth.LoginPassword;
+import migool.post.category.Category;
+import migool.poster.cms.dle.IDlePost;
 
 /**
  * 
@@ -22,4 +28,44 @@ public interface IConstants {
 	
 	//
 	public static final LoginPassword LOGIN_PASSWORD = new LoginPassword(LOGIN, PASS);
+	
+	public IDlePost POST = new IDlePost() {
+		
+		@Override
+		public String getUrl() {
+			return "урла";
+		}
+		
+		@Override
+		public String getTitle() {
+			return "заголовок";
+		}
+		
+		@Override
+		public List<String> getTags() {
+			return Arrays.asList(new String[]{"тэг_1", "тэг_2", "тэг 3"});
+		}
+		
+		@Override
+		public String getShortStory() {
+			return "краткая новость";
+		}
+		
+		@Override
+		public Properties getInputs() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+		
+		@Override
+		public String getFullStory() {
+			return "полная новость";
+		}
+		
+		@Override
+		public List<Category> getCategories() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+	};
 }

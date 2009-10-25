@@ -1,6 +1,6 @@
 package migool.http.client;
 
-import org.apache.http.client.methods.HttpUriRequest;
+import migool.util.EmptyChecker;
 
 /**
  * 
@@ -8,15 +8,20 @@ import org.apache.http.client.methods.HttpUriRequest;
  *
  */
 public final class HttpClientUtil {
+	private static final String CHARSET = "charset=";
+
 	private HttpClientUtil() {
 	}
 
-	/**
-	 * 
-	 * @param request
-	 * @return
-	 */
-	public static final String requestToString(HttpUriRequest request) {
-		return null;
+	public static final String parseCharset(String string) {
+		if (EmptyChecker.isNotNullOrEmpty(string) && string.contains(CHARSET)) {
+			return string.substring(string.lastIndexOf(CHARSET) + CHARSET.length(), string.length());
+		} else {
+			return null;
+		}
+	}
+	
+	public static void main(String[] args) {
+		System.out.println(parseCharset("text/html; charset=windows-1251"));
 	}
 }
