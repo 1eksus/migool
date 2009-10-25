@@ -13,4 +13,9 @@ public class ImageEntity extends FileEntity {
 	public static final String PNG = "png";
 
 	public String type;
+
+	public ImageEntity(byte[] bytes, String fileName, String type) {
+		super(bytes, fileName);
+		this.type = type;
+	}
 }
