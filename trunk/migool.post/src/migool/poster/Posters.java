@@ -8,7 +8,7 @@ import migool.poster.host._4erda4okCom;
 /**
  * 
  * @author Denis Migol
- *
+ * 
  */
 public final class Posters {
 	private Posters() {
@@ -20,11 +20,11 @@ public final class Posters {
 
 	static {
 		put(set, new _4erda4okCom());
-		
+
 		hosts = new ArrayList<String>(set.keySet());
 		posters = new ArrayList<IPoster>(set.values());
 	}
-	
+
 	/**
 	 * 
 	 * @param set
