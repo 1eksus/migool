@@ -62,8 +62,7 @@ public final class DlePoster implements IDlePoster, IImageShare {
 	public DlePoster(String host) {
 		this.host = host;
 		this.site = LinkUtil.createHttpRoot(host);
-		//this.client = new DefaultHttpClient();
-		this.client = HttpClientFactory.newInstance().newHttpClient();
+		this.client = HttpClientFactory.get().newHttpClient();
 	}
 
 	public LoginResponse login(LoginPassword lp) throws ClientProtocolException, IOException, Exception {

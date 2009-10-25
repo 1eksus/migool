@@ -18,7 +18,7 @@ public abstract class HttpClientFactory {
 		}
 	};
 
-	public static final HttpClientFactory newInstance() {
+	public static final HttpClientFactory get() {
 		return defFactory;
 	}
 	
