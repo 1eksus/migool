@@ -41,7 +41,7 @@ public class RedtubeGrabber implements IGrabber {
 
 	public static final String HOST = "redtube.com";
 
-	private HttpClient client = HttpClientFactory.newInstance().newHttpClient();
+	private HttpClient client = HttpClientFactory.get().newHttpClient();
 
 	private URL url;
 
