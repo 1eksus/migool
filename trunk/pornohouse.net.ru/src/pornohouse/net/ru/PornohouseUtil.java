@@ -44,7 +44,7 @@ public final class PornohouseUtil {
 
 	private static final List<Image> toListImage(List<String> urls) {
 		ArrayList<Image> ret = new ArrayList<Image>(urls.size());
-		HttpClient client = HttpClientFactory.newInstance().newHttpClient();
+		HttpClient client = HttpClientFactory.get().newHttpClient();
 		HttpGet get = null;
 		HttpResponse response = null;
 		Image img = null;
