@@ -352,17 +352,23 @@ public final class HtmlParserUtil {
 			//}
 		}
 	}
-	
-	public static final boolean isCategoriesMultiple(SelectTag select) {
+
+	/**
+	 * 
+	 * @param select
+	 * @return
+	 */
+	public static final boolean isMultiple(SelectTag select) {
 		// TODO
 		return false;
 	}
 
 	/**
 	 * 
+	 * @param select
 	 * @return
 	 */
-	public static final Map<String, String> getCategories(SelectTag select) {
+	public static final Map<String, String> getOptionsValues(SelectTag select) {
 		final OptionTag[] options = select.getOptionTags();
 		int size = options.length;
 		OptionTag option = null;
