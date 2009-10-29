@@ -31,7 +31,7 @@ public final class PostServiceUtil {
 	
 	private static final Logger log = Logger.getLogger(PostServiceUtil.class.getName());
 
-	private static final HttpClient client = HttpClientFactory.newInstance().newHttpClient();
+	private static final HttpClient client = HttpClientFactory.get().newHttpClient();
 	
 	private static final HashMap<String, String> contentTypes;
 	
