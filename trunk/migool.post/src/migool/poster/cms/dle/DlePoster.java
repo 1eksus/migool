@@ -38,8 +38,8 @@ import migool.http.client.HttpClientFactory;
 import migool.http.client.HttpClientWrapper;
 import migool.post.internal.Image;
 import migool.post.util.PostUtil;
+import migool.poster.PostInfo;
 import migool.poster.PostResponse;
-import migool.poster.PosterInfo;
 import migool.share.image.IImageShare;
 import migool.share.image.ImageShareResponse;
 import migool.util.EmptyChecker;
@@ -119,12 +119,12 @@ public final class DlePoster implements IDlePoster, IImageShare {
 	}
 
 	@Override
-	public PosterInfo getPosterInfo() {
+	public PostInfo getPostInfo() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public PostResponse post(IDlePost post, PosterInfo info) throws ClientProtocolException, IOException, Exception {
+	public PostResponse post(IDlePost post) throws ClientProtocolException, IOException, Exception {
 		String url = postUrl;
 		String html = clientW.getToString(url);
 

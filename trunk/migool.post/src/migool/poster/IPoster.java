@@ -13,12 +13,12 @@ public interface IPoster extends IHostClient {
 	 * 
 	 * @return
 	 */
-	PosterInfo getPosterInfo();
+	PostInfo getPostInfo();
 
 	/**
 	 * 
 	 * @param post
 	 * @return
 	 */
-	PostResponse post(Post post, PosterInfo info);
+	PostResponse post(Post post);
 }

@@ -1,6 +1,7 @@
 package migool.post;
 
 import java.util.List;
+import java.util.Properties;
 
 import migool.post.category.Category;
 import migool.post.internal.FileLink;
@@ -37,4 +38,6 @@ public class Post {
 	public String platform; // 32/64
 	public boolean free;
 	public boolean crack;
+	
+	public Properties props;
 }

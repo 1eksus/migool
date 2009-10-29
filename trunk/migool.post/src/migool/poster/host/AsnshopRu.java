@@ -8,8 +8,8 @@ import migool.host.auth.LoginPassword;
 import migool.host.auth.LoginResponse;
 import migool.post.Post;
 import migool.poster.IPoster;
+import migool.poster.PostInfo;
 import migool.poster.PostResponse;
-import migool.poster.PosterInfo;
 
 /**
  * 
@@ -19,12 +19,6 @@ import migool.poster.PosterInfo;
 public class AsnshopRu implements IPoster {
 
 	public static final String HOST = "asnshop.ru";
-
-	@Override
-	public PostResponse post(Post post, PosterInfo info) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public String getHost() {
@@ -38,9 +32,14 @@ public class AsnshopRu implements IPoster {
 	}
 
 	@Override
-	public PosterInfo getPosterInfo() {
+	public PostInfo getPostInfo() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	@Override
+	public PostResponse post(Post post) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

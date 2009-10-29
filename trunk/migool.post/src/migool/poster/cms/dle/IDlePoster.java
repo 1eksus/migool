@@ -4,8 +4,8 @@ import java.io.IOException;
 
 import org.apache.http.client.ClientProtocolException;
 
+import migool.poster.PostInfo;
 import migool.poster.PostResponse;
-import migool.poster.PosterInfo;
 import migool.poster.cms.ICMSPoster;
 
 /**
@@ -22,11 +22,11 @@ public interface IDlePoster extends ICMSPoster {
 	 * @throws IOException 
 	 * @throws ClientProtocolException 
 	 */
-	PostResponse post(IDlePost post, PosterInfo info) throws ClientProtocolException, IOException, Exception;
+	PostResponse post(IDlePost post) throws ClientProtocolException, IOException, Exception;
 
 	/**
 	 * 
 	 * @return
 	 */
-	PosterInfo getPosterInfo();
+	PostInfo getPostInfo();
 }
