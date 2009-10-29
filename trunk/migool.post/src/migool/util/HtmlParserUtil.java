@@ -2,6 +2,7 @@ package migool.util;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -350,5 +351,26 @@ public final class HtmlParserUtil {
 				entity.addPart(name, new StringBody(params.get(name)));
 			//}
 		}
+	}
+	
+	public static final boolean isCategoriesMultiple(SelectTag select) {
+		// TODO
+		return false;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public static final Map<String, String> getCategories(SelectTag select) {
+		final OptionTag[] options = select.getOptionTags();
+		int size = options.length;
+		OptionTag option = null;
+		final Map<String, String> values = new HashMap<String, String>();
+		for (int i = 0; i < size; i++) {
+			option = options[i];
+			values.put(option.getValue(), option.getOptionText());
+		}
+		return values;
 	}
 }
