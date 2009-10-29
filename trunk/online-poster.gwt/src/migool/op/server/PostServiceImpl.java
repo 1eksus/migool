@@ -5,24 +5,26 @@ import static migool.op.server.PostServiceUtil.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.TreeMap;
-
-import org.apache.http.client.HttpClient;
-import org.apache.http.conn.GAEConnectionManager;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.params.BasicHttpParams;
 
 import migool.http.client.HttpClientFactory;
 import migool.op.client.PostService;
 import migool.op.client.serializable.HostConfigSerializable;
 import migool.op.client.serializable.PostResponseSerializable;
 import migool.op.client.serializable.PostSerializable;
+import migool.op.client.serializable.PostInfoSerializable;
 import migool.op.server.jdo.JDOUtil;
 import migool.post.Post;
 import migool.post.category.Categories;
 import migool.post.category.Category;
 import migool.poster.IPoster;
 import migool.poster.Posters;
+
+import org.apache.http.client.HttpClient;
+import org.apache.http.conn.GAEConnectionManager;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.BasicHttpParams;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
@@ -121,7 +123,12 @@ public class PostServiceImpl extends RemoteServiceServlet implements PostService
 	}
 
 	@Override
-	public PostResponseSerializable post(String host) {
+	public PostInfoSerializable getPostInfo(String host) {
+		return toPostInfoSerializable(posters.get(host).getPostInfo());
+	}
+
+	@Override
+	public PostResponseSerializable post(String host, Properties props) {
 		return toPostResponseSerializable(posters.get(host).post(post));
 	}
 }

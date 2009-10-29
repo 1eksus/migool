@@ -8,6 +8,8 @@ import java.util.Map;
 import migool.op.client.PostServiceAsync;
 import migool.op.client.serializable.HostConfigSerializable;
 import migool.op.client.serializable.PostResponseSerializable;
+import migool.op.client.serializable.PostInfoSerializable;
+import migool.op.client.widget.CaptchaDialog.Callback;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.FlexTable;
@@ -49,18 +51,40 @@ public class PostResultWidget extends FlexTable {
 		int size = hosts.length;
 		for (int i = 0; i < size; i++) {
 			final String host = hosts[i] + "";
-			service.post(host, new AsyncCallback<PostResponseSerializable>() {
+			service.getPostInfo(host, new AsyncCallback<PostInfoSerializable>() {
 
 				@Override
-				public void onSuccess(PostResponseSerializable result) {
-					addRow(host, result);
+				public void onSuccess(PostInfoSerializable result) {
+					// TODO
+					final CaptchaDialog dialog = new CaptchaDialog("", new Callback() {
+						@Override
+						public void onResult() {
+							final String result = getResult();
+							
+						}
+					});
+					dialog.show();
 				}
 
 				@Override
 				public void onFailure(Throwable caught) {
 					// TODO Auto-generated method stub
+
 				}
 			});
+//			service.post(host, info, new AsyncCallback<PostResponseSerializable>() {
+//
+//				@Override
+//				public void onSuccess(PostResponseSerializable result) {
+//					addRow(host, result);
+//				}
+//
+//				@Override
+//				public void onFailure(Throwable caught) {
+//					// TODO Auto-generated method stub
+//
+//				}
+//			});
 		}
 	}
 
@@ -71,7 +95,7 @@ public class PostResultWidget extends FlexTable {
 		setWidget(0, i++, new HTML("message"));
 		setWidget(0, i++, new HTML("url"));
 	}
-	
+
 	private final String createHttpRoot(String host) {
 		return "http://" + host;
 	}
