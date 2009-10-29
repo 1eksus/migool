@@ -7,12 +7,12 @@ package migool.entity;
  */
 public class CaptchaEntity {
 	public ImageEntity image;
-	public String title;
+	public String text;
 	public String result;
 
-	public CaptchaEntity(ImageEntity image, String title, String result) {
+	public CaptchaEntity(ImageEntity image, String text, String result) {
 		this.image = image;
-		this.title = title;
+		this.text = text;
 		this.result = result;
 	}
 }
