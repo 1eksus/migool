@@ -53,7 +53,7 @@ public class DlePosterTest {
 	 */
 	@Test
 	public void testPost() throws Exception {
-		PostResponse response = poster.post(IConstants.POST, null);
+		PostResponse response = poster.post(IConstants.POST);
 		assertNotNull(response);
 		assertEquals(response.getCode(), PostResponse.OK);
 	}
