@@ -4,7 +4,6 @@ import static migool.op.client.widget.GWTClientUtil.*;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
 
 import migool.op.client.PostServiceAsync;
 import migool.op.client.serializable.HostConfigSerializable;
@@ -60,9 +59,9 @@ public class PostResultWidget extends FlexTable {
 						new CaptchaDialog(result.imageUrl, new Callback() {
 							@Override
 							public void onResult() {
-								Properties props = new Properties();
-								props.put(result.paramName, getResult());
-								doPost(host, props);
+								Map<String, String> params = new HashMap<String, String>();
+								params.put(result.paramName, getResult());
+								doPost(host, params);
 							}
 						}).show();
 					} else {
@@ -79,8 +78,8 @@ public class PostResultWidget extends FlexTable {
 		}
 	}
 
-	private final void doPost(final String host, final Properties props) {
-		service.post(host, props, new AsyncCallback<PostResponseSerializable>() {
+	private final void doPost(final String host, final Map<String, String> params) {
+		service.post(host, params, new AsyncCallback<PostResponseSerializable>() {
 
 			@Override
 			public void onSuccess(PostResponseSerializable result) {

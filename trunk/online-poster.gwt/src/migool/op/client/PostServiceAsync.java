@@ -2,7 +2,6 @@ package migool.op.client;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 
 import migool.op.client.serializable.HostConfigSerializable;
 import migool.op.client.serializable.PostResponseSerializable;
@@ -31,5 +30,5 @@ public interface PostServiceAsync {
 
 	void getPostInfo(String host, AsyncCallback<PostInfoSerializable> callback);
 
-	void post(String host, Properties props, AsyncCallback<PostResponseSerializable> callback);
+	void post(String host, Map<String, String> props, AsyncCallback<PostResponseSerializable> callback);
 }

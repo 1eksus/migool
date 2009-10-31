@@ -5,7 +5,6 @@ import static migool.op.server.PostServiceUtil.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.TreeMap;
 
 import migool.http.client.HttpClientFactory;
@@ -128,7 +127,7 @@ public class PostServiceImpl extends RemoteServiceServlet implements PostService
 	}
 
 	@Override
-	public PostResponseSerializable post(String host, Properties props) {
+	public PostResponseSerializable post(String host, Map<String, String> params) {
 		return toPostResponseSerializable(posters.get(host).post(post));
 	}
 }
