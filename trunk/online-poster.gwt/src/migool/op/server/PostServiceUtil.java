@@ -146,6 +146,11 @@ public final class PostServiceUtil {
 		return null;
 	}
 
+	public static final String postImage(ImageEntity img) {
+		// TODO
+		return null;
+	}
+
 	/**
 	 * 
 	 * @param response
