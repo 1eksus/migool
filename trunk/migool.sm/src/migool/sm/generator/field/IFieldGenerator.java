@@ -1,4 +1,4 @@
-package migool.sm.generator;
+package migool.sm.generator.field;
 
 /**
  * 

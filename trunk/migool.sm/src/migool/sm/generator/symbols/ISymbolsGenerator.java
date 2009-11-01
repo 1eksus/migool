@@ -1,4 +1,6 @@
-package migool.sm.generator;
+package migool.sm.generator.symbols;
+
+import migool.sm.generator.IGenerator;
 
 /**
  * 
