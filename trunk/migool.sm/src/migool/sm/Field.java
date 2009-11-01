@@ -58,4 +58,17 @@ public class Field {
 	public int getCount() {
 		return count;
 	}
+	
+	public int getCount(byte type) {
+		byte[] bytes = this.bytes;
+
+		int ret = 0;
+
+		for (int i = 0; i < bytes.length; i++) {
+			if (bytes[i] == type) {
+				ret++;
+			}
+		}
+		return ret;
+	}
 }
