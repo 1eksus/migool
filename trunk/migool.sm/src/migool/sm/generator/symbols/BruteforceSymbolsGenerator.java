@@ -60,6 +60,7 @@ public class BruteforceSymbolsGenerator extends SymbolsGeneratorBase {
 
 	public static void main(String[] args) {
 		ISymbolsGenerator g = new BruteforceSymbolsGenerator("1234".toCharArray(), 3);
+		System.out.println(g.getCount());
 		while (g.hasNext()) {
 			System.out.println(g.next());
 		}
