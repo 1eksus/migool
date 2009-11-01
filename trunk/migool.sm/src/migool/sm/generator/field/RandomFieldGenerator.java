@@ -39,7 +39,7 @@ public class RandomFieldGenerator extends FieldGeneratorBase {
 	@Override
 	public long getCount() {
 		// TODO Auto-generated method stub
-		//return (long) (1.0 / 0.0);
+		// return (long) (1.0 / 0.0);
 		// 9223372036854775807
 		return Long.MAX_VALUE;
 	}
@@ -53,7 +53,7 @@ public class RandomFieldGenerator extends FieldGeneratorBase {
 		Field field = new Field(12);
 		System.out.println(Arrays.toString(field.getBytes()));
 		IFieldGenerator g = new RandomFieldGenerator(new Field(12));
-		//System.out.println(g.getCount());
+		// System.out.println(g.getCount());
 		System.out.println(Arrays.toString(g.next()));
 		System.out.println(Arrays.toString(g.next()));
 		System.out.println(Arrays.toString(field.getBytes()));

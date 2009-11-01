@@ -8,7 +8,7 @@ import java.util.Random;
  * 
  */
 public class RandomSymbolsGenerator extends SymbolsGeneratorBase {
-	
+
 	public RandomSymbolsGenerator() {
 		this(CHARS, 8);
 	}

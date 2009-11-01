@@ -76,7 +76,8 @@ public class SMStringBuilder {
 			// Field()).next()));
 			// b.setSymbols("symbols");
 			// String string = b.build();
-			String string = toString(new Field(new RandomFieldGenerator(new Field()).next()), (new RandomSymbolsGenerator()).next());
+			String string = toString(new Field(new RandomFieldGenerator(new Field()).next()),
+					(new RandomSymbolsGenerator()).next());
 			// System.out.println(string);
 			CryptoUtil.getMD5hash(string);
 			// System.out.println(CryptoUtil.getMD5hash(string));
