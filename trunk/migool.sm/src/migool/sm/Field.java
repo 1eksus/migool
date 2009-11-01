@@ -16,8 +16,7 @@ public class Field {
 	private final int count;
 
 	private int width = 8;
-
-	// private int height = 8;
+	private int height = 8;
 
 	public Field() {
 		this(12);
@@ -25,6 +24,10 @@ public class Field {
 
 	public Field(int count) {
 		this(new byte[8 * 8], count);
+	}
+
+	public Field(byte[] bytes) {
+		this(bytes, 12);
 	}
 
 	public Field(byte[] bytes, int count) {
@@ -38,6 +41,14 @@ public class Field {
 
 	public byte[] getBytes() {
 		return Arrays.copyOf(bytes, bytes.length);
+	}
+
+	public int getWidth() {
+		return width;
+	}
+
+	public int getHeight() {
+		return height;
 	}
 
 	public int getSize() {
