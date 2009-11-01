@@ -61,4 +61,8 @@ public class RandomFieldGenerator extends FieldGeneratorBase {
 		}
 		//System.out.println(Arrays.toString(field.getBytes()));
 	}
+
+	@Override
+	public void reset() {
+	}
 }

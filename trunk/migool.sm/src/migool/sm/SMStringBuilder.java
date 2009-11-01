@@ -67,6 +67,22 @@ public class SMStringBuilder {
 		ret.append(symbols);
 		return ret.toString();
 	}
+	
+	public static final String toString(byte[] field, String symbols) {
+		ret.setLength(0);
+		int width = 8;
+		int height = 8;
+		for (int i = 0; i < height; i++) {
+			ret.append("(");
+			for (int j = 0; j < width; j++) {
+				ret.append((field[i * width + j] == Field.MINE) ? "*" : (j + 1));
+			}
+			ret.append(")_");
+		}
+		ret.append(GAME);
+		ret.append(symbols);
+		return ret.toString();
+	}
 
 	public static void main(String[] args) {
 		long start = System.currentTimeMillis();

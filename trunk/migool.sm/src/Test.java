@@ -2,8 +2,14 @@ import static migool.sm.Field.*;
 
 import java.util.Arrays;
 
+import migool.sm.Field;
+import migool.sm.SMStringBuilder;
+import migool.sm.generator.field.BruteforceFieldGenerator;
+import migool.sm.generator.field.IFieldGenerator;
+import migool.sm.generator.symbols.BruteforceSymbolsGenerator;
 import migool.sm.generator.symbols.ISymbolsGenerator;
 import migool.sm.generator.symbols.SymbolsGeneratorBase;
+import migool.util.CryptoUtil;
 
 /**
  * 
@@ -23,10 +29,41 @@ public class Test {
 		};
 	public static final String TEST_MD5 = "f3c98666bc6594f1f86ad7c11c935f53";
 	public static final char[] TEST_CHARS = SymbolsGeneratorBase.createRandomOrder(ISymbolsGenerator.CHARS);
-	
+
 	public static void main(String[] args) {
-		for (int i = 0; i < 100; i++)
-			System.out.println(SymbolsGeneratorBase.createRandomOrder("1234".toCharArray()));
+//		for (int i = 0; i < 100; i++)
+//			System.out.println(SymbolsGeneratorBase.createRandomOrder("1234".toCharArray()));
 		System.out.println(Arrays.toString(TEST_CHARS));
+		boolean flag = false;
+		String md5 = null;
+		final Field f = new Field(TEST_FIELD);
+		System.out.println(f);
+
+		final IFieldGenerator fg = new BruteforceFieldGenerator(f);
+		long fgCount = fg.getCount();
+		System.out.println("fg.count: " + fgCount);
+
+		final ISymbolsGenerator sg = new BruteforceSymbolsGenerator(TEST_CHARS, 8);
+		long sgCount = sg.getCount();
+		System.out.println("sg.count: " + sgCount);
+
+		String c = fgCount * sgCount + "";
+		System.out.println("total count: " + c + " (" + c.length() + " digits)");
+
+		byte[] b = null;
+		String s = null;
+
+		for (int i = 0; i < fgCount && !flag; i++) {
+			b = fg.next();
+			System.out.println(Field.toString(b));
+			for (int j = 0; j < sgCount && !flag; j++) {
+				s = sg.next();
+				s = SMStringBuilder.toString(b, s);
+				md5 = CryptoUtil.getMD5hash(s);
+				flag = TEST_MD5.equals(md5);
+			}
+			System.out.println();
+		}
+		System.out.println(md5);
 	}
 }

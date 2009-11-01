@@ -75,4 +75,32 @@ public class Field {
 		}
 		return ret;
 	}
+	
+	public String toString() {
+		return toString(bytes);
+	}
+	
+	public static final String toString(byte b) {
+		if (b == MINE) {
+			return "*";
+		}
+		if (b == NONE) {
+			return " ";
+		}
+		if (b == DONE) {
+			return "x";
+		}
+		return "";
+	}
+	
+	public static final String toString(byte[] b) {
+		StringBuilder ret = new StringBuilder();
+		for (int i = 0; i < 8; i++) {
+			for (int j = 0; j < 8; j++) {
+				ret.append(toString(b[i*8 + j]));
+			}
+			ret.append("\n");
+		}
+		return ret.toString();
+	}
 }

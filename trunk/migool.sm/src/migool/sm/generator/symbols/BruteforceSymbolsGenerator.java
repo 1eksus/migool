@@ -23,7 +23,8 @@ public class BruteforceSymbolsGenerator extends SymbolsGeneratorBase {
 		reset();
 	}
 
-	private void reset() {
+	@Override
+	public void reset() {
 		char[] symbols = this.symbols;
 		int[] ind = this.ind;
 

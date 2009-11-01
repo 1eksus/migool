@@ -14,4 +14,6 @@ public interface IGenerator {
 	public long getCount();
 
 	public boolean hasNext();
+	
+	public void reset();
 }

@@ -26,7 +26,8 @@ public class BruteforceFieldGenerator extends FieldGeneratorBase {
 		reset();
 	}
 
-	private void reset() {
+	@Override
+	public void reset() {
 		isFirst = true;
 	}
 
