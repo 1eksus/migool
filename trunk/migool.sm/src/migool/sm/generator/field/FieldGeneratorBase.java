@@ -35,7 +35,8 @@ public abstract class FieldGeneratorBase implements IFieldGenerator {
 		for (int i = 0; i < length; i++) {
 			ret[i] = Field.NONE;
 		}
-		return fillNoneBytes(next(ret, field.getMinesCount() - field.getCount(Field.MINE)));
+		//return fillNoneBytes(next(ret, field.getAllMinesCount() - field.getCount(Field.MINE)));
+		return fillNoneBytes(next(ret, field.getLeftMinesCount()));
 	}
 
 	protected abstract byte[] next(byte[] noneBytes, int minesCount);

@@ -55,8 +55,12 @@ public class Field {
 		return bytes.length;
 	}
 
-	public int getMinesCount() {
+	public int getAllMinesCount() {
 		return minesCount;
+	}
+
+	public int getLeftMinesCount() {
+		return minesCount - getCount(MINE);
 	}
 
 	public int getCount(byte type) {
