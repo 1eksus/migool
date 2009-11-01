@@ -1,7 +1,5 @@
 package migool.sm.generator.field;
 
-import java.util.Arrays;
-
 import migool.sm.Field;
 import migool.util.MathUtil;
 
@@ -14,14 +12,15 @@ public class BruteforceFieldGenerator extends FieldGeneratorBase {
 
 	private final int[] ind;
 	private boolean isFirst;
-	private final int count;
+	private final long count;
 
 	public BruteforceFieldGenerator(Field field) {
 		super(field);
 
 		int k = field.getLeftMinesCount();
 		int n = field.getBytes().length;
-		count = MathUtil.factorial(n) / (MathUtil.factorial(k) * MathUtil.factorial(n - k));
+		//count = MathUtil.factorial(n) / (MathUtil.factorial(k) * MathUtil.factorial(n - k));
+		count = MathUtil.A(n, k);
 
 		ind = new int[k];
 		reset();
@@ -72,10 +71,14 @@ public class BruteforceFieldGenerator extends FieldGeneratorBase {
 	}
 
 	public static void main(String[] args) {
-		IFieldGenerator g = new BruteforceFieldGenerator(new Field(new byte[9], 3));
-		// IFieldGenerator g = new BruteforceFieldGenerator(new Field());
-		while (g.hasNext())
-			System.out.println(Arrays.toString(g.next()));
+		long start = System.currentTimeMillis();
+		//IFieldGenerator g = new BruteforceFieldGenerator(new Field(new byte[9], 3));
+		IFieldGenerator g = new BruteforceFieldGenerator(new Field());
 		System.out.println(g.getCount());
+		while (g.hasNext())
+			//System.out.println(Arrays.toString(g.next()));
+			g.next();
+		long time = System.currentTimeMillis() - start;
+		System.out.println("time: " + time);
 	}
 }
