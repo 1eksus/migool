@@ -39,20 +39,4 @@ public abstract class FieldGeneratorBase implements IFieldGenerator {
 	}
 
 	protected abstract byte[] next(byte[] noneBytes, int minesCount);
-
-	// @Override
-	// public byte next() {
-	// throw new UnsupportedOperationException();
-	// }
-	//
-	// @Override
-	// public long getCount() {
-	// throw new UnsupportedOperationException();
-	// }
-	//
-	// @Override
-	// public boolean hasNext() {
-	// throw new UnsupportedOperationException();
-	// }
-
 }

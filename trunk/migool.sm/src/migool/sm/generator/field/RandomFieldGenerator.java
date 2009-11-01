@@ -21,7 +21,6 @@ public class RandomFieldGenerator extends FieldGeneratorBase {
 	@Override
 	protected byte[] next(byte[] noneBytes, int minesCount) {
 		final int size = noneBytes.length;
-		System.out.println(minesCount);
 		final Random r = new Random();
 		final Set<Integer> indexes = new HashSet<Integer>();
 		int next;
