@@ -1,8 +1,5 @@
 package migool.sm;
 
-import java.sql.Date;
-import java.util.Arrays;
-
 import migool.sm.generator.field.RandomFieldGenerator;
 import migool.util.CryptoUtil;
 
@@ -49,11 +46,11 @@ public class SMStringBuilder {
 	public String build() {
 		return sb.toString();
 	}
-	
+
 	private static final StringBuilder ret = new StringBuilder();
 
 	public static final String toString(Field field, String symbols) {
-		//StringBuilder ret = new StringBuilder();
+		// StringBuilder ret = new StringBuilder();
 		ret.setLength(0);
 		byte[] b = field.getBytes();
 		int width = field.getWidth();
@@ -73,10 +70,11 @@ public class SMStringBuilder {
 	public static void main(String[] args) {
 		long start = System.currentTimeMillis();
 		for (int i = 0; i < 100000; i++) {
-//			SMStringBuilder b = new SMStringBuilder();
-//			b.setField(new Field(new RandomFieldGenerator(new Field()).next()));
-//			b.setSymbols("symbols");
-//			String string = b.build();
+			// SMStringBuilder b = new SMStringBuilder();
+			// b.setField(new Field(new RandomFieldGenerator(new
+			// Field()).next()));
+			// b.setSymbols("symbols");
+			// String string = b.build();
 			String string = toString(new Field(new RandomFieldGenerator(new Field()).next()), "symbols");
 			// System.out.println(string);
 			CryptoUtil.getMD5hash(string);
