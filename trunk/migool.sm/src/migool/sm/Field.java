@@ -37,6 +37,10 @@ public class Field {
 		return bytes;
 	}
 
+	public int getSize() {
+		return bytes.length;
+	}
+
 	public int getCount() {
 		return count;
 	}

@@ -8,5 +8,5 @@ import migool.sm.generator.IGenerator;
  *
  */
 public interface IFieldGenerator extends IGenerator {
-	byte next();
+	byte[] next();
 }
