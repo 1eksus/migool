@@ -20,11 +20,11 @@ public class RandomFieldGenerator extends FieldGeneratorBase {
 
 	@Override
 	public byte[] next() {
-		byte[] ret = field.getBytes();
-		int size = ret.length;
+		final byte[] ret = field.getBytes();
+		final int size = ret.length;
 		int count = field.getCount();
-		Set<Integer> indexes = new HashSet<Integer>();
-		Random r = new Random();
+		final Set<Integer> indexes = new HashSet<Integer>();
+		final Random r = new Random();
 		int next;
 		while (count >= 0) {
 			next = r.nextInt(size);
