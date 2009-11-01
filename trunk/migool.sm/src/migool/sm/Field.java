@@ -1,5 +1,7 @@
 package migool.sm;
 
+import java.util.Arrays;
+
 /**
  * 
  * @author Denis Migol
@@ -14,7 +16,8 @@ public class Field {
 	private final int count;
 
 	private int width = 8;
-//	private int height = 8;
+
+	// private int height = 8;
 
 	public Field() {
 		this(12);
@@ -34,7 +37,7 @@ public class Field {
 	}
 
 	public byte[] getBytes() {
-		return bytes;
+		return Arrays.copyOf(bytes, bytes.length);
 	}
 
 	public int getSize() {

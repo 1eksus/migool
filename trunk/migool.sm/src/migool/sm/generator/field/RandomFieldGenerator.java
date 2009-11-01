@@ -55,6 +55,7 @@ public class RandomFieldGenerator extends FieldGeneratorBase {
 		IFieldGenerator g = new RandomFieldGenerator(new Field(12));
 		//System.out.println(g.getCount());
 		System.out.println(Arrays.toString(g.next()));
+		System.out.println(Arrays.toString(g.next()));
 		System.out.println(Arrays.toString(field.getBytes()));
 	}
 }
