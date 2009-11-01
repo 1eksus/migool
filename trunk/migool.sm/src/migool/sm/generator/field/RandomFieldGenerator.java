@@ -38,7 +38,6 @@ public class RandomFieldGenerator extends FieldGeneratorBase {
 
 	@Override
 	public long getCount() {
-		// TODO Auto-generated method stub
 		// return (long) (1.0 / 0.0);
 		// 9223372036854775807
 		return Long.MAX_VALUE;
