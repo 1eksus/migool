@@ -9,10 +9,15 @@ import migool.sm.Field;
  */
 public abstract class FieldGeneratorBase implements IFieldGenerator {
 
-	protected Field field;
+//	protected Field field;
+	protected byte[] bytes;
 
 	public FieldGeneratorBase(Field field) {
-		this.field = field;
+		this(field.getBytes());
+	}
+	
+	public FieldGeneratorBase(byte[] bytes) {
+		this.bytes = bytes;
 	}
 
 	// @Override

@@ -5,12 +5,16 @@ import migool.sm.Field;
 /**
  * 
  * @author Denis Migol
- *
+ * 
  */
 public class RandomFieldGenerator extends FieldGeneratorBase {
 
 	public RandomFieldGenerator(Field field) {
 		super(field);
+	}
+
+	public RandomFieldGenerator(byte[] bytes) {
+		super(bytes);
 	}
 
 	@Override
