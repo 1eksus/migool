@@ -56,14 +56,40 @@ public class Test {
 		for (int i = 0; i < fgCount && !flag; i++) {
 			b = fg.next();
 			System.out.println(Field.toString(b));
-			for (int j = 0; j < sgCount && !flag; j++) {
+//			for (int j = 0; j < sgCount && !flag; j++) {
+//			s = sg.next();
+//			s = SMStringBuilder.toString(b, s);
+//			md5 = CryptoUtil.getMD5hash(s);
+//			flag = TEST_MD5.equals(md5);
+//		}
+			int iters = 100;
+			long iterCount = sgCount / iters;
+			long mod = sgCount % 100;
+			for (int j = 0; j < iters; j++) {
+				long start = System.currentTimeMillis();
+				for (long k = 0; k < iterCount; k++) {
+					s = sg.next();
+					s = SMStringBuilder.toString(b, s);
+					md5 = CryptoUtil.getMD5hash(s);
+					if (TEST_MD5.equals(md5)) {
+						System.out.println(s);
+						return;
+					}
+				}
+				System.out.println(j + "% complete, time: " + (System.currentTimeMillis() - start) + "ms");
+			}
+			for (long k = 0; k < mod; k++) {
 				s = sg.next();
 				s = SMStringBuilder.toString(b, s);
 				md5 = CryptoUtil.getMD5hash(s);
-				flag = TEST_MD5.equals(md5);
+				if (TEST_MD5.equals(md5)) {
+					System.out.println(s);
+					return;
+				}
 			}
 			System.out.println();
 		}
 		System.out.println(md5);
+		System.out.println("NOT found :(");
 	}
 }
