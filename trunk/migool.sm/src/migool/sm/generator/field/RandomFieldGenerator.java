@@ -13,10 +13,6 @@ public class RandomFieldGenerator extends FieldGeneratorBase {
 		super(field);
 	}
 
-	public RandomFieldGenerator(byte[] bytes) {
-		super(bytes);
-	}
-
 	@Override
 	public byte next() {
 		// TODO Auto-generated method stub
