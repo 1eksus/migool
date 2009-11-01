@@ -12,7 +12,7 @@ public class SMStringBuilder {
 	/**
 	 * 
 	 */
-	public SMStringBuilder() {		
+	public SMStringBuilder() {
 	}
 
 	public String build() {
