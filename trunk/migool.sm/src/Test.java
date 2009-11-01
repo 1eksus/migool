@@ -27,7 +27,7 @@ public class Test {
 		NONE, MINE, DONE, DONE, DONE, DONE, DONE, DONE, // 7
 		NONE, MINE, DONE, DONE, DONE, DONE, MINE, DONE, // 8
 		};
-	public static final String TEST_MD5 = "f3c98666bc6594f1f86ad7c11c935f53";
+	public static final byte[] TEST_MD5 = CryptoUtil.fromHexString("f3c98666bc6594f1f86ad7c11c935f53");
 	public static final char[] TEST_CHARS = SymbolsGeneratorBase.createRandomOrder(ISymbolsGenerator.CHARS);
 
 	public static void main(String[] args) {
@@ -35,7 +35,6 @@ public class Test {
 //			System.out.println(SymbolsGeneratorBase.createRandomOrder("1234".toCharArray()));
 		System.out.println(Arrays.toString(TEST_CHARS));
 		boolean flag = false;
-		String md5 = null;
 		final Field f = new Field(TEST_FIELD);
 		System.out.println(f);
 
@@ -52,6 +51,7 @@ public class Test {
 
 		byte[] b = null;
 		String s = null;
+		byte[] md5 = null;
 
 		for (int i = 0; i < fgCount && !flag; i++) {
 			b = fg.next();
@@ -70,8 +70,10 @@ public class Test {
 				for (long k = 0; k < iterCount; k++) {
 					s = sg.next();
 					s = SMStringBuilder.toString(b, s);
-					md5 = CryptoUtil.getMD5hash(s);
-					if (TEST_MD5.equals(md5)) {
+					//md5 = CryptoUtil.getMD5hash(s);
+					md5 = CryptoUtil.getMD5hash(s.getBytes());
+					//if (TEST_MD5.equals(md5)) {
+					if (Arrays.equals(TEST_MD5, md5)) {
 						System.out.println(s);
 						return;
 					}
@@ -81,8 +83,9 @@ public class Test {
 			for (long k = 0; k < mod; k++) {
 				s = sg.next();
 				s = SMStringBuilder.toString(b, s);
-				md5 = CryptoUtil.getMD5hash(s);
-				if (TEST_MD5.equals(md5)) {
+				md5 = CryptoUtil.getMD5hash(s.getBytes());
+				//if (TEST_MD5.equals(md5)) {
+				if (Arrays.equals(TEST_MD5, md5)) {
 					System.out.println(s);
 					return;
 				}
