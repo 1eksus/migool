@@ -62,9 +62,9 @@ public class Test {
 //			md5 = CryptoUtil.getMD5hash(s);
 //			flag = TEST_MD5.equals(md5);
 //		}
-			int iters = 100;
+			int iters = 10000;
 			long iterCount = sgCount / iters;
-			long mod = sgCount % 100;
+			long mod = sgCount % iters;
 			for (int j = 0; j < iters; j++) {
 				long start = System.currentTimeMillis();
 				for (long k = 0; k < iterCount; k++) {
@@ -78,7 +78,7 @@ public class Test {
 						return;
 					}
 				}
-				System.out.println(j + "% complete, time: " + (System.currentTimeMillis() - start) + "ms");
+				System.out.println((double)(j / iters * 100) + "% complete, time: " + (System.currentTimeMillis() - start) + "ms");
 			}
 			for (long k = 0; k < mod; k++) {
 				s = sg.next();
