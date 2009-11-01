@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import org.apache.http.HttpEntity;
@@ -30,13 +31,14 @@ import migool.util.IOUtil;
 public final class PostServiceUtil {
 	private PostServiceUtil() {
 	}
-	
+
 	private static final Logger log = Logger.getLogger(PostServiceUtil.class.getName());
 
 	private static final HttpClient client = HttpClientFactory.get().newHttpClient();
-	
-	private static final HashMap<String, String> contentTypes;
-	
+
+	private static final Map<String, String> contentTypes;
+	private static final Map<String, byte[]> imageTypes;
+
 	static {
 		contentTypes = new HashMap<String, String>();
 		contentTypes.put("image/pjpeg", ImageEntity.JPEG);
@@ -46,6 +48,9 @@ public final class PostServiceUtil {
 		contentTypes.put("image/tiff", ImageEntity.TIFF);
 		contentTypes.put("image/x-png", ImageEntity.PNG);
 		contentTypes.put("image/png", ImageEntity.PNG);
+
+		imageTypes = new HashMap<String, byte[]>();
+		imageTypes.put(ImageEntity.JPEG, new byte[]{(byte)0xFF, (byte)0xD8});
 	}
 
 	/**
@@ -143,6 +148,15 @@ public final class PostServiceUtil {
 			log.throwing(PostServiceUtil.class.getName(), "getImage", e);
 			e.printStackTrace();
 		}
+		return null;
+	}
+
+	/**
+	 * 
+	 * @param buffer
+	 * @return
+	 */
+	public static final String detectImageType(byte[] buffer) {
 		return null;
 	}
 
