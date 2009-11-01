@@ -19,22 +19,23 @@ public class RandomFieldGenerator extends FieldGeneratorBase {
 	}
 
 	@Override
-	public byte[] next() {
-		final byte[] ret = field.getBytes();
-		final int size = ret.length;
-		int count = field.getCount();
-		final Set<Integer> indexes = new HashSet<Integer>();
+	protected byte[] next(byte[] noneBytes, int minesCount) {
+		final int size = noneBytes.length;
+		System.out.println(minesCount);
 		final Random r = new Random();
+		final Set<Integer> indexes = new HashSet<Integer>();
 		int next;
-		while (count >= 0) {
+		while (minesCount > 0) {
 			next = r.nextInt(size);
 			if (!indexes.contains(next)) {
-				ret[next] = Field.MINE;
-				count--;
+				indexes.add(next);
+				noneBytes[next] = Field.MINE;
+				minesCount--;
 			}
 		}
-		return ret;
+		return noneBytes;
 	}
+
 
 	@Override
 	public long getCount() {
@@ -50,11 +51,15 @@ public class RandomFieldGenerator extends FieldGeneratorBase {
 
 	public static void main(String[] args) {
 		Field field = new Field(12);
-		System.out.println(Arrays.toString(field.getBytes()));
-		IFieldGenerator g = new RandomFieldGenerator(new Field(12));
-		// System.out.println(g.getCount());
-		System.out.println(Arrays.toString(g.next()));
-		System.out.println(Arrays.toString(g.next()));
-		System.out.println(Arrays.toString(field.getBytes()));
+		//System.out.println(Arrays.toString(field.getBytes()));
+		for (int i = 0; i < 5; i++) {
+			field.set(0, i, Field.MINE);
+		}
+		IFieldGenerator g = new RandomFieldGenerator(field);
+		for (int i = 0; i < 10; i++) {
+			byte[] b = g.next();
+			System.out.println((new Field(b)).getCount(Field.MINE) + ": " + Arrays.toString(b));
+		}
+		//System.out.println(Arrays.toString(field.getBytes()));
 	}
 }

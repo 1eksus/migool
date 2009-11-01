@@ -13,8 +13,14 @@ public class BruteforceFieldGenerator extends FieldGeneratorBase {
 		super(field);
 	}
 
+//	@Override
+//	public byte[] next() {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
+//	
 	@Override
-	public byte[] next() {
+	protected byte[] next(byte[] noneBytes, int minesCount) {
 		// TODO Auto-generated method stub
 		return null;
 	}

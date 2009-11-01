@@ -13,7 +13,7 @@ public class Field {
 	public static final byte DONE = 2;
 
 	private byte[] bytes;
-	private final int count;
+	private final int minesCount;
 
 	private int width = 8;
 	private int height = 8;
@@ -22,17 +22,17 @@ public class Field {
 		this(12);
 	}
 
-	public Field(int count) {
-		this(new byte[8 * 8], count);
+	public Field(int minesCount) {
+		this(new byte[8 * 8], minesCount);
 	}
 
 	public Field(byte[] bytes) {
 		this(bytes, 12);
 	}
 
-	public Field(byte[] bytes, int count) {
+	public Field(byte[] bytes, int minesCount) {
 		this.bytes = bytes;
-		this.count = count;
+		this.minesCount = minesCount;
 	}
 
 	public void set(int row, int col, byte b) {
@@ -55,10 +55,10 @@ public class Field {
 		return bytes.length;
 	}
 
-	public int getCount() {
-		return count;
+	public int getMinesCount() {
+		return minesCount;
 	}
-	
+
 	public int getCount(byte type) {
 		byte[] bytes = this.bytes;
 
