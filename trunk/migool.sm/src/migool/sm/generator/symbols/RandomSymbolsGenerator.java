@@ -39,5 +39,4 @@ public class RandomSymbolsGenerator extends SymbolsGeneratorBase {
 	public boolean hasNext() {
 		return true;
 	}
-
 }

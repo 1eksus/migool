@@ -72,12 +72,15 @@ public class BruteforceFieldGenerator extends FieldGeneratorBase {
 
 	public static void main(String[] args) {
 		long start = System.currentTimeMillis();
-		//IFieldGenerator g = new BruteforceFieldGenerator(new Field(new byte[9], 3));
-		IFieldGenerator g = new BruteforceFieldGenerator(new Field());
+		IFieldGenerator g = new BruteforceFieldGenerator(new Field(new byte[9], 3));
+		//IFieldGenerator g = new BruteforceFieldGenerator(new Field());
+		long count = g.getCount();
 		System.out.println(g.getCount());
-		while (g.hasNext())
+		//while (g.hasNext())
 			//System.out.println(Arrays.toString(g.next()));
+		for (long i = 0; i < count; i++) {
 			g.next();
+		}
 		long time = System.currentTimeMillis() - start;
 		System.out.println("time: " + time);
 	}
