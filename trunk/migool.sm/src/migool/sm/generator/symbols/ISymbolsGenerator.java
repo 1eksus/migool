@@ -8,5 +8,7 @@ import migool.sm.generator.IGenerator;
  *
  */
 public interface ISymbolsGenerator extends IGenerator {
+	char[] CHARS = "1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".toCharArray();
+
 	String next();
 }
