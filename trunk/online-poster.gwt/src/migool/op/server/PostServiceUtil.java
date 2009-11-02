@@ -1,5 +1,6 @@
 package migool.op.server;
 
+import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -10,9 +11,13 @@ import java.util.logging.Logger;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.content.InputStreamBody;
 
 import migool.entity.ImageEntity;
 import migool.http.client.HttpClientFactory;
+import migool.http.client.HttpClientWrapper;
 import migool.op.client.serializable.HostConfigSerializable;
 import migool.op.client.serializable.PostInfoSerializable;
 import migool.op.client.serializable.PostResponseSerializable;
@@ -32,9 +37,12 @@ public final class PostServiceUtil {
 	private PostServiceUtil() {
 	}
 
+	public static final String IMAGE = "image";
+
 	private static final Logger log = Logger.getLogger(PostServiceUtil.class.getName());
 
 	private static final HttpClient client = HttpClientFactory.get().newHttpClient();
+	private static final HttpClientWrapper clientW = new HttpClientWrapper(client);
 
 	private static final Map<String, String> contentTypes;
 	private static final Map<String, byte[]> imageTypes;
@@ -50,7 +58,7 @@ public final class PostServiceUtil {
 		contentTypes.put("image/png", ImageEntity.PNG);
 
 		imageTypes = new HashMap<String, byte[]>();
-		imageTypes.put(ImageEntity.JPEG, new byte[]{(byte)0xFF, (byte)0xD8});
+		imageTypes.put(ImageEntity.JPEG, new byte[] { (byte) 0xFF, (byte) 0xD8 });
 	}
 
 	/**
@@ -160,8 +168,24 @@ public final class PostServiceUtil {
 		return null;
 	}
 
-	public static final String postImage(ImageEntity img) {
-		// TODO
+	/**
+	 * 
+	 * @param img
+	 * @return
+	 */
+	public static final String uploadImage(ImageEntity img) {
+		// TODO test
+		try {
+			MultipartEntity entity = new MultipartEntity();
+			entity.addPart(IMAGE, new InputStreamBody(new ByteArrayInputStream(img.bytes), img.fileName));
+
+			HttpPost post = new HttpPost("/upload");
+			post.setEntity(entity);
+			String link = clientW.requestToString(post);
+			return link;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 
