@@ -4,13 +4,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import migool.util.EmptyChecker;
 import migool.util.IOUtil;
 
 import org.apache.commons.fileupload.FileItemIterator;
@@ -36,10 +38,21 @@ public class UploadServlet extends HttpServlet {
 
 	private static final int MAX_FILES = 500;
 	private static final int FIRST_FILE = 0;
-	private int currentFile = FIRST_FILE;
-	private final HashMap<String, FileEntity> files = new HashMap<String, FileEntity>();
+	private static int currentFile = FIRST_FILE;
+	private static final Map<String, FileEntity> files = new ConcurrentHashMap<String, FileEntity>();
+
+	public static final String upload(String contentType, byte[] bytes) {
+		FileEntity file = new FileEntity();
+		if (EmptyChecker.isNotNullOrEmpty(contentType)) {
+			file.contentType = contentType;
+		}
+		file.bytes = bytes;
+		String fileId = nextId();
+		files.put(fileId, file);
+		return fileId;
+	}
 	
-	private String nextId() {
+	private static String nextId() {
 		if (currentFile >= MAX_FILES) {
 			currentFile = FIRST_FILE;
 		}
@@ -85,7 +98,9 @@ public class UploadServlet extends HttpServlet {
 			FileEntity file = files.get(id);
 			OutputStream out = resp.getOutputStream();
 			resp.setHeader("Pragma", "no-cache");
-			resp.setContentType(file.contentType);
+			if (EmptyChecker.isNotNullOrEmpty(file.contentType)) {
+				resp.setContentType(file.contentType);
+			}
 			out.write(file.bytes);
 			out.flush();
 			out.close();
@@ -106,14 +121,7 @@ public class UploadServlet extends HttpServlet {
 				FileItemStream item = iter.next();
 				InputStream stream = item.openStream();
 				if (!item.isFormField()) {
-					FileEntity file = new FileEntity();
-					file.contentType = item.getContentType();
-					file.bytes = IOUtil.toByteArray(stream);
-					//String fileId = nextId(item.getName());
-					String fileId = nextId();
-					files.put(fileId, file);
-					//out.print(req.getServletPath() + "/" + fileId);
-					out.print(req.getRequestURL() + "/" + fileId);
+					out.print(req.getRequestURL() + "/" + upload(item.getContentType(), IOUtil.toByteArray(stream)));
 					out.flush();
 				}
 			}

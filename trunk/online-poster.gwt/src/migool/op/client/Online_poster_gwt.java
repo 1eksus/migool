@@ -19,13 +19,13 @@ import com.google.gwt.user.client.ui.Widget;
 public class Online_poster_gwt implements EntryPoint {
 
 	private final PostServiceAsync postService = GWT.create(PostService.class);
-	HorizontalSplitPanel splitPanel = new HorizontalSplitPanel();
+	//private final HorizontalSplitPanel splitPanel = new HorizontalSplitPanel();
 
 	/**
 	 * This is the entry point method.
 	 */
 	public void onModuleLoad() {
-		RootPanel.get().add(splitPanel);
+		final HorizontalSplitPanel splitPanel = new HorizontalSplitPanel();
 		splitPanel.setSize("100%", "100%");
 		splitPanel.setSplitPosition("100px");
 		VerticalPanel left = new VerticalPanel();
@@ -64,5 +64,6 @@ public class Online_poster_gwt implements EntryPoint {
 		splitPanel.add(left);
 		//splitPanel.add(PostWidget.create(postService));
 		splitPanel.add(new PostWidget(postService));
+		RootPanel.get().add(splitPanel);
 	}
 }

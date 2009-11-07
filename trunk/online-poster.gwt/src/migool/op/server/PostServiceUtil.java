@@ -1,23 +1,11 @@
 package migool.op.server;
 
-import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Logger;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.mime.MultipartEntity;
-import org.apache.http.entity.mime.content.InputStreamBody;
-
-import migool.entity.ImageEntity;
 import migool.http.client.HttpClientFactory;
-import migool.http.client.HttpClientWrapper;
 import migool.op.client.serializable.HostConfigSerializable;
 import migool.op.client.serializable.PostInfoSerializable;
 import migool.op.client.serializable.PostResponseSerializable;
@@ -27,6 +15,11 @@ import migool.poster.PostInfo;
 import migool.poster.PostResponse;
 import migool.util.EmptyChecker;
 import migool.util.IOUtil;
+import migool.util.ImageType;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
 
 /**
  * 
@@ -42,24 +35,7 @@ public final class PostServiceUtil {
 	private static final Logger log = Logger.getLogger(PostServiceUtil.class.getName());
 
 	private static final HttpClient client = HttpClientFactory.get().newHttpClient();
-	private static final HttpClientWrapper clientW = new HttpClientWrapper(client);
-
-	private static final Map<String, String> contentTypes;
-	private static final Map<String, byte[]> imageTypes;
-
-	static {
-		contentTypes = new HashMap<String, String>();
-		contentTypes.put("image/pjpeg", ImageEntity.JPEG);
-		contentTypes.put("image/jpeg", ImageEntity.JPEG);
-		contentTypes.put("image/gif", ImageEntity.GIF);
-		contentTypes.put("image/bmp", ImageEntity.BMP);
-		contentTypes.put("image/tiff", ImageEntity.TIFF);
-		contentTypes.put("image/x-png", ImageEntity.PNG);
-		contentTypes.put("image/png", ImageEntity.PNG);
-
-		imageTypes = new HashMap<String, byte[]>();
-		imageTypes.put(ImageEntity.JPEG, new byte[] { (byte) 0xFF, (byte) 0xD8 });
-	}
+	//private static final HttpClientWrapper clientW = new HttpClientWrapper(client);
 
 	/**
 	 * 
@@ -112,18 +88,6 @@ public final class PostServiceUtil {
 
 	/**
 	 * 
-	 * @param contentType
-	 * @return
-	 */
-	private static final String getType(String contentType) {
-		if (EmptyChecker.isNullOrEmpty(contentType)) {
-			return null;
-		}
-		return contentTypes.get(contentType);
-	}
-
-	/**
-	 * 
 	 * @return
 	 */
 	private static final String getFileExtension(String type) {
@@ -142,12 +106,11 @@ public final class PostServiceUtil {
 	 */
 	public static final Image getImage(String imageUrl, String prefixName) {
 		try {
-			System.out.println(imageUrl);
 			HttpGet get = new HttpGet(imageUrl);
 			HttpEntity entity = client.execute(get).getEntity();
 			Image ret = new Image();
 			ret.bytes = IOUtil.toByteArray(entity.getContent());
-			String type = getType(entity.getContentType().getValue());
+			String type = ImageType.getImageTypeByContentType(entity.getContentType().getValue());
 			ret.type = type;
 			String extension = getFileExtension(type);
 			ret.fileName = (EmptyChecker.isNullOrEmpty(extension)) ? prefixName : prefixName + extension;
@@ -161,32 +124,11 @@ public final class PostServiceUtil {
 
 	/**
 	 * 
-	 * @param buffer
-	 * @return
-	 */
-	public static final String detectImageType(byte[] buffer) {
-		return null;
-	}
-
-	/**
-	 * 
 	 * @param img
 	 * @return
 	 */
-	public static final String uploadImage(ImageEntity img) {
-		// TODO test
-		try {
-			MultipartEntity entity = new MultipartEntity();
-			entity.addPart(IMAGE, new InputStreamBody(new ByteArrayInputStream(img.bytes), img.fileName));
-
-			HttpPost post = new HttpPost("/upload");
-			post.setEntity(entity);
-			String link = clientW.requestToString(post);
-			return link;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
+	public static final String uploadImage(byte[] b) {
+		return UploadServlet.upload(ImageType.getContentTypeByImage(b), b);
 	}
 
 	/**
