@@ -1,4 +1,4 @@
-package migool.ot.server.jdo.serializable;
+package migool.ot.client.serializable;
 
 import java.io.Serializable;
 

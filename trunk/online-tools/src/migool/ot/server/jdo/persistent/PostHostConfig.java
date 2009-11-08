@@ -7,7 +7,7 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
-import migool.ot.server.jdo.serializable.GrabHostConfig;
+import migool.ot.client.serializable.GrabHostConfig;
 
 /**
  * 
