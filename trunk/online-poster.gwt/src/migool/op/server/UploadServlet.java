@@ -35,6 +35,8 @@ public class UploadServlet extends HttpServlet {
 		String contentType;
 		byte[] bytes;
 	}
+	
+	public static final String UPLOAD = "/upload/";
 
 	private static final int MAX_FILES = 500;
 	private static final int FIRST_FILE = 0;
@@ -49,7 +51,7 @@ public class UploadServlet extends HttpServlet {
 		file.bytes = bytes;
 		String fileId = nextId();
 		files.put(fileId, file);
-		return fileId;
+		return UPLOAD + fileId;
 	}
 	
 	private static String nextId() {
