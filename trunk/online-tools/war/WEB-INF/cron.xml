@@ -2,7 +2,7 @@
 <cronentries>
   <cron>
     <url>/autopost</url>
-    <description>Grab and post every 2 minutes</description>
-    <schedule>every 12 hours</schedule>
+    <description>Grab and post every day 05:00</description>
+    <schedule>every day 05:00</schedule>
   </cron>
 </cronentries>
