@@ -44,6 +44,9 @@ public class RedtubeGrabber implements IGrabber {
 	private HttpClient client = HttpClientFactory.get().newHttpClient();
 
 	private URL url;
+	
+	public RedtubeGrabber() {
+	}
 
 	/**
 	 * @throws MalformedURLException
@@ -58,7 +61,7 @@ public class RedtubeGrabber implements IGrabber {
 	 * @param url
 	 */
 	public RedtubeGrabber(URL url) {
-		this.url = url;
+		this.setUrl(url);
 	}
 
 	/**
@@ -207,11 +210,11 @@ public class RedtubeGrabber implements IGrabber {
 	 * @throws ClientProtocolException
 	 */
 	public List<RedtubeGrab> grab() throws ClientProtocolException, URISyntaxException, IOException {
-		String url = this.url.toString();
+		String url = this.getUrl().toString();
 		if (isPage(url)) {
-			return grabPage(client, this.url);
+			return grabPage(client, this.getUrl());
 		} else if (isId(url)) {
-			return Arrays.asList(new RedtubeGrab[] { grabId(client, this.url) });
+			return Arrays.asList(new RedtubeGrab[] { grabId(client, this.getUrl()) });
 		}
 		return null;
 	}
@@ -233,5 +236,19 @@ public class RedtubeGrabber implements IGrabber {
 		});
 		RedtubeGrabber grabber = new RedtubeGrabber("http://www.redtube.com/?page=758");
 		grabber.grab();
+	}
+
+	/**
+	 * @param url the url to set
+	 */
+	public void setUrl(URL url) {
+		this.url = url;
+	}
+
+	/**
+	 * @return the url
+	 */
+	public URL getUrl() {
+		return url;
 	}
 }
