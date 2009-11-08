@@ -77,7 +77,7 @@ public class RedtubeGrabber implements IGrabber {
 	 * @return
 	 */
 	private static final String getEmbed(int id) {
-		// TODO get through the url 
+		// TODO get through the url
 		return "<object height=\"344\" width=\"434\">"
 				+ "<param name=\"movie\" value=\"http://embed.redtube.com/player/\">"
 				+ "<param name=\"FlashVars\" value=\"id=" + id + "&style=redtube\">" + "<embed "
@@ -94,7 +94,7 @@ public class RedtubeGrabber implements IGrabber {
 	private static final int extractId(String link) {
 		return Integer.parseInt(new Regex(link, "[\\d]+$").getMatches()[0][0]);
 	}
-	
+
 	private static final Integer[] parse10(String pic) {
 		String[] strings = (new Regex(pic, "[01]{1}[,\\)]")).getMatchesAsArray();
 		ArrayList<Integer> nums = new ArrayList<Integer>(strings.length);
@@ -103,7 +103,7 @@ public class RedtubeGrabber implements IGrabber {
 		}
 		return nums.toArray(new Integer[nums.size()]);
 	}
-	
+
 	private static final TreeMap<Integer, Integer[]> parsePics(String script) {
 		String regexPics = "pics\\[\\'[\\d]{7}\\'\\][\t ]*\\=[\t ]*new[\\ ]*Array\\([01\\,\t ]*\\);";
 		TreeMap<Integer, Integer[]> ret = new TreeMap<Integer, Integer[]>();
@@ -132,7 +132,7 @@ public class RedtubeGrabber implements IGrabber {
 	private static final String getThumbLink(String prefix, int i) {
 		return prefix + appendPrefixWithZeros(i + "", 3) + ".jpg";
 	}
-	
+
 	private static final String[] getThumbs(String linkThumb, Integer[] nums) {
 		ArrayList<String> ret = new ArrayList<String>();
 		String prefix = getThumbPrefix(linkThumb);
@@ -160,13 +160,15 @@ public class RedtubeGrabber implements IGrabber {
 		String pageIds = getPage(client, url);
 		try {
 			Parser parser = new Parser(pageIds);
-			NodeList videoThumbs = parser.parse(new AndFilter(new TagNameFilter("ul"),
-					new HasAttributeFilter("class", "videoThumbs")));
+			NodeList videoThumbs = parser.parse(new AndFilter(new TagNameFilter("ul"), new HasAttributeFilter("class",
+					"videoThumbs")));
 			NodeList lis = videoThumbs.extractAllNodesThatMatch(new TagNameFilter("li"), true);
 			ret.ensureCapacity(lis.size());
 
 			parser.reset();
-			String script = ((ScriptTag)parser.parse(new AndFilter(new TagNameFilter("script"), new HasParentFilter(new HasAttributeFilter("class", "videosTable")))).elementAt(0)).getChildrenHTML();
+			String script = ((ScriptTag) parser.parse(
+					new AndFilter(new TagNameFilter("script"), new HasParentFilter(new HasAttributeFilter("class",
+							"videosTable")))).elementAt(0)).getChildrenHTML();
 			TreeMap<Integer, Integer[]> pics = parsePics(script);
 
 			Node li = null;
@@ -175,15 +177,18 @@ public class RedtubeGrabber implements IGrabber {
 			LinkTag a = null;
 			for (int i = 0; i < lis.size(); i++) {
 				li = lis.elementAt(i);
-				a = (LinkTag)li.getChildren().extractAllNodesThatMatch(new TagNameFilter("a"), true).elementAt(0);
+				a = (LinkTag) li.getChildren().extractAllNodesThatMatch(new TagNameFilter("a"), true).elementAt(0);
 				id = extractId(a.extractLink());
 				if (id > 0) {
 					grab = new RedtubeGrab();
 					grab.share = "http://www.redtube.com/" + id;
 					grab.title = a.getAttribute("title");
-					grab.thumb = ((ImageTag)a.getChildren().extractAllNodesThatMatch(new TagNameFilter("img"), true).elementAt(0)).getImageURL();
+					grab.thumb = ((ImageTag) a.getChildren().extractAllNodesThatMatch(new TagNameFilter("img"), true)
+							.elementAt(0)).getImageURL();
 					grab.thumbs = getThumbs(grab.thumb, pics.get(id));
-					grab.duration = ((Span)li.getChildren().extractAllNodesThatMatch(new AndFilter(new TagNameFilter("span"), new HasAttributeFilter("class", "d")), true).elementAt(0)).getStringText();
+					grab.duration = ((Span) li.getChildren().extractAllNodesThatMatch(
+							new AndFilter(new TagNameFilter("span"), new HasAttributeFilter("class", "d")), true)
+							.elementAt(0)).getStringText();
 					grab.embed = getEmbed(id);
 					ret.add(grab);
 				}
