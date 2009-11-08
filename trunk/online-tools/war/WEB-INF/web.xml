@@ -4,21 +4,31 @@
     "http://java.sun.com/dtd/web-app_2_3.dtd">
 
 <web-app>
-  
-  <!-- Servlets -->
-  <servlet>
-    <servlet-name>greetServlet</servlet-name>
-    <servlet-class>migool.ot.server.GreetingServiceImpl</servlet-class>
-  </servlet>
-  
-  <servlet-mapping>
-    <servlet-name>greetServlet</servlet-name>
-    <url-pattern>/online_tools/greet</url-pattern>
-  </servlet-mapping>
-  
-  <!-- Default page to serve -->
-  <welcome-file-list>
-    <welcome-file>Online_tools.html</welcome-file>
-  </welcome-file-list>
+
+	<!-- Servlets -->
+	<servlet>
+		<servlet-name>ConfigServlet</servlet-name>
+		<servlet-class>migool.ot.server.ConfigServiceImpl</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>ConfigServlet</servlet-name>
+		<url-pattern>/config</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>GrabAndPostServlet</servlet-name>
+		<servlet-class>migool.ot.server.GrabAndPostServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>GrabAndPostServlet</servlet-name>
+		<url-pattern>/autopost</url-pattern>
+	</servlet-mapping>
+
+	<!-- Default page to serve -->
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+	</welcome-file-list>
 
 </web-app>
