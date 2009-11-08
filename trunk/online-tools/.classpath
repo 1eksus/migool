@@ -4,5 +4,9 @@
 	<classpathentry kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER"/>
 	<classpathentry kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/migool.grab"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/migool.post"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/migool.util"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/pornohouse.net.ru"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>
