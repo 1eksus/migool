@@ -20,6 +20,14 @@ public class PostHostConfigPC {
 
 	@Persistent(serialized = "true")
 	private PostHostConfig config;
+	
+	public PostHostConfigPC() {
+	}
+	
+	public PostHostConfigPC(PostHostConfig config) {
+		this.host = config.host;
+		this.config = config;
+	}
 
 	/**
 	 * @param host
