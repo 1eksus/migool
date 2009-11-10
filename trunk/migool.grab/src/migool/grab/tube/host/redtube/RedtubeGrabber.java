@@ -8,5 +8,5 @@ import migool.grab.tube.TubeGrabberBase;
  *
  */
 public class RedtubeGrabber extends TubeGrabberBase {
-
+	public static final String HOST = "redtube.com";
 }
