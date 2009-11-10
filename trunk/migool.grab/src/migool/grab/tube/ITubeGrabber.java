@@ -15,4 +15,8 @@ public interface ITubeGrabber extends IGrabber {
 	ITubeGrab next();
 
 	ITubeGrab prev();
+
+	ITubePosition getTubePosition();
+
+	void setTubePosition(ITubePosition tubePosition);
 }
