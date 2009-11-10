@@ -12,9 +12,9 @@ public interface ITubeGrab {
 
 	String getTitle();
 
-	String getThumb();
+	String getThumbUrl();
 
-	String[] getThumbs();
+	String[] getThumbUrls();
 
 	String getDuration();
 

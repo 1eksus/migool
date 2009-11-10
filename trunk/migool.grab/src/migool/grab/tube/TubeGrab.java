@@ -10,8 +10,8 @@ public class TubeGrab implements ITubeGrab {
 	private String share;
 	private String id;
 	private String title;
-	private String thumb;
-	private String[] thumbs;
+	private String thumbUrl;
+	private String[] thumbUrls;
 	private String duration;
 	private String embed;
 
@@ -36,13 +36,13 @@ public class TubeGrab implements ITubeGrab {
 	}
 
 	@Override
-	public String getThumb() {
-		return thumb;
+	public String getThumbUrl() {
+		return thumbUrl;
 	}
 
 	@Override
-	public String[] getThumbs() {
-		return thumbs;
+	public String[] getThumbUrls() {
+		return thumbUrls;
 	}
 
 	@Override
@@ -79,7 +79,7 @@ public class TubeGrab implements ITubeGrab {
 	 *            the thumb to set
 	 */
 	public void setThumb(String thumb) {
-		this.thumb = thumb;
+		this.thumbUrl = thumb;
 	}
 
 	/**
@@ -87,7 +87,7 @@ public class TubeGrab implements ITubeGrab {
 	 *            the thumbs to set
 	 */
 	public void setThumbs(String[] thumbs) {
-		this.thumbs = thumbs;
+		this.thumbUrls = thumbs;
 	}
 
 	/**
