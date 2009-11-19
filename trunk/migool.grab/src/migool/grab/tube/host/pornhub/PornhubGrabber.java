@@ -14,4 +14,10 @@ public class PornhubGrabber extends TubeGrabberBase {
 	public String getHost() {
 		return HOST;
 	}
+
+	@Override
+	protected void updateTubePosition() {
+		// TODO Auto-generated method stub
+		
+	}
 }

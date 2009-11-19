@@ -17,7 +17,10 @@ public abstract class TubeGrabberBase implements ITubeGrabber {
 	@Override
 	public void setTubePosition(ITubePosition tubePosition) {
 		this.tubePosition = tubePosition;
+		updateTubePosition();
 	}
+
+	protected abstract void updateTubePosition();
 
 	@Override
 	public boolean hasNext() {
