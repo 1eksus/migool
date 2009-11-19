@@ -43,10 +43,10 @@ public abstract class TubeGrabberBase implements ITubeGrabber {
 		return null;
 	}
 
-	@Override
-	public String getHost() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+//	@Override
+//	public String getHost() {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
 
 }
