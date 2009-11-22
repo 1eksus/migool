@@ -8,15 +8,4 @@ import migool.grab.IGrabber;
  * 
  */
 public interface ITubeGrabber extends IGrabber {
-	boolean hasNext();
-
-	boolean hasPrev();
-
-	ITubeGrab next();
-
-	ITubeGrab prev();
-
-	ITubePosition getTubePosition();
-
-	void setTubePosition(ITubePosition tubePosition);
 }

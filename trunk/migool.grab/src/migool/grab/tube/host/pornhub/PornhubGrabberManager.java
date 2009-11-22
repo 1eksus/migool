@@ -1,16 +1,15 @@
 package migool.grab.tube.host.pornhub;
 
-import migool.grab.tube.TubeGrabberBase;
+import migool.grab.tube.TubeGrabberManagerBase;
 
 /**
  * 
  * @author Denis Migol
  * 
  */
-public class PornhubGrabber extends TubeGrabberBase {
+public class PornhubGrabberManager extends TubeGrabberManagerBase {
 	public static final String HOST = "pornhub.com";
 
-	@Override
 	public String getHost() {
 		return HOST;
 	}

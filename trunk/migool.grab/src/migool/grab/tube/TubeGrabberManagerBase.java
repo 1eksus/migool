@@ -5,7 +5,7 @@ package migool.grab.tube;
  * @author Denis Migol
  * 
  */
-public abstract class TubeGrabberBase implements ITubeGrabber {
+public abstract class TubeGrabberManagerBase implements ITubeGrabberManager {
 
 	protected ITubePosition tubePosition;
 
