@@ -6,7 +6,7 @@ package migool.grab.tube;
  * 
  */
 public interface ITubePosition {
-	String getPageUrl();
+	String getUrl();
 
-	String getIdUrl();
+	String getPageUrl();
 }

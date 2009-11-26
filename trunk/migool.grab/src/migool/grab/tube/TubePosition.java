@@ -8,7 +8,7 @@ package migool.grab.tube;
 public class TubePosition implements ITubePosition {
 
 	@Override
-	public String getIdUrl() {
+	public String getUrl() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -18,5 +18,4 @@ public class TubePosition implements ITubePosition {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 }
