@@ -1,11 +1,13 @@
 package migool.grab.tube;
 
+import migool.grab.IGrab;
+
 /**
  * 
  * @author Denis Migol
  * 
  */
-public interface ITubeGrab {
+public interface ITubeGrab extends IGrab {
 	String getUrl();
 
 	String getId();
