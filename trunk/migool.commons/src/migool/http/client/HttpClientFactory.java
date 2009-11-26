@@ -21,7 +21,7 @@ public abstract class HttpClientFactory {
 	public static final HttpClientFactory get() {
 		return defFactory;
 	}
-	
+
 	public static void setDefault(HttpClientFactory defFactory) {
 		HttpClientFactory.defFactory = defFactory;
 	}
