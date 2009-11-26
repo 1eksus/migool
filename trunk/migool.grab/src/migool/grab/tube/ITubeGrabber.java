@@ -1,5 +1,10 @@
 package migool.grab.tube;
 
+import java.io.IOException;
+
+import org.apache.http.client.ClientProtocolException;
+import org.htmlparser.util.ParserException;
+
 import migool.grab.IGrabber;
 
 /**
@@ -26,8 +31,11 @@ public interface ITubeGrabber extends IGrabber {
 	 * 
 	 * @param url
 	 * @return
+	 * @throws IOException 
+	 * @throws ParserException 
+	 * @throws ClientProtocolException 
 	 */
-	ITubeGrab[] grab(String url);
+	ITubeGrab[] grab(String url) throws ClientProtocolException, ParserException, IOException;
 
 	/**
 	 * 
@@ -40,8 +48,11 @@ public interface ITubeGrabber extends IGrabber {
 	 * 
 	 * @param url
 	 * @return
+	 * @throws IOException 
+	 * @throws ClientProtocolException 
+	 * @throws ParserException 
 	 */
-	ITubeGrab[] grabPageUrl(String url);
+	ITubeGrab[] grabPageUrl(String url) throws ClientProtocolException, IOException, ParserException;
 
 	/**
 	 * 
