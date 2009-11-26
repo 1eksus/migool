@@ -6,11 +6,13 @@ package migool.grab.tube;
  * 
  */
 public interface ITubeGrab {
-	String getShare();
+	String getUrl();
 
 	String getId();
 
 	String getTitle();
+
+	String getMessage();
 
 	String getThumbUrl();
 

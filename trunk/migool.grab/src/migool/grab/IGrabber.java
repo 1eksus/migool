@@ -1,10 +1,11 @@
 package migool.grab;
 
+import migool.host.IHostable;
+
 /**
  * 
  * @author Denis Migol
  * 
  */
-public interface IGrabber {
-	String getHost();
+public interface IGrabber extends IHostable {
 }

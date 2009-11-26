@@ -7,9 +7,10 @@ package migool.grab.tube;
  */
 public class TubeGrab implements ITubeGrab {
 
-	private String share;
+	private String url;
 	private String id;
 	private String title;
+	private String message;
 	private String thumbUrl;
 	private String[] thumbUrls;
 	private String duration;
@@ -31,8 +32,8 @@ public class TubeGrab implements ITubeGrab {
 	}
 
 	@Override
-	public String getShare() {
-		return share;
+	public String getUrl() {
+		return url;
 	}
 
 	@Override
@@ -54,8 +55,8 @@ public class TubeGrab implements ITubeGrab {
 	 * @param share
 	 *            the share to set
 	 */
-	public void setShare(String share) {
-		this.share = share;
+	public void setUrl(String share) {
+		this.url = share;
 	}
 
 	/**
@@ -106,4 +107,12 @@ public class TubeGrab implements ITubeGrab {
 		this.embed = embed;
 	}
 
+	@Override
+	public String getMessage() {
+		return message;
+	}
+	
+	public void setMessage(String message) {
+		this.message = message;
+	}
 }
