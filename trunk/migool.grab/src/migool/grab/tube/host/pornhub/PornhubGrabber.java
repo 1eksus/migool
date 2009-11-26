@@ -2,6 +2,7 @@ package migool.grab.tube.host.pornhub;
 
 import migool.grab.tube.ITubeGrab;
 import migool.grab.tube.TubeGrabberBase;
+import migool.util.RegexUtil;
 
 /**
  * 
@@ -10,16 +11,16 @@ import migool.grab.tube.TubeGrabberBase;
  */
 public class PornhubGrabber extends TubeGrabberBase {
 
-	public static final String HOST = "pornhub.com";
+	public static final String HOST = "www.pornhub.com";
+	public static final String URL_REGEX = "http\\:\\/\\/www\\.pornhub\\.com\\/view\\_video\\.php\\?viewkey\\=[\\d]{9}";
+	public static final String PAGE_URL_REGEX = "http\\:\\/\\/www\\.pornhub\\.com\\/video\\?o\\=mr\\&page\\=[\\d]+";
 
 	public boolean isUrl(String url) {
-		// TODO
-		return false;
+		return RegexUtil.isMatch(URL_REGEX, url);
 	}
 
 	public boolean isPageUrl(String url) {
-		// TODO
-		return false;
+		return RegexUtil.isMatch(PAGE_URL_REGEX, url);
 	}
 
 	@Override
@@ -35,6 +36,12 @@ public class PornhubGrabber extends TubeGrabberBase {
 
 	@Override
 	public ITubeGrab grabUrl(String url) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getPageUrl(int number) {
 		// TODO Auto-generated method stub
 		return null;
 	}

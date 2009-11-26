@@ -40,4 +40,10 @@ public class RedtubeGrabber extends TubeGrabberBase {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+	@Override
+	public String getPageUrl(int number) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

@@ -42,4 +42,11 @@ public interface ITubeGrabber extends IGrabber {
 	 * @return
 	 */
 	ITubeGrab[] grabPageUrl(String url);
+
+	/**
+	 * 
+	 * @param number
+	 * @return
+	 */
+	String getPageUrl(int number);
 }
