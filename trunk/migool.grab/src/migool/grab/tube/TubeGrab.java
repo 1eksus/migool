@@ -52,11 +52,11 @@ public class TubeGrab implements ITubeGrab {
 	}
 
 	/**
-	 * @param share
-	 *            the share to set
+	 * @param url
+	 *            the url to set
 	 */
-	public void setUrl(String share) {
-		this.url = share;
+	public void setUrl(String url) {
+		this.url = url;
 	}
 
 	/**
@@ -76,19 +76,19 @@ public class TubeGrab implements ITubeGrab {
 	}
 
 	/**
-	 * @param thumb
-	 *            the thumb to set
+	 * @param thumbUrl
+	 *            the thumbUrl to set
 	 */
-	public void setThumb(String thumb) {
-		this.thumbUrl = thumb;
+	public void setThumbUrl(String thumbUrl) {
+		this.thumbUrl = thumbUrl;
 	}
 
 	/**
-	 * @param thumbs
-	 *            the thumbs to set
+	 * @param thumbUrls
+	 *            the thumbUrls to set
 	 */
-	public void setThumbs(String[] thumbs) {
-		this.thumbUrls = thumbs;
+	public void setThumbUrls(String[] thumbUrls) {
+		this.thumbUrls = thumbUrls;
 	}
 
 	/**
