@@ -33,12 +33,13 @@ public class PornhubGrabber extends TubeGrabberBase {
 	public static final String PAGE_URL_REGEX = "http\\:\\/\\/www\\.pornhub\\.com\\/video\\?o\\=mr\\&page\\=[\\d]+";
 	public static final String PAGE_URL_PREFIX = "http://www.pornhub.com/video?o=mr&page=";
 	public static final String DURATION_REGEX = "[\\d]{1,3}\\:[\\d]{2}";
-	
+
 	private static final String DURATION = "duration";
 
 	private static final NodeFilter VIDEOBLOCK_FILTER = new AndFilter(new TagNameFilter(LI), new AndFilter(
 			new TagNameFilter(DIV), new HasAttributeFilter(CLASS, "wrap")));
-	//private static final NodeFilter DURATION_FILTER = new AndFilter(new TagNameFilter(VAR), new HasAttributeFilter(CLASS, DURATION));
+	// private static final NodeFilter DURATION_FILTER = new AndFilter(new
+	// TagNameFilter(VAR), new HasAttributeFilter(CLASS, DURATION));
 	private static final NodeFilter DURATION_FILTER = new HasAttributeFilter(CLASS, DURATION);
 
 	/* fields */
@@ -86,7 +87,37 @@ public class PornhubGrabber extends TubeGrabberBase {
 	 * @param children
 	 * @return
 	 */
-	private String getDuration(NodeList children) {
+	private String grabTitle(NodeList children) {
+		// TODO
+		return null;
+	}
+
+	/**
+	 * 
+	 * @param children
+	 * @return
+	 */
+	private String grabThumbUrl(NodeList children) {
+		// TODO
+		return null;
+	}
+
+	/**
+	 * 
+	 * @param children
+	 * @return
+	 */
+	private String[] grabThumbUrls(NodeList children) {
+		// TODO
+		return null;
+	}
+
+	/**
+	 * 
+	 * @param children
+	 * @return
+	 */
+	private String grabDuration(NodeList children) {
 		final NodeList nl = children.extractAllNodesThatMatch(DURATION_FILTER, true);
 		if (nl != null && nl.size() >= 1) {
 			return RegexUtil.getMatch(nl.elementAt(0).getText(), DURATION_REGEX);
@@ -104,7 +135,7 @@ public class PornhubGrabber extends TubeGrabberBase {
 			if (isVideoBullet(children)) {
 				// TODO
 				TubeGrabBuilder b = new TubeGrabBuilder();
-				b.setDuration(getDuration(children));
+				b.setDuration(grabDuration(children));
 			}
 		}
 		// TODO Auto-generated method stub

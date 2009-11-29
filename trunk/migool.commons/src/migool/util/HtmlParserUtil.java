@@ -53,9 +53,12 @@ public final class HtmlParserUtil {
 	public static final String FOR = "for";
 	public static final String ID = "id";
 	public static final String SCRIPT = "script";
+	public static final String A = "a";
 
 	public static final NodeFilter PASSWORD_INPUT_FILTER = new AndFilter(new TagNameFilter(INPUT), new HasAttributeFilter(TYPE, PASSWORD));
 	public static final NodeFilter SCRIPT_FILTER = new TagNameFilter(SCRIPT);
+
+	public static final NodeFilter A_FILTER = new TagNameFilter(A);
 
 	private HtmlParserUtil() {
 	}
