@@ -1,5 +1,7 @@
 package migool.grab.tube.host.pornhub;
 
+import static migool.util.HtmlParserUtil.*;
+
 import java.io.IOException;
 
 import org.apache.http.client.ClientProtocolException;
@@ -29,9 +31,14 @@ public class PornhubGrabber extends TubeGrabberBase {
 	public static final String URL_REGEX = "http\\:\\/\\/www\\.pornhub\\.com\\/view\\_video\\.php\\?viewkey\\=[\\d]{9}";
 	public static final String PAGE_URL_REGEX = "http\\:\\/\\/www\\.pornhub\\.com\\/video\\?o\\=mr\\&page\\=[\\d]+";
 	public static final String PAGE_URL_PREFIX = "http://www.pornhub.com/video?o=mr&page=";
+	public static final String DURATION_REGEX = "[\\d]{1,3}\\:[\\d]{2}";
+	
+	private static final String DURATION = "duration";
 
-	private static final NodeFilter VIDEOS_PAGE_FILTER = new AndFilter(new TagNameFilter("li"), new AndFilter(
-			new TagNameFilter("div"), new HasAttributeFilter("class", "wrap")));
+	private static final NodeFilter VIDEOBLOCK_FILTER = new AndFilter(new TagNameFilter(LI), new AndFilter(
+			new TagNameFilter(DIV), new HasAttributeFilter(CLASS, "wrap")));
+	//private static final NodeFilter DURATION_FILTER = new AndFilter(new TagNameFilter(VAR), new HasAttributeFilter(CLASS, DURATION));
+	private static final NodeFilter DURATION_FILTER = new HasAttributeFilter(CLASS, DURATION);
 
 	/* fields */
 	private final HttpClientWrapper httpClient;
@@ -40,11 +47,11 @@ public class PornhubGrabber extends TubeGrabberBase {
 		httpClient = new HttpClientWrapper();
 	}
 
-	public boolean isUrl(String url) {
+	public boolean isUrl(final String url) {
 		return RegexUtil.isMatch(URL_REGEX, url);
 	}
 
-	public boolean isPageUrl(String url) {
+	public boolean isPageUrl(final String url) {
 		return RegexUtil.isMatch(PAGE_URL_REGEX, url);
 	}
 
@@ -59,9 +66,9 @@ public class PornhubGrabber extends TubeGrabberBase {
 	 * @return
 	 */
 	private boolean isVideoBullet(NodeList children) {
-		NodeList alist = children.extractAllNodesThatMatch(new TagNameFilter("a"), true);
+		final NodeList alist = children.extractAllNodesThatMatch(new TagNameFilter("a"), true);
 		if (alist != null) {
-			int size = alist.size();
+			final int size = alist.size();
 			for (int i = 0; i < size; i++) {
 				if (isUrl(((LinkTag) alist.elementAt(i)).getLink())) {
 					return true;
@@ -71,15 +78,27 @@ public class PornhubGrabber extends TubeGrabberBase {
 		return false;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
+	private String getDuration(NodeList children) {
+		final NodeList nl = children.extractAllNodesThatMatch(DURATION_FILTER, true);
+		if (nl != null && nl.size() >= 1) {
+			return RegexUtil.getMatch(nl.elementAt(0).getText(), DURATION_REGEX);
+		}
+		return null;
+	}
+
 	@Override
 	public ITubeGrab[] grabPageUrl(String url) throws ClientProtocolException, IOException, ParserException {
 		final String page = httpClient.requestToString(new HttpGet(url));
-		final NodeList nl = (new Parser(page)).parse(VIDEOS_PAGE_FILTER);
+		final NodeList nl = (new Parser(page)).parse(VIDEOBLOCK_FILTER);
 		int size = nl.size();
 		for (int i = 0; i < size; i++) {
 			final NodeList children = nl.elementAt(i).getChildren();
 			if (isVideoBullet(children)) {
-
+				// TODO
 			}
 		}
 		// TODO Auto-generated method stub
