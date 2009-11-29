@@ -47,10 +47,12 @@ public class PornhubGrabber extends TubeGrabberBase {
 		httpClient = new HttpClientWrapper();
 	}
 
+	@Override
 	public boolean isUrl(final String url) {
 		return RegexUtil.isMatch(URL_REGEX, url);
 	}
 
+	@Override
 	public boolean isPageUrl(final String url) {
 		return RegexUtil.isMatch(PAGE_URL_REGEX, url);
 	}
