@@ -82,6 +82,7 @@ public class PornhubGrabber extends TubeGrabberBase {
 
 	/**
 	 * 
+	 * @param children
 	 * @return
 	 */
 	private String getDuration(NodeList children) {
