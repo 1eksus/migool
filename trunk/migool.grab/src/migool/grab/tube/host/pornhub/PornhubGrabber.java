@@ -16,6 +16,7 @@ import org.htmlparser.util.NodeList;
 import org.htmlparser.util.ParserException;
 
 import migool.grab.tube.ITubeGrab;
+import migool.grab.tube.TubeGrabBuilder;
 import migool.grab.tube.TubeGrabberBase;
 import migool.http.client.HttpClientWrapper;
 import migool.util.RegexUtil;
@@ -102,6 +103,8 @@ public class PornhubGrabber extends TubeGrabberBase {
 			final NodeList children = nl.elementAt(i).getChildren();
 			if (isVideoBullet(children)) {
 				// TODO
+				TubeGrabBuilder b = new TubeGrabBuilder();
+				b.setDuration(getDuration(children));
 			}
 		}
 		// TODO Auto-generated method stub
