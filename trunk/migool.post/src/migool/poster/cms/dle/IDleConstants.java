@@ -18,7 +18,7 @@ public interface IDleConstants {
 	public static final String LOGIN_SUBMIT = "login=submit";
 
 	public static final String ENTRYFORM = "entryform";
-	public static final String TITLE = "title";
+//	public static final String TITLE = "title";
 	public static final String ALT_NAME = "alt_name";
 	public static final String CATLIST = "catlist[]";
 	public static final String SHORT_STORY = "short_story";
