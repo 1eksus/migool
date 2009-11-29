@@ -9,7 +9,7 @@ import org.htmlparser.Parser;
 import org.htmlparser.filters.AndFilter;
 import org.htmlparser.filters.HasAttributeFilter;
 import org.htmlparser.filters.TagNameFilter;
-import org.htmlparser.tags.Bullet;
+import org.htmlparser.tags.LinkTag;
 import org.htmlparser.util.NodeList;
 import org.htmlparser.util.ParserException;
 
@@ -53,13 +53,33 @@ public class PornhubGrabber extends TubeGrabberBase {
 		return HOST;
 	}
 
+	/**
+	 * 
+	 * @param children
+	 * @return
+	 */
+	private boolean isVideoBullet(NodeList children) {
+		NodeList alist = children.extractAllNodesThatMatch(new TagNameFilter("a"), true);
+		if (alist != null) {
+			int size = alist.size();
+			for (int i = 0; i < size; i++) {
+				if (isUrl(((LinkTag) alist.elementAt(i)).getLink())) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 	@Override
 	public ITubeGrab[] grabPageUrl(String url) throws ClientProtocolException, IOException, ParserException {
 		String page = httpClient.requestToString(new HttpGet(url));
 		NodeList nl = (new Parser(page)).parse(VIDEOS_PAGE_FILTER);
 		int size = nl.size();
 		for (int i = 0; i < size; i++) {
-			Bullet bullet = (Bullet) nl.elementAt(i);
+			if (isVideoBullet(nl.elementAt(i).getChildren())) {
+
+			}
 		}
 		// TODO Auto-generated method stub
 		return null;
