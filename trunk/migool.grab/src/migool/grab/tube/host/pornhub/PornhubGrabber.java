@@ -73,11 +73,12 @@ public class PornhubGrabber extends TubeGrabberBase {
 
 	@Override
 	public ITubeGrab[] grabPageUrl(String url) throws ClientProtocolException, IOException, ParserException {
-		String page = httpClient.requestToString(new HttpGet(url));
-		NodeList nl = (new Parser(page)).parse(VIDEOS_PAGE_FILTER);
+		final String page = httpClient.requestToString(new HttpGet(url));
+		final NodeList nl = (new Parser(page)).parse(VIDEOS_PAGE_FILTER);
 		int size = nl.size();
 		for (int i = 0; i < size; i++) {
-			if (isVideoBullet(nl.elementAt(i).getChildren())) {
+			final NodeList children = nl.elementAt(i).getChildren();
+			if (isVideoBullet(children)) {
 
 			}
 		}
