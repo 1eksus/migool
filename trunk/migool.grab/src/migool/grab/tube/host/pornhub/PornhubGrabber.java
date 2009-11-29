@@ -19,6 +19,7 @@ import migool.grab.tube.ITubeGrab;
 import migool.grab.tube.TubeGrabBuilder;
 import migool.grab.tube.TubeGrabberBase;
 import migool.http.client.HttpClientWrapper;
+import migool.util.EmptyChecker;
 import migool.util.RegexUtil;
 
 /**
@@ -70,7 +71,7 @@ public class PornhubGrabber extends TubeGrabberBase {
 	 * @return
 	 */
 	private boolean isVideoBullet(NodeList children) {
-		final NodeList alist = children.extractAllNodesThatMatch(new TagNameFilter("a"), true);
+		final NodeList alist = children.extractAllNodesThatMatch(A_FILTER, true);
 		if (alist != null) {
 			final int size = alist.size();
 			for (int i = 0; i < size; i++) {
@@ -88,7 +89,16 @@ public class PornhubGrabber extends TubeGrabberBase {
 	 * @return
 	 */
 	private String grabTitle(NodeList children) {
-		// TODO
+		final NodeList alist = children.extractAllNodesThatMatch(A_FILTER, true);
+		if (alist != null) {
+			final int size = alist.size();
+			String title = null;
+			for (int i = 0; i < size; i++) {
+				if (EmptyChecker.isNotNullOrEmpty(title = ((LinkTag)alist.elementAt(i)).getAttribute(TITLE))) {
+					return title;
+				}
+			}
+		}
 		return null;
 	}
 
@@ -135,6 +145,7 @@ public class PornhubGrabber extends TubeGrabberBase {
 			if (isVideoBullet(children)) {
 				// TODO
 				TubeGrabBuilder b = new TubeGrabBuilder();
+				b.setTitle(grabTitle(children));
 				b.setDuration(grabDuration(children));
 			}
 		}

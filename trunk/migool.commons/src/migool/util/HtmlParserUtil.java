@@ -36,6 +36,7 @@ import org.htmlparser.util.ParserException;
  */
 public final class HtmlParserUtil {
 
+	public static final String TITLE = "title";
 	public static final String LI = "li";
 	public static final String DIV = "div";
 	public static final String VAR = "var";
