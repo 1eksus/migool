@@ -60,7 +60,7 @@ public class PornhubGrabber extends TubeGrabberBase {
 	}
 
 	@Override
-	public boolean isUrl(final String url) {
+	public boolean isIdUrl(final String url) {
 		return RegexUtil.isMatch(URL_REGEX, url);
 	}
 
@@ -79,15 +79,16 @@ public class PornhubGrabber extends TubeGrabberBase {
 	 * @param children
 	 * @return
 	 */
-	private String grabUrlFromPage(NodeList children) {
+	private String grabIdUrlFromPage(NodeList children) {
 		final NodeList alist = children.extractAllNodesThatMatch(A_FILTER, true);
 		if (alist != null) {
 			final int size = alist.size();
 			String link = null;
 			for (int i = 0; i < size; i++) {
 				link = ((LinkTag) alist.elementAt(i)).getLink();
-				if (isUrl(link)) {
-					return RegexUtil.getMatch(link, URL_REGEX);
+				if (isIdUrl(link)) {
+					//return RegexUtil.getMatch(link, URL_REGEX);
+					return link;
 				}
 			}
 		}
@@ -155,7 +156,7 @@ public class PornhubGrabber extends TubeGrabberBase {
 		for (int i = 0; i < size; i++) {
 			final NodeList children = nl.elementAt(i).getChildren();
 			String idUrl = null;
-			if (EmptyChecker.isNotNullOrEmpty(idUrl = grabUrlFromPage(children))) {
+			if (EmptyChecker.isNotNullOrEmpty(idUrl = grabIdUrlFromPage(children))) {
 				final ITubeGrabBuilder b = new TubeGrabBuilder().setIdUrl(idUrl).setTitle(grabTitleFromPage(children))
 						.setThumbUrl(grabThumbUrlFromPage(children)).setThumbUrls(grabThumbUrlsFromPage(children))
 						.setDuration(grabDuration(children));

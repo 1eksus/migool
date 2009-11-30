@@ -18,7 +18,7 @@ public interface ITubeGrabber extends IGrabber {
 	 * @param url
 	 * @return
 	 */
-	boolean isUrl(String url);
+	boolean isIdUrl(String url);
 
 	/**
 	 * 

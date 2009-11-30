@@ -16,7 +16,7 @@ public abstract class TubeGrabberBase implements ITubeGrabber {
 	public ITubeGrab[] grab(String url) throws ClientProtocolException, ParserException, IOException {
 		if (isPageUrl(url)) {
 			return grabPageUrl(url);
-		} else if (isUrl(url)) {
+		} else if (isIdUrl(url)) {
 			return new ITubeGrab[] { grabUrl(url) };
 		}
 		throw new IllegalArgumentException(url);

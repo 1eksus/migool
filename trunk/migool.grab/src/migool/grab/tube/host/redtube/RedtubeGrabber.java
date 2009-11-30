@@ -36,7 +36,7 @@ public class RedtubeGrabber extends TubeGrabberBase {
 	}
 
 	@Override
-	public boolean isUrl(String url) {
+	public boolean isIdUrl(String url) {
 		// TODO Auto-generated method stub
 		return false;
 	}
