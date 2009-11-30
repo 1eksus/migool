@@ -8,7 +8,7 @@ import migool.grab.IGrab;
  * 
  */
 public interface ITubeGrab extends IGrab {
-	String getUrl();
+	String getIdUrl();
 
 	String getId();
 

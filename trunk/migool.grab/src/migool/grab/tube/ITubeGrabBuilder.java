@@ -6,7 +6,7 @@ package migool.grab.tube;
  * 
  */
 public interface ITubeGrabBuilder {
-	ITubeGrabBuilder setUrl(String url);
+	ITubeGrabBuilder setIdUrl(String idUrl);
 
 	ITubeGrabBuilder setId(String id);
 

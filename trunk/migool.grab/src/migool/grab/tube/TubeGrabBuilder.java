@@ -64,8 +64,8 @@ public class TubeGrabBuilder implements ITubeGrabBuilder {
 	}
 
 	@Override
-	public ITubeGrabBuilder setUrl(String url) {
-		grab.setUrl(url);
+	public ITubeGrabBuilder setIdUrl(String idUrl) {
+		grab.setIdUrl(idUrl);
 		return this;
 	}
 }

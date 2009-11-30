@@ -9,7 +9,7 @@ import java.util.Arrays;
  */
 public class TubeGrab implements ITubeGrab {
 
-	private String url;
+	private String idUrl;
 	private String id;
 	private String title;
 	private String message;
@@ -34,8 +34,8 @@ public class TubeGrab implements ITubeGrab {
 	}
 
 	@Override
-	public String getUrl() {
-		return url;
+	public String getIdUrl() {
+		return idUrl;
 	}
 
 	@Override
@@ -57,8 +57,8 @@ public class TubeGrab implements ITubeGrab {
 	 * @param url
 	 *            the url to set
 	 */
-	public void setUrl(String url) {
-		this.url = url;
+	public void setIdUrl(String idUrl) {
+		this.idUrl = idUrl;
 	}
 
 	/**
@@ -122,6 +122,6 @@ public class TubeGrab implements ITubeGrab {
 	public String toString() {
 		return "TubeGrab [duration=" + duration + ", embed=" + embed + ", id=" + id + ", message=" + message
 				+ ", thumbUrl=" + thumbUrl + ", thumbUrls=" + Arrays.toString(thumbUrls) + ", title=" + title
-				+ ", url=" + url + "]";
+				+ ", url=" + idUrl + "]";
 	}
 }

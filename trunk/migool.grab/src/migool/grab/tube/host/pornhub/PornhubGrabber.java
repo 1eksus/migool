@@ -156,7 +156,7 @@ public class PornhubGrabber extends TubeGrabberBase {
 			final NodeList children = nl.elementAt(i).getChildren();
 			String idUrl = null;
 			if (EmptyChecker.isNotNullOrEmpty(idUrl = grabUrlFromPage(children))) {
-				final ITubeGrabBuilder b = new TubeGrabBuilder().setUrl(idUrl).setTitle(grabTitleFromPage(children))
+				final ITubeGrabBuilder b = new TubeGrabBuilder().setIdUrl(idUrl).setTitle(grabTitleFromPage(children))
 						.setThumbUrl(grabThumbUrlFromPage(children)).setThumbUrls(grabThumbUrlsFromPage(children))
 						.setDuration(grabDuration(children));
 
