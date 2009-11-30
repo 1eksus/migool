@@ -46,8 +46,8 @@ public class PornhubGrabber extends TubeGrabberBase {
 
 	private static final String DURATION = "duration";
 
-	private static final NodeFilter VIDEOBLOCK_FILTER = new AndFilter(new TagNameFilter(LI), new HasChildFilter(new AndFilter(
-			new TagNameFilter(DIV), new HasAttributeFilter(CLASS, "wrap"))));
+	private static final NodeFilter VIDEOBLOCK_FILTER = new AndFilter(new TagNameFilter(LI), new HasChildFilter(
+			new AndFilter(new TagNameFilter(DIV), new HasAttributeFilter(CLASS, "wrap"))));
 	// private static final NodeFilter DURATION_FILTER = new AndFilter(new
 	// TagNameFilter(VAR), new HasAttributeFilter(CLASS, DURATION));
 	private static final NodeFilter DURATION_FILTER = new HasAttributeFilter(CLASS, DURATION);
@@ -156,9 +156,9 @@ public class PornhubGrabber extends TubeGrabberBase {
 			final NodeList children = nl.elementAt(i).getChildren();
 			String idUrl = null;
 			if (EmptyChecker.isNotNullOrEmpty(idUrl = grabUrlFromPage(children))) {
-				final ITubeGrabBuilder b = new TubeGrabBuilder().setUrl(idUrl).setTitle(grabTitleFromPage(children)).setThumbUrl(
-						grabThumbUrlFromPage(children)).setThumbUrls(grabThumbUrlsFromPage(children)).setDuration(
-						grabDuration(children));
+				final ITubeGrabBuilder b = new TubeGrabBuilder().setUrl(idUrl).setTitle(grabTitleFromPage(children))
+						.setThumbUrl(grabThumbUrlFromPage(children)).setThumbUrls(grabThumbUrlsFromPage(children))
+						.setDuration(grabDuration(children));
 
 				ret.add(b.build());
 			}
