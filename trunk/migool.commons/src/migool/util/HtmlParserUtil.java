@@ -36,6 +36,7 @@ import org.htmlparser.util.ParserException;
  */
 public final class HtmlParserUtil {
 
+	public static final String IMG = "img";
 	public static final String TITLE = "title";
 	public static final String LI = "li";
 	public static final String DIV = "div";
@@ -60,6 +61,11 @@ public final class HtmlParserUtil {
 	public static final NodeFilter SCRIPT_FILTER = new TagNameFilter(SCRIPT);
 
 	public static final NodeFilter A_FILTER = new TagNameFilter(A);
+	public static final NodeFilter IMG_FILTER = new TagNameFilter(IMG);
+	/**
+	 * Link that contains image
+	 */
+	public static final NodeFilter A_IMG_FILTER = new AndFilter(A_FILTER, new HasChildFilter(IMG_FILTER));
 
 	private HtmlParserUtil() {
 	}
