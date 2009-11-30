@@ -17,6 +17,7 @@ import org.htmlparser.filters.AndFilter;
 import org.htmlparser.filters.HasAttributeFilter;
 import org.htmlparser.filters.HasChildFilter;
 import org.htmlparser.filters.TagNameFilter;
+import org.htmlparser.tags.ImageTag;
 import org.htmlparser.tags.LinkTag;
 import org.htmlparser.util.NodeList;
 import org.htmlparser.util.ParserException;
@@ -87,7 +88,7 @@ public class PornhubGrabber extends TubeGrabberBase {
 			for (int i = 0; i < size; i++) {
 				link = ((LinkTag) alist.elementAt(i)).getLink();
 				if (isIdUrl(link)) {
-					//return RegexUtil.getMatch(link, URL_REGEX);
+					// return RegexUtil.getMatch(link, URL_REGEX);
 					return link;
 				}
 			}
@@ -119,7 +120,7 @@ public class PornhubGrabber extends TubeGrabberBase {
 	 * @param children
 	 * @return
 	 */
-	private String grabThumbUrlFromPage(NodeList children) {
+	private String grabThumbUrlFromPage(ImageTag img) {
 		// TODO
 		return null;
 	}
@@ -157,8 +158,11 @@ public class PornhubGrabber extends TubeGrabberBase {
 			final NodeList children = nl.elementAt(i).getChildren();
 			String idUrl = null;
 			if (EmptyChecker.isNotNullOrEmpty(idUrl = grabIdUrlFromPage(children))) {
+				final LinkTag link = (LinkTag) children.extractAllNodesThatMatch(A_IMG_FILTER, true).elementAt(0);
+				final ImageTag img = (ImageTag) link.getChildren().extractAllNodesThatMatch(IMG_FILTER).elementAt(0);
+
 				final ITubeGrabBuilder b = new TubeGrabBuilder().setIdUrl(idUrl).setTitle(grabTitleFromPage(children))
-						.setThumbUrl(grabThumbUrlFromPage(children)).setThumbUrls(grabThumbUrlsFromPage(children))
+						.setThumbUrl(grabThumbUrlFromPage(img)).setThumbUrls(grabThumbUrlsFromPage(children))
 						.setDuration(grabDuration(children));
 
 				ret.add(b.build());
