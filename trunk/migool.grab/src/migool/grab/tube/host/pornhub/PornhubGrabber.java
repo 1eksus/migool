@@ -79,17 +79,19 @@ public class PornhubGrabber extends TubeGrabberBase {
 	 * @param children
 	 * @return
 	 */
-	private boolean isVideoBullet(NodeList children) {
+	private String grabUrlFromPage(NodeList children) {
 		final NodeList alist = children.extractAllNodesThatMatch(A_FILTER, true);
 		if (alist != null) {
 			final int size = alist.size();
+			String link = null;
 			for (int i = 0; i < size; i++) {
-				if (isUrl(((LinkTag) alist.elementAt(i)).getLink())) {
-					return true;
+				link = ((LinkTag) alist.elementAt(i)).getLink();
+				if (isUrl(link)) {
+					return RegexUtil.getMatch(link, URL_REGEX);
 				}
 			}
 		}
-		return false;
+		return null;
 	}
 
 	/**
@@ -152,8 +154,9 @@ public class PornhubGrabber extends TubeGrabberBase {
 		int size = nl.size();
 		for (int i = 0; i < size; i++) {
 			final NodeList children = nl.elementAt(i).getChildren();
-			if (isVideoBullet(children)) {
-				final ITubeGrabBuilder b = new TubeGrabBuilder().setTitle(grabTitleFromPage(children)).setThumbUrl(
+			String urlId = null;
+			if (EmptyChecker.isNotNullOrEmpty(urlId = grabUrlFromPage(children))) {
+				final ITubeGrabBuilder b = new TubeGrabBuilder().setUrl(urlId).setTitle(grabTitleFromPage(children)).setThumbUrl(
 						grabThumbUrlFromPage(children)).setThumbUrls(grabThumbUrlsFromPage(children)).setDuration(
 						grabDuration(children));
 
