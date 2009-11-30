@@ -1,5 +1,7 @@
 package migool.grab.tube;
 
+import java.util.Arrays;
+
 /**
  * 
  * @author Denis Migol
@@ -114,5 +116,12 @@ public class TubeGrab implements ITubeGrab {
 	
 	public void setMessage(String message) {
 		this.message = message;
+	}
+
+	@Override
+	public String toString() {
+		return "TubeGrab [duration=" + duration + ", embed=" + embed + ", id=" + id + ", message=" + message
+				+ ", thumbUrl=" + thumbUrl + ", thumbUrls=" + Arrays.toString(thumbUrls) + ", title=" + title
+				+ ", url=" + url + "]";
 	}
 }
