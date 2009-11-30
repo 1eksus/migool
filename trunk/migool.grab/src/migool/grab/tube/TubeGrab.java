@@ -122,6 +122,6 @@ public class TubeGrab implements ITubeGrab {
 	public String toString() {
 		return "TubeGrab [duration=" + duration + ", embed=" + embed + ", id=" + id + ", message=" + message
 				+ ", thumbUrl=" + thumbUrl + ", thumbUrls=" + Arrays.toString(thumbUrls) + ", title=" + title
-				+ ", url=" + idUrl + "]";
+				+ ", idUrl=" + idUrl + "]";
 	}
 }
