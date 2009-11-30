@@ -8,5 +8,5 @@ import migool.grab.IGrabber;
  * 
  */
 public interface ISearchGrabber extends IGrabber {
-	// TODO
+	ISearchGrab[] grab(String request);
 }
