@@ -40,6 +40,8 @@ import migool.util.RegexUtil;
 public class PornhubGrabber extends TubeGrabberBase {
 
 	public static final String HOST = "www.pornhub.com";
+	
+	static final int MIN_NUMBER_PAGE = 1;
 
 	public static final String URL_REGEX = "http\\:\\/\\/www\\.pornhub\\.com\\/view\\_video\\.php\\?viewkey\\=([\\d]{8,10}|[\\w]+)";
 	public static final String PAGE_URL_REGEX = "http\\:\\/\\/www\\.pornhub\\.com\\/video\\?o\\=mr\\&page\\=[\\d]+";
@@ -225,7 +227,7 @@ public class PornhubGrabber extends TubeGrabberBase {
 
 	@Override
 	public String getPageUrl(int number) {
-		if (number < 1) {
+		if (number < MIN_NUMBER_PAGE) {
 			throw new IllegalArgumentException(number + "");
 		}
 		return PAGE_URL_PREFIX + number;
