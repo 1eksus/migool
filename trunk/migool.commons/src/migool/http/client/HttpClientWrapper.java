@@ -17,8 +17,8 @@ import org.apache.http.client.methods.HttpUriRequest;
  * @author Denis Migol
  * 
  */
-public final class HttpClientWrapper {
-	private final HttpClient client;
+public final class HttpClientWrapper extends HttpClientableBase {
+	private HttpClient client;
 	private String charset;
 	private boolean isFirstRequest = true;
 
@@ -32,14 +32,6 @@ public final class HttpClientWrapper {
 	 */
 	public HttpClientWrapper(HttpClient client) {
 		this.client = client;
-	}
-
-	/**
-	 * 
-	 * @return
-	 */
-	public HttpClient getClient() {
-		return client;
 	}
 
 	/**
