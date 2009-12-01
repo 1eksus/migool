@@ -32,7 +32,7 @@ import org.htmlparser.util.ParserException;
 /**
  * 
  * @author Denis Migol
- *
+ * 
  */
 public final class HtmlParserUtil {
 
@@ -59,7 +59,8 @@ public final class HtmlParserUtil {
 	public static final String SCRIPT = "script";
 	public static final String A = "a";
 
-	public static final NodeFilter PASSWORD_INPUT_FILTER = new AndFilter(new TagNameFilter(INPUT), new HasAttributeFilter(TYPE, PASSWORD));
+	public static final NodeFilter PASSWORD_INPUT_FILTER = new AndFilter(new TagNameFilter(INPUT),
+			new HasAttributeFilter(TYPE, PASSWORD));
 	public static final NodeFilter SCRIPT_FILTER = new TagNameFilter(SCRIPT);
 
 	public static final NodeFilter A_FILTER = new TagNameFilter(A);
@@ -77,6 +78,7 @@ public final class HtmlParserUtil {
 
 	/**
 	 * Searches form which contains password input and returns it.
+	 * 
 	 * @param html
 	 * @return
 	 */
@@ -84,7 +86,8 @@ public final class HtmlParserUtil {
 		Parser parser;
 		try {
 			parser = new Parser(html);
-			NodeList nl = parser.parse(new AndFilter(new TagNameFilter(FORM), new HasChildFilter(PASSWORD_INPUT_FILTER, true)));
+			NodeList nl = parser.parse(new AndFilter(new TagNameFilter(FORM), new HasChildFilter(PASSWORD_INPUT_FILTER,
+					true)));
 			if (nl.size() == 1) {
 				return (FormTag) nl.elementAt(0);
 			}
@@ -121,7 +124,7 @@ public final class HtmlParserUtil {
 		for (int i = 0; i < inputs.size(); i++) {
 			input = (InputTag) inputs.elementAt(i);
 			params.add(new BasicNameValuePair(input.getAttribute(NAME), input.getAttribute(VALUE)));
-		}		
+		}
 	}
 
 	/**
@@ -151,7 +154,8 @@ public final class HtmlParserUtil {
 	 * @return
 	 */
 	public static NodeList getHiddenInputs(FormTag form) {
-		return form.getFormInputs().extractAllNodesThatMatch(new AndFilter(new TagNameFilter(INPUT), new HasAttributeFilter(TYPE, HIDDEN)), true);
+		return form.getFormInputs().extractAllNodesThatMatch(
+				new AndFilter(new TagNameFilter(INPUT), new HasAttributeFilter(TYPE, HIDDEN)), true);
 	}
 
 	/**
@@ -160,7 +164,8 @@ public final class HtmlParserUtil {
 	 * @return
 	 */
 	public static NodeList getNotHiddenInputs(FormTag form) {
-		return form.getFormInputs().extractAllNodesThatMatch(new AndFilter(new TagNameFilter(INPUT), new NotFilter(new HasAttributeFilter(TYPE, HIDDEN))), true);
+		return form.getFormInputs().extractAllNodesThatMatch(
+				new AndFilter(new TagNameFilter(INPUT), new NotFilter(new HasAttributeFilter(TYPE, HIDDEN))), true);
 	}
 
 	/**
@@ -239,7 +244,7 @@ public final class HtmlParserUtil {
 	public static List<String> getNameAttributeValues(NodeList nl) {
 		List<String> ret = new ArrayList<String>(nl.size());
 		for (int i = 0; i < nl.size(); i++) {
-			String name = ((TagNode)nl.elementAt(i)).getAttribute(NAME);
+			String name = ((TagNode) nl.elementAt(i)).getAttribute(NAME);
 			if (name != null) {
 				ret.add(name);
 			}
@@ -247,22 +252,24 @@ public final class HtmlParserUtil {
 		return ret;
 	}
 
-//	/**
-//	 * 
-//	 * @param names
-//	 * @param params
-//	 * @return
-//	 */
-//	public static List<NameValuePair> toListNameValuePair(List<String> names, Map<String, String> params) {
-//		ArrayList<NameValuePair> ret = new ArrayList<NameValuePair>(names.size());
-//		for (String name : names) {
-//			String value = params.get(name);
-//			if (value != null) {
-//				ret.add(new BasicNameValuePair(name, params.get(name)));
-//			}
-//		}
-//		return ret;
-//	}
+	// /**
+	// *
+	// * @param names
+	// * @param params
+	// * @return
+	// */
+	// public static List<NameValuePair> toListNameValuePair(List<String> names,
+	// Map<String, String> params) {
+	// ArrayList<NameValuePair> ret = new
+	// ArrayList<NameValuePair>(names.size());
+	// for (String name : names) {
+	// String value = params.get(name);
+	// if (value != null) {
+	// ret.add(new BasicNameValuePair(name, params.get(name)));
+	// }
+	// }
+	// return ret;
+	// }
 
 	/**
 	 * 
@@ -278,7 +285,7 @@ public final class HtmlParserUtil {
 		}
 		return ret;
 	}
-	
+
 	/**
 	 * 
 	 * @param params
@@ -292,19 +299,20 @@ public final class HtmlParserUtil {
 		}
 	}
 
-//	/**
-//	 * 
-//	 * @param entity
-//	 * @param form
-//	 * @param name
-//	 * @param value
-//	 * @throws UnsupportedEncodingException
-//	 */
-//	public static void fillTextArea(MultipartEntity entity, FormTag form, String name, String value) throws UnsupportedEncodingException {
-//		if (form.getTextAreaTag(name) != null) {
-//			entity.addPart(name, new StringBody(value));
-//		}
-//	}
+	// /**
+	// *
+	// * @param entity
+	// * @param form
+	// * @param name
+	// * @param value
+	// * @throws UnsupportedEncodingException
+	// */
+	// public static void fillTextArea(MultipartEntity entity, FormTag form,
+	// String name, String value) throws UnsupportedEncodingException {
+	// if (form.getTextAreaTag(name) != null) {
+	// entity.addPart(name, new StringBody(value));
+	// }
+	// }
 
 	/**
 	 * 
@@ -316,22 +324,23 @@ public final class HtmlParserUtil {
 	public static void fillInputText(Map<String, String> params, FormTag form, String name, String value) {
 		if (form.getInputTag(name) != null & EmptyChecker.isNotNullOrEmpty(value)) {
 			params.put(name, value);
-		}		
+		}
 	}
 
-//	/**
-//	 * 
-//	 * @param entity
-//	 * @param form
-//	 * @param name
-//	 * @param value
-//	 * @throws UnsupportedEncodingException
-//	 */
-//	public static void fillInputText(MultipartEntity entity, FormTag form, String name, String value) throws UnsupportedEncodingException {
-//		if (form.getInputTag(name) != null) {
-//			entity.addPart(name, new StringBody(value));
-//		}		
-//	}
+	// /**
+	// *
+	// * @param entity
+	// * @param form
+	// * @param name
+	// * @param value
+	// * @throws UnsupportedEncodingException
+	// */
+	// public static void fillInputText(MultipartEntity entity, FormTag form,
+	// String name, String value) throws UnsupportedEncodingException {
+	// if (form.getInputTag(name) != null) {
+	// entity.addPart(name, new StringBody(value));
+	// }
+	// }
 
 	/**
 	 * 
@@ -346,19 +355,20 @@ public final class HtmlParserUtil {
 		}
 	}
 
-//	/**
-//	 * 
-//	 * @param entity
-//	 * @param form
-//	 * @param name
-//	 * @param value
-//	 * @throws UnsupportedEncodingException
-//	 */
-//	public static void fillInputCheckbox(MultipartEntity entity, FormTag form, String name, boolean value) throws UnsupportedEncodingException {
-//		if (form.getInputTag(name) != null && value) {
-//			entity.addPart(name, new StringBody("1"));
-//		}
-//	}
+	// /**
+	// *
+	// * @param entity
+	// * @param form
+	// * @param name
+	// * @param value
+	// * @throws UnsupportedEncodingException
+	// */
+	// public static void fillInputCheckbox(MultipartEntity entity, FormTag
+	// form, String name, boolean value) throws UnsupportedEncodingException {
+	// if (form.getInputTag(name) != null && value) {
+	// entity.addPart(name, new StringBody("1"));
+	// }
+	// }
 
 	/**
 	 * 
@@ -366,11 +376,12 @@ public final class HtmlParserUtil {
 	 * @param params
 	 * @throws UnsupportedEncodingException
 	 */
-	public static void fillParams(MultipartEntity entity, Map<String, String> params) throws UnsupportedEncodingException {
+	public static void fillParams(MultipartEntity entity, Map<String, String> params)
+			throws UnsupportedEncodingException {
 		for (String name : params.keySet()) {
-			//if (name != null) {
-				entity.addPart(name, new StringBody(params.get(name)));
-			//}
+			// if (name != null) {
+			entity.addPart(name, new StringBody(params.get(name)));
+			// }
 		}
 	}
 
