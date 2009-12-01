@@ -253,7 +253,7 @@ public final class HtmlParserUtil {
 //	 * @param params
 //	 * @return
 //	 */
-//	public static final List<NameValuePair> toListNameValuePair(List<String> names, Map<String, String> params) {
+//	public static List<NameValuePair> toListNameValuePair(List<String> names, Map<String, String> params) {
 //		ArrayList<NameValuePair> ret = new ArrayList<NameValuePair>(names.size());
 //		for (String name : names) {
 //			String value = params.get(name);
@@ -263,8 +263,11 @@ public final class HtmlParserUtil {
 //		}
 //		return ret;
 //	}
-	
-	public static final List<NameValuePair> toListNameValuePair(Map<String, String> params) {
+
+	/**
+	 * 
+	 */
+	public static List<NameValuePair> toListNameValuePair(Map<String, String> params) {
 		Set<String> names = params.keySet();
 		ArrayList<NameValuePair> ret = new ArrayList<NameValuePair>(names.size());
 		for (String name : names) {
@@ -283,7 +286,7 @@ public final class HtmlParserUtil {
 	 * @param name
 	 * @param value
 	 */
-	public static final void fillTextArea(Map<String, String> params, FormTag form, String name, String value) {
+	public static void fillTextArea(Map<String, String> params, FormTag form, String name, String value) {
 		if (form.getTextAreaTag(name) != null & EmptyChecker.isNotNullOrEmpty(value)) {
 			params.put(name, value);
 		}
@@ -297,7 +300,7 @@ public final class HtmlParserUtil {
 //	 * @param value
 //	 * @throws UnsupportedEncodingException
 //	 */
-//	public static final void fillTextArea(MultipartEntity entity, FormTag form, String name, String value) throws UnsupportedEncodingException {
+//	public static void fillTextArea(MultipartEntity entity, FormTag form, String name, String value) throws UnsupportedEncodingException {
 //		if (form.getTextAreaTag(name) != null) {
 //			entity.addPart(name, new StringBody(value));
 //		}
@@ -310,7 +313,7 @@ public final class HtmlParserUtil {
 	 * @param name
 	 * @param value
 	 */
-	public static final void fillInputText(Map<String, String> params, FormTag form, String name, String value) {
+	public static void fillInputText(Map<String, String> params, FormTag form, String name, String value) {
 		if (form.getInputTag(name) != null & EmptyChecker.isNotNullOrEmpty(value)) {
 			params.put(name, value);
 		}		
@@ -324,7 +327,7 @@ public final class HtmlParserUtil {
 //	 * @param value
 //	 * @throws UnsupportedEncodingException
 //	 */
-//	public static final void fillInputText(MultipartEntity entity, FormTag form, String name, String value) throws UnsupportedEncodingException {
+//	public static void fillInputText(MultipartEntity entity, FormTag form, String name, String value) throws UnsupportedEncodingException {
 //		if (form.getInputTag(name) != null) {
 //			entity.addPart(name, new StringBody(value));
 //		}		
@@ -337,7 +340,7 @@ public final class HtmlParserUtil {
 	 * @param name
 	 * @param value
 	 */
-	public static final void fillInputCheckbox(Map<String, String> params, FormTag form, String name, boolean value) {
+	public static void fillInputCheckbox(Map<String, String> params, FormTag form, String name, boolean value) {
 		if (form.getInputTag(name) != null && value) {
 			params.put(name, "1");
 		}
@@ -351,7 +354,7 @@ public final class HtmlParserUtil {
 //	 * @param value
 //	 * @throws UnsupportedEncodingException
 //	 */
-//	public static final void fillInputCheckbox(MultipartEntity entity, FormTag form, String name, boolean value) throws UnsupportedEncodingException {
+//	public static void fillInputCheckbox(MultipartEntity entity, FormTag form, String name, boolean value) throws UnsupportedEncodingException {
 //		if (form.getInputTag(name) != null && value) {
 //			entity.addPart(name, new StringBody("1"));
 //		}
@@ -363,7 +366,7 @@ public final class HtmlParserUtil {
 	 * @param params
 	 * @throws UnsupportedEncodingException
 	 */
-	public static final void fillParams(MultipartEntity entity, Map<String, String> params) throws UnsupportedEncodingException {
+	public static void fillParams(MultipartEntity entity, Map<String, String> params) throws UnsupportedEncodingException {
 		for (String name : params.keySet()) {
 			//if (name != null) {
 				entity.addPart(name, new StringBody(params.get(name)));
@@ -376,7 +379,7 @@ public final class HtmlParserUtil {
 	 * @param select
 	 * @return
 	 */
-	public static final boolean isMultiple(SelectTag select) {
+	public static boolean isMultiple(SelectTag select) {
 		// TODO
 		return false;
 	}
@@ -386,7 +389,7 @@ public final class HtmlParserUtil {
 	 * @param select
 	 * @return
 	 */
-	public static final Map<String, String> getOptionsValues(SelectTag select) {
+	public static Map<String, String> getOptionsValues(SelectTag select) {
 		final OptionTag[] options = select.getOptionTags();
 		int size = options.length;
 		OptionTag option = null;
