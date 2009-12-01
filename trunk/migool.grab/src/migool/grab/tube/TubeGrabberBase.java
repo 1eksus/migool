@@ -17,7 +17,7 @@ public abstract class TubeGrabberBase implements ITubeGrabber {
 		if (isPageUrl(url)) {
 			return grabPageUrl(url);
 		} else if (isIdUrl(url)) {
-			return new ITubeGrab[] { grabUrl(url) };
+			return new ITubeGrab[] { grabIdUrl(url) };
 		}
 		throw new IllegalArgumentException(url);
 	}

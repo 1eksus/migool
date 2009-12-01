@@ -185,7 +185,7 @@ public class PornhubGrabber extends TubeGrabberBase {
 	}
 
 	@Override
-	public ITubeGrab grabUrl(String url) {
+	public ITubeGrab grabIdUrl(String url) {
 		// TODO Auto-generated method stub
 		return null;
 	}

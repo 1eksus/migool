@@ -42,7 +42,7 @@ public interface ITubeGrabber extends IGrabber {
 	 * @param url
 	 * @return
 	 */
-	ITubeGrab grabUrl(String url);
+	ITubeGrab grabIdUrl(String url);
 
 	/**
 	 * 
