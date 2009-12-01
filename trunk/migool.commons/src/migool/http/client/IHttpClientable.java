@@ -7,7 +7,7 @@ import org.apache.http.client.HttpClient;
  * @author Denis Migol
  *
  */
-public interface HttpClientable {
+public interface IHttpClientable {
 	/**
 	 * 
 	 * @param HttpClient
