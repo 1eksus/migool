@@ -36,6 +36,8 @@ import org.htmlparser.util.ParserException;
  */
 public final class HtmlParserUtil {
 
+	public static final String OBJECT = "object";
+	public static final String TEXTAREA = "textarea";
 	public static final String IMG = "img";
 	public static final String TITLE = "title";
 	public static final String LI = "li";
@@ -62,6 +64,9 @@ public final class HtmlParserUtil {
 
 	public static final NodeFilter A_FILTER = new TagNameFilter(A);
 	public static final NodeFilter IMG_FILTER = new TagNameFilter(IMG);
+	public static final NodeFilter TEXTAREA_FILTER = new TagNameFilter(TEXTAREA);
+	public static final NodeFilter OBJECT_FILTER = new TagNameFilter(OBJECT);
+
 	/**
 	 * Link that contains image
 	 */

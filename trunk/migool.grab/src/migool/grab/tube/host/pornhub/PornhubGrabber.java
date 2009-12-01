@@ -45,13 +45,19 @@ public class PornhubGrabber extends TubeGrabberBase {
 	public static final String PAGE_URL_PREFIX = "http://www.pornhub.com/video?o=mr&page=";
 	public static final String DURATION_REGEX = "[\\d]{1,3}\\:[\\d]{2}";
 
+	public static final String START_THUMB_CHANGE_REGEX = "(?<=onmouseover\\=\\\"startThumbChange\\()[\\w\\,\\ \\:\\/\\'\\.]+(?=\\)\\;\\\")";
+	public static final String START_THUMB_CHANGE_COUNT_REGEX = "(?<= )[\\d]+(?=\\,)";
+	public static final String START_THUMB_CHANGE_PREFIX_REGEX = "(?<=\\ \\')[\\w\\,\\:\\/\\.]+(?=\\')";
+
 	private static final String DURATION = "duration";
 
 	private static final NodeFilter VIDEOBLOCK_FILTER = new AndFilter(new TagNameFilter(LI), new HasChildFilter(
-			new AndFilter(new TagNameFilter(DIV), new HasAttributeFilter(CLASS, "wrap"))));
+			new AndFilter(new TagNameFilter(DIV), new HasAttributeFilter(CLASS, "wrap")), true));
 	// private static final NodeFilter DURATION_FILTER = new AndFilter(new
 	// TagNameFilter(VAR), new HasAttributeFilter(CLASS, DURATION));
 	private static final NodeFilter DURATION_FILTER = new HasAttributeFilter(CLASS, DURATION);
+//	private static final NodeFilter EMBED_FILTER = new AndFilter(TEXTAREA_FILTER, new HasChildFilter(OBJECT_FILTER,
+//			true));
 
 	/* fields */
 	private final HttpClientWrapper httpClient;
@@ -143,8 +149,12 @@ public class PornhubGrabber extends TubeGrabberBase {
 	 */
 	private String[] grabThumbUrlsFromPage(ImageTag img) {
 		ArrayList<String> ret = new ArrayList<String>(16);
-		// TODO
-		System.out.println(img.getText());
+		final String thumbText = RegexUtil.getMatch(img.getText(), START_THUMB_CHANGE_REGEX);
+		final int count = Integer.parseInt(RegexUtil.getMatch(thumbText, START_THUMB_CHANGE_COUNT_REGEX));
+		final String prefix = RegexUtil.getMatch(thumbText, START_THUMB_CHANGE_PREFIX_REGEX);
+		for (int i = 0; i < count; i++) {
+			ret.add(prefix + "small" + (i + 1) + ".jpg");
+		}
 		return ret.toArray(new String[ret.size()]);
 	}
 
@@ -173,15 +183,38 @@ public class PornhubGrabber extends TubeGrabberBase {
 			if (EmptyChecker.isNotNullOrEmpty(idUrl = grabIdUrlFromPage(children))) {
 				final LinkTag link = (LinkTag) children.extractAllNodesThatMatch(A_IMG_FILTER, true).elementAt(0);
 				final ImageTag img = (ImageTag) link.getChildren().extractAllNodesThatMatch(IMG_FILTER).elementAt(0);
+				// final String idPage = httpClient.requestToString(new
+				// HttpGet(idUrl));
+				final String id = grabIdFromPage(img);
 
-				final ITubeGrabBuilder b = new TubeGrabBuilder().setId(grabIdFromPage(img)).setIdUrl(idUrl).setTitle(grabTitleFromPage(children))
-						.setThumbUrl(grabThumbUrlFromPage(img)).setThumbUrls(grabThumbUrlsFromPage(img))
-						.setDuration(grabDuration(children));
+				final ITubeGrabBuilder b = new TubeGrabBuilder().setId(id).setIdUrl(idUrl).setTitle(
+						grabTitleFromPage(children)).setThumbUrl(grabThumbUrlFromPage(img)).setThumbUrls(
+						grabThumbUrlsFromPage(img)).setDuration(grabDuration(children)).setEmbed(grabEmbedFromId(id));
 
 				ret.add(b.build());
 			}
 		}
 		return ret.toArray(new ITubeGrab[ret.size()]);
+	}
+
+	/**
+	 * 
+	 * @return
+	 * @throws ParserException
+	 */
+	private String grabEmbedFromId(String id) throws ParserException {
+		// System.out.println(((TextareaTag)(new
+		// Parser(idPage)).parse(EMBED_FILTER).elementAt(0)).getStringText());
+		return String
+				.format(
+						"<object type=\"application/x-shockwave-flash\" "
+								+ "data=\"http://cdn-www.pornhub.com/flash/embed_player_v1.3.swf\" width=\"608\" height=\"476\">"
+								+ "<param name=\"movie\" value=\"http://cdn-www.pornhub.com/flash/embed_player_v1.3.swf\" />"
+								+ "<param name=\"bgColor\" value=\"#000000\" />"
+								+ "<param name=\"allowfullscreen\" value=\"true\" />"
+								+ "<param name=\"allowScriptAccess\" value=\"always\" />"
+								+ "<param name=\"FlashVars\" value=\"options=http://www.pornhub.com/embed_player.php?id=%1$s\"/></object>",
+						id);
 	}
 
 	@Override
