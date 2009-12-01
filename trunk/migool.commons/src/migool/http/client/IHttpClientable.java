@@ -12,7 +12,7 @@ public interface IHttpClientable {
 	 * 
 	 * @param HttpClient
 	 */
-	void setHttpClient(HttpClient HttpClient);
+	void setHttpClient(HttpClient httpClient);
 
 	/**
 	 * 
