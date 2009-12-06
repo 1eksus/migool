@@ -13,6 +13,6 @@
 	<classpathentry kind="lib" path="war/WEB-INF/lib/httpmime-4.0.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/commons-fileupload-1.2.1.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/commons-io-1.4.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/migool.post"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/migool.post_old"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>
