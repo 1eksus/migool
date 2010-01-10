@@ -13,10 +13,10 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.conn.EofSensorInputStream;
 
-import migool.grab.host.redtube.RedtubeGrab;
+import migool.entity.FileEntity;
+import migool.grab.tube.TubeGrab;
 import migool.http.client.HttpClientFactory;
-import migool.post.internal.Image;
-import migool.poster.cms.ucoz.post.PublUcozPost;
+import migool.post.cms.ucoz.post.PublUcozPost;
 import migool.util.IOUtil;
 
 /**
@@ -42,20 +42,20 @@ public final class PornohouseUtil {
 		return IOUtil.toByteArray(in);
 	}
 
-	private static final List<Image> toListImage(List<String> urls) {
-		ArrayList<Image> ret = new ArrayList<Image>(urls.size());
+	private static final List<FileEntity> toListImage(List<String> urls) {
+		ArrayList<FileEntity> ret = new ArrayList<FileEntity>(urls.size());
 		HttpClient client = HttpClientFactory.get().newHttpClient();
 		HttpGet get = null;
 		HttpResponse response = null;
-		Image img = null;
+		FileEntity img = null;
 		for (String url : urls) {
 			get = new HttpGet(url);
 			try {
 				response = client.execute(get);
-				img = new Image();
+				img = new FileEntity();
 				//img.bytes = IOUtil.toByteArray(response.getEntity().getContent());
-				img.bytes = toByteArray(response.getEntity().getContent());
-				img.fileName = (new File(url)).getName();
+				img.setBytes(toByteArray(response.getEntity().getContent()));
+				img.setFileName((new File(url)).getName());
 				ret.add(img);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -64,17 +64,17 @@ public final class PornohouseUtil {
 		return ret;
 	}
 
-	public static final PornohousePost toPornohousePost(RedtubeGrab grab) {
+	public static final PornohousePost toPornohousePost(TubeGrab grab) {
 		PornohousePost ret = new PornohousePost();
-		ret.url = grab.share;
-		ret.title = grab.title;
+		ret.url = grab.getIdUrl();
+		ret.title = grab.getTitle();
 		// TODO categories
 		// TODO brief ?
-		ret.embed = grab.embed;
-		ret.duration = grab.duration;
-		String[] thumbs = grab.thumbs;
+		ret.embed = grab.getEmbed();
+		ret.duration = grab.getDuration();
+		final String[] thumbs = grab.getThumbUrls();
 		ArrayList<String> urls = new ArrayList<String>(thumbs.length + 1);
-		urls.add(grab.thumb);
+		urls.add(grab.getThumbUrl());
 		urls.addAll(Arrays.asList(thumbs));
 		ret.images = toListImage(urls);
 		return ret;

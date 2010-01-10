@@ -2,7 +2,7 @@ package pornohouse.net.ru;
 
 import java.util.List;
 
-import migool.post.internal.Image;
+import migool.entity.FileEntity;
 
 /**
  * 
@@ -16,7 +16,7 @@ public class PornohousePost {
 	public String brief;
 	public String embed;
 	public String duration;
-	public List<Image> images;
+	public List<FileEntity> images;
 
 	@Override
 	public String toString() {
