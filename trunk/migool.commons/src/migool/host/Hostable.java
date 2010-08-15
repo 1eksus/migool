@@ -5,7 +5,7 @@ package migool.host;
  * @author Denis Migol
  * 
  */
-public interface IHostable {
+public interface Hostable {
 	/**
 	 * 
 	 * @return

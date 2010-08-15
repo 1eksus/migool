@@ -5,7 +5,7 @@ package migool.host;
  * @author Denis Migol
  * 
  */
-public class HostableBase implements IHostable {
+public class HostableBase implements Hostable {
 
 	protected final String host;
 
