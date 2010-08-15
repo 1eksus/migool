@@ -11,11 +11,8 @@ public class CaptchaEntity implements Entity {
 	 */
 	private static final long serialVersionUID = 8207886840705101861L;
 
-	// private FileEntity image;
 	private MimeTypeEntity image;
 	private String text;
-
-	// private String result;
 
 	public static class Builder {
 		private final CaptchaEntity entity;
@@ -59,7 +56,6 @@ public class CaptchaEntity implements Entity {
 	public CaptchaEntity(final MimeTypeEntity image, final String text) {
 		this.setImage(image);
 		this.setText(text);
-		// this.setResult(result);
 	}
 
 	/**
@@ -91,18 +87,4 @@ public class CaptchaEntity implements Entity {
 	public String getText() {
 		return text;
 	}
-
-	// /**
-	// * @param result the result to set
-	// */
-	// public void setResult(String result) {
-	// this.result = result;
-	// }
-	//
-	// /**
-	// * @return the result
-	// */
-	// public String getResult() {
-	// return result;
-	// }
 }
