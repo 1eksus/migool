@@ -3,7 +3,7 @@ package migool.entity;
 /**
  * 
  * @author Denis Migol
- *
+ * 
  */
 public class CaptchaEntity implements Entity {
 	/**
@@ -11,14 +11,43 @@ public class CaptchaEntity implements Entity {
 	 */
 	private static final long serialVersionUID = 8207886840705101861L;
 
-	private FileEntity image;
+	// private FileEntity image;
+	private MimeTypeEntity image;
 	private String text;
-	private String result;
+
+	// private String result;
+
+	public static class Builder {
+		private final CaptchaEntity entity;
+
+		public static Builder newBuilder() {
+			return new Builder();
+		}
+
+		public Builder() {
+			entity = new CaptchaEntity();
+		}
+
+		public CaptchaEntity build() {
+			return entity;
+		}
+
+		public Builder setImage(final MimeTypeEntity image) {
+			entity.setImage(image);
+			return this;
+		}
+
+		public Builder setText(final String text) {
+			entity.setText(text);
+			return this;
+		}
+	}
 
 	/**
 	 * 
 	 */
 	public CaptchaEntity() {
+		this(null, null);
 	}
 
 	/**
@@ -27,30 +56,32 @@ public class CaptchaEntity implements Entity {
 	 * @param text
 	 * @param result
 	 */
-	public CaptchaEntity(FileEntity image, String text, String result) {
+	public CaptchaEntity(final MimeTypeEntity image, final String text) {
 		this.setImage(image);
 		this.setText(text);
-		this.setResult(result);
+		// this.setResult(result);
 	}
 
 	/**
-	 * @param image the image to set
+	 * @param image
+	 *            the image to set
 	 */
-	public void setImage(FileEntity image) {
+	public void setImage(final MimeTypeEntity image) {
 		this.image = image;
 	}
 
 	/**
 	 * @return the image
 	 */
-	public FileEntity getImage() {
+	public MimeTypeEntity getImage() {
 		return image;
 	}
 
 	/**
-	 * @param text the text to set
+	 * @param text
+	 *            the text to set
 	 */
-	public void setText(String text) {
+	public void setText(final String text) {
 		this.text = text;
 	}
 
@@ -61,17 +92,17 @@ public class CaptchaEntity implements Entity {
 		return text;
 	}
 
-	/**
-	 * @param result the result to set
-	 */
-	public void setResult(String result) {
-		this.result = result;
-	}
-
-	/**
-	 * @return the result
-	 */
-	public String getResult() {
-		return result;
-	}
+	// /**
+	// * @param result the result to set
+	// */
+	// public void setResult(String result) {
+	// this.result = result;
+	// }
+	//
+	// /**
+	// * @return the result
+	// */
+	// public String getResult() {
+	// return result;
+	// }
 }

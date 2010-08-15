@@ -14,6 +14,50 @@ public class MimeTypeEntity implements Entity {
 	private String mimeType;
 	private byte[] bytes;
 
+	public static class Builder {
+		private final MimeTypeEntity entity;
+
+		public Builder() {
+			entity = new MimeTypeEntity();
+		}
+
+		public MimeTypeEntity build() {
+			return entity;
+		}
+
+		public static Builder newBuilder() {
+			return new Builder();
+		}
+
+		public Builder setMimeType(final String mimeType) {
+			entity.setMimeType(mimeType);
+			return this;
+		}
+
+		public Builder setBytes(final byte[] bytes) {
+			entity.setBytes(bytes);
+			return this;
+		}
+	}
+
+	/**
+	 * 
+	 */
+	public MimeTypeEntity() {
+		this(null, null);
+	}
+
+	/**
+	 * 
+	 * @param mimeType
+	 * @param bytes
+	 */
+	public MimeTypeEntity(final String mimeType, final byte[] bytes) {
+		super();
+		this.mimeType = mimeType;
+		this.bytes = bytes;
+	}
+
 	/**
 	 * @param mimeType
 	 *            the mimeType to set

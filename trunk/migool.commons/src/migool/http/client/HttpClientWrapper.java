@@ -1,10 +1,11 @@
 package migool.http.client;
 
-import static migool.http.client.HttpClientUtil.*;
+import static migool.http.client.HttpClientUtil.parseCharset;
 
 import java.io.IOException;
 
 import migool.entity.FileEntity;
+import migool.entity.MimeTypeEntity;
 import migool.util.IOUtil;
 
 import org.apache.http.HttpResponse;
@@ -41,7 +42,7 @@ public final class HttpClientWrapper {
 	 * 
 	 * @param client
 	 */
-	public HttpClientWrapper(HttpClient httpClient) {
+	public HttpClientWrapper(final HttpClient httpClient) {
 		this.httpClient = httpClient;
 	}
 
@@ -60,7 +61,7 @@ public final class HttpClientWrapper {
 			if (charset == null) {
 				try {
 					charset = parseCharsetFromHtml(new String(ret));
-				} catch (Exception e) {
+				} catch (final Exception e) {
 				}
 			}
 			isFirstRequest = false;
@@ -68,7 +69,7 @@ public final class HttpClientWrapper {
 		return charset == null ? new String(ret) : new String(ret, charset);
 	}
 
-	private static final String parseCharsetFromHtml(String html) throws ParserException {
+	private static final String parseCharsetFromHtml(final String html) throws ParserException {
 		final Parser parser = new Parser(html);
 		final MetaTag meta = (MetaTag) parser.parse(
 				new AndFilter(new TagNameFilter("meta"), new HasAttributeFilter("http-equiv", "Content-Type")))
@@ -85,8 +86,8 @@ public final class HttpClientWrapper {
 	 * @throws ClientProtocolException
 	 * @throws IOException
 	 */
-	public void requestToVoid(HttpUriRequest request) throws IOException {
-		HttpResponse response = httpClient.execute(request);
+	public void requestToVoid(final HttpUriRequest request) throws IOException {
+		final HttpResponse response = httpClient.execute(request);
 		response.getEntity().getContent().close();
 	}
 
@@ -96,11 +97,24 @@ public final class HttpClientWrapper {
 	 * @return
 	 * @throws IOException
 	 */
-	public FileEntity requestToFileEntity(HttpUriRequest request) throws IOException {
+	public FileEntity requestToFileEntity(final HttpUriRequest request) throws IOException {
 		final HttpResponse response = httpClient.execute(request);
 		final String mimeType = response.getEntity().getContentType().getValue();
 		final byte[] bytes = IOUtil.toByteArray(response.getEntity().getContent());
 		return new FileEntity(mimeType, bytes, null);
+	}
+
+	/**
+	 * 
+	 * @param request
+	 * @return
+	 * @throws IOException
+	 */
+	public MimeTypeEntity requestToMimeTypeEntity(final HttpUriRequest request) throws IOException {
+		final HttpResponse response = httpClient.execute(request);
+		final String mimeType = response.getEntity().getContentType().getValue();
+		final byte[] bytes = IOUtil.toByteArray(response.getEntity().getContent());
+		return new MimeTypeEntity(mimeType, bytes);
 	}
 
 	/**
@@ -110,7 +124,7 @@ public final class HttpClientWrapper {
 	 * @throws ClientProtocolException
 	 * @throws IOException
 	 */
-	public String getToString(String uri) throws IOException {
+	public String getToString(final String uri) throws IOException {
 		return requestToString(new HttpGet(uri));
 	}
 
@@ -120,7 +134,7 @@ public final class HttpClientWrapper {
 	 * @return
 	 * @throws IOException
 	 */
-	public FileEntity getToFileEntity(String uri) throws IOException {
+	public FileEntity getToFileEntity(final String uri) throws IOException {
 		return requestToFileEntity(new HttpGet(uri));
 	}
 
@@ -135,7 +149,7 @@ public final class HttpClientWrapper {
 	public HttpClient getHttpClient() {
 		return httpClient;
 	}
-	
+
 	public void setHttpClient(final HttpClient httpClient) {
 		this.httpClient = httpClient;
 	}
