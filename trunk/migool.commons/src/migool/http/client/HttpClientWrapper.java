@@ -1,0 +1,142 @@
+package migool.http.client;
+
+import static migool.http.client.HttpClientUtil.*;
+
+import java.io.IOException;
+
+import migool.entity.FileEntity;
+import migool.util.IOUtil;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpUriRequest;
+import org.htmlparser.Parser;
+import org.htmlparser.filters.AndFilter;
+import org.htmlparser.filters.HasAttributeFilter;
+import org.htmlparser.filters.TagNameFilter;
+import org.htmlparser.tags.MetaTag;
+import org.htmlparser.util.ParserException;
+
+/**
+ * 
+ * @author Denis Migol
+ * 
+ */
+public final class HttpClientWrapper {
+	private String charset;
+	private boolean isFirstRequest = true;
+
+	private HttpClient httpClient;
+
+	/**
+	 * The constructor
+	 */
+	public HttpClientWrapper() {
+		this(HttpClientFactory.get().newHttpClient());
+	}
+
+	/**
+	 * 
+	 * @param client
+	 */
+	public HttpClientWrapper(HttpClient httpClient) {
+		this.httpClient = httpClient;
+	}
+
+	/**
+	 * 
+	 * @param request
+	 * @return
+	 * @throws ClientProtocolException
+	 * @throws IOException
+	 */
+	public String requestToString(final HttpUriRequest request) throws IOException {
+		final HttpResponse response = httpClient.execute(request);
+		final byte[] ret = IOUtil.toByteArray(response.getEntity().getContent());
+		if (isFirstRequest) {
+			charset = parseCharset(response.getEntity().getContentType().getValue());
+			if (charset == null) {
+				try {
+					charset = parseCharsetFromHtml(new String(ret));
+				} catch (Exception e) {
+				}
+			}
+			isFirstRequest = false;
+		}
+		return charset == null ? new String(ret) : new String(ret, charset);
+	}
+
+	private static final String parseCharsetFromHtml(String html) throws ParserException {
+		final Parser parser = new Parser(html);
+		final MetaTag meta = (MetaTag) parser.parse(
+				new AndFilter(new TagNameFilter("meta"), new HasAttributeFilter("http-equiv", "Content-Type")))
+				.elementAt(0);
+		if (meta != null) {
+			return parseCharset(meta.getMetaContent());
+		}
+		return null;
+	}
+
+	/**
+	 * 
+	 * @param request
+	 * @throws ClientProtocolException
+	 * @throws IOException
+	 */
+	public void requestToVoid(HttpUriRequest request) throws IOException {
+		HttpResponse response = httpClient.execute(request);
+		response.getEntity().getContent().close();
+	}
+
+	/**
+	 * 
+	 * @param request
+	 * @return
+	 * @throws IOException
+	 */
+	public FileEntity requestToFileEntity(HttpUriRequest request) throws IOException {
+		final HttpResponse response = httpClient.execute(request);
+		final String mimeType = response.getEntity().getContentType().getValue();
+		final byte[] bytes = IOUtil.toByteArray(response.getEntity().getContent());
+		return new FileEntity(mimeType, bytes, null);
+	}
+
+	/**
+	 * 
+	 * @param uri
+	 * @return
+	 * @throws ClientProtocolException
+	 * @throws IOException
+	 */
+	public String getToString(String uri) throws IOException {
+		return requestToString(new HttpGet(uri));
+	}
+
+	/**
+	 * 
+	 * @param uri
+	 * @return
+	 * @throws IOException
+	 */
+	public FileEntity getToFileEntity(String uri) throws IOException {
+		return requestToFileEntity(new HttpGet(uri));
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public String getCharset() {
+		return charset;
+	}
+
+	public HttpClient getHttpClient() {
+		return httpClient;
+	}
+	
+	public void setHttpClient(final HttpClient httpClient) {
+		this.httpClient = httpClient;
+	}
+}
