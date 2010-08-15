@@ -5,7 +5,7 @@ package migool.entity;
  * @author Denis Migol
  *
  */
-public class CaptchaEntity implements IEntity {
+public class CaptchaEntity implements Entity {
 	/**
 	 * 
 	 */

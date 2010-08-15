@@ -9,7 +9,7 @@ import migool.entity.CaptchaEntity;
  * @author Denis Migol
  * 
  */
-public interface ILoginable {
+public interface Loginable {
 	/**
 	 * 
 	 * @return

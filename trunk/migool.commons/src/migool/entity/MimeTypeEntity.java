@@ -4,7 +4,7 @@ package migool.entity;
  * @author Denis Migol
  * 
  */
-public class MimeTypeEntity implements IEntity {
+public class MimeTypeEntity implements Entity {
 
 	/**
 	 * 

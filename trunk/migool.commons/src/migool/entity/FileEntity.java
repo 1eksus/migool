@@ -5,7 +5,7 @@ package migool.entity;
  * @author Denis Migol
  * 
  */
-public class FileEntity implements IEntity {
+public class FileEntity implements Entity {
 
 	/**
 	 * 
@@ -34,7 +34,7 @@ public class FileEntity implements IEntity {
 	 * @param bytes
 	 * @param fileName
 	 */
-	public FileEntity(String mimeType, byte[] bytes, String fileName) {
+	public FileEntity(final String mimeType, final byte[] bytes, final String fileName) {
 		this.mimeType = mimeType;
 		this.bytes = bytes;
 		this.fileName = fileName;
@@ -44,7 +44,7 @@ public class FileEntity implements IEntity {
 	 * @param bytes
 	 *            the bytes to set
 	 */
-	public void setBytes(byte[] bytes) {
+	public void setBytes(final byte[] bytes) {
 		this.bytes = bytes;
 	}
 
@@ -59,7 +59,7 @@ public class FileEntity implements IEntity {
 	 * @param fileName
 	 *            the fileName to set
 	 */
-	public void setFileName(String fileName) {
+	public void setFileName(final String fileName) {
 		this.fileName = fileName;
 	}
 
@@ -74,7 +74,7 @@ public class FileEntity implements IEntity {
 	 * @param mimeType
 	 *            the mimeType to set
 	 */
-	public void setMimeType(String mimeType) {
+	public void setMimeType(final String mimeType) {
 		this.mimeType = mimeType;
 	}
 
