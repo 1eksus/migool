@@ -16,6 +16,34 @@ public class Login implements Serializable {
 	private String username;
 	private String password;
 
+	public static class Builder {
+		private final Login login = new Login();
+
+		public static Builder newBuilder() {
+			return new Builder();
+		}
+
+		public Login build() {
+			return login;
+		}
+
+		public Builder setUsername(final String username) {
+			login.setUsername(username);
+			return this;
+		}
+
+		public Builder setPassword(final String password) {
+			login.setPassword(password);
+			return this;
+		}
+
+		public Builder setLogin(final Login login) {
+			this.login.setUsername(login.getUsername());
+			this.login.setPassword(login.getPassword());
+			return this;
+		}
+	}
+
 	/**
 	 * 
 	 */
@@ -67,7 +95,7 @@ public class Login implements Serializable {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(final Object obj) {
 		if (this == obj) {
 			return true;
 		}
