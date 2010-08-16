@@ -20,7 +20,6 @@ public interface Loginable {
 	 * 
 	 * @throws LoginException
 	 * @throws IOException
-	 * @throws Exception
 	 */
-	void login(Login login) throws LoginException, IOException, Exception;
+	void login(Login login) throws LoginException, IOException;
 }
