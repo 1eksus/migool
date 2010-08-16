@@ -7,6 +7,7 @@ import java.util.Random;
 import com.gargoylesoftware.htmlunit.BrowserVersion;
 import com.gargoylesoftware.htmlunit.html.HtmlAnchor;
 import com.gargoylesoftware.htmlunit.html.HtmlButtonInput;
+import com.gargoylesoftware.htmlunit.html.HtmlCheckBoxInput;
 import com.gargoylesoftware.htmlunit.html.HtmlElement;
 import com.gargoylesoftware.htmlunit.html.HtmlForm;
 import com.gargoylesoftware.htmlunit.html.HtmlImage;
@@ -16,6 +17,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.gargoylesoftware.htmlunit.html.HtmlPasswordInput;
 import com.gargoylesoftware.htmlunit.html.HtmlSelect;
 import com.gargoylesoftware.htmlunit.html.HtmlSubmitInput;
+import com.gargoylesoftware.htmlunit.html.HtmlTextArea;
 import com.gargoylesoftware.htmlunit.html.HtmlTextInput;
 
 /**
@@ -57,6 +59,36 @@ public final class HtmlUnitUtil {
 			}
 		}
 		return null;
+	}
+
+	public static List<HtmlSelect> getSelects(final HtmlForm form) {
+		final List<HtmlSelect> ret = new ArrayList<HtmlSelect>();
+		for (final HtmlElement element : form.getElementsByTagName("select")) {
+			if (element instanceof HtmlSelect) {
+				ret.add((HtmlSelect) element);
+			}
+		}
+
+		// collect selects from lost children
+		for (final HtmlElement elt : form.getLostChildren()) {
+			if (elt instanceof HtmlSelect) {
+				ret.add((HtmlSelect) elt);
+			}
+		}
+		return ret;
+	}
+
+	public static HtmlSelect getSelect(final HtmlForm form) {
+		return getSelects(form).get(0);
+	}
+
+	public static List<String> getOptionTexts(final HtmlSelect select) {
+		final List<HtmlOption> options = select.getOptions();
+		final List<String> ret = new ArrayList<String>(options.size());
+		for (final HtmlOption option : options) {
+			ret.add(option.getText());
+		}
+		return ret;
 	}
 
 	/**
@@ -185,5 +217,38 @@ public final class HtmlUnitUtil {
 		final List<String> hrefs = getAnchorsHrefAttribute(page);
 		final List<String> ret = new ArrayList<String>(hrefs);
 		return ret;
+	}
+
+	public static HtmlTextInput getTextInputByNames(final HtmlForm form, final List<String> names) {
+		for (final String name : names) {
+			try {
+				final HtmlTextInput ret = form.getInputByName(name);
+				return ret;
+			} catch (final Exception e) {
+			}
+		}
+		return null;
+	}
+
+	public static HtmlTextArea getTextAreaByNames(final HtmlForm form, final List<String> names) {
+		for (final String name : names) {
+			try {
+				final HtmlTextArea ret = form.getTextAreaByName(name);
+				return ret;
+			} catch (final Exception e) {
+			}
+		}
+		return null;
+	}
+
+	public static HtmlCheckBoxInput getCheckBoxInputByNames(final HtmlForm form, final List<String> names) {
+		for (final String name : names) {
+			try {
+				final HtmlCheckBoxInput ret = form.getInputByName(name);
+				return ret;
+			} catch (final Exception e) {
+			}
+		}
+		return null;
 	}
 }
