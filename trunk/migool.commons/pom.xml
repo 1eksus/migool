@@ -24,7 +24,7 @@
 				<artifactId>maven-jar-plugin</artifactId>
 				<version>LATEST</version>
 			</plugin>
-			<plugin>
+			<!--<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-assembly-plugin</artifactId>
 				<version>LATEST</version>
@@ -35,15 +35,14 @@
 				</configuration>
 				<executions>
 					<execution>
-						<id>make-assembly</id> <!-- this is used for inheritance merges -->
-						<phase>package</phase> <!-- append to the packaging phase. -->
+						<id>make-assembly</id>
+						<phase>package</phase>
 						<goals>
-							<!-- <goal>single</goal> -->
-							<goal>single-directory</goal> <!-- goals == mojos -->
+							<goal>directory-single</goal>
 						</goals>
 					</execution>
 				</executions>
-			</plugin>
+			</plugin>-->
 		</plugins>
 	</build>
 	<dependencies>
