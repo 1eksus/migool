@@ -19,10 +19,12 @@ import org.htmlparser.Parser;
 import org.htmlparser.filters.AndFilter;
 import org.htmlparser.filters.HasAttributeFilter;
 import org.htmlparser.filters.HasChildFilter;
+import org.htmlparser.filters.NodeClassFilter;
 import org.htmlparser.filters.NotFilter;
 import org.htmlparser.filters.OrFilter;
 import org.htmlparser.filters.TagNameFilter;
 import org.htmlparser.nodes.TagNode;
+import org.htmlparser.nodes.TextNode;
 import org.htmlparser.tags.FormTag;
 import org.htmlparser.tags.InputTag;
 import org.htmlparser.tags.OptionTag;
@@ -115,6 +117,8 @@ public final class HtmlParserUtil {
 	 */
 	public static final NodeFilter A_IMG_FILTER = new AndFilter(A_FILTER, new HasChildFilter(IMG_FILTER));
 
+	public static final NodeFilter TEXT_NODE_FILTER = new NodeClassFilter(TextNode.class);
+
 	/**
 	 * 
 	 * @param html
@@ -159,7 +163,7 @@ public final class HtmlParserUtil {
 	 */
 	public static InputTag getInputTag(final FormTag form, final String[] names) {
 		InputTag ret;
-		for (String name : names) {
+		for (final String name : names) {
 			ret = form.getInputTag(name);
 			if (ret != null) {
 				return ret;
@@ -248,13 +252,13 @@ public final class HtmlParserUtil {
 	 * @param entity
 	 */
 	public static void setHiddenInputs(final FormTag form, final MultipartEntity entity) {
-		NodeList hiddens = getHiddenInputs(form);
+		final NodeList hiddens = getHiddenInputs(form);
 		InputTag input = null;
 		for (int i = 0; i < hiddens.size(); i++) {
 			input = (InputTag) hiddens.elementAt(i);
 			try {
 				entity.addPart(input.getAttribute(NAME), new StringBody(input.getAttribute(VALUE)));
-			} catch (UnsupportedEncodingException e) {
+			} catch (final UnsupportedEncodingException e) {
 			}
 		}
 	}
@@ -266,7 +270,7 @@ public final class HtmlParserUtil {
 	public static Map<String, String> getSelectOptions(final SelectTag select) {
 		final OptionTag[] options = select.getOptionTags();
 		final Map<String, String> ret = new TreeMap<String, String>();
-		for (OptionTag option : options) {
+		for (final OptionTag option : options) {
 			ret.put(option.getValue(), option.getOptionText());
 		}
 		return ret;
@@ -282,8 +286,8 @@ public final class HtmlParserUtil {
 		final NodeList children = node.getChildren();
 		if (children != null) {
 			final int size = tagNames.size();
-			List<NodeFilter> predicates = new ArrayList<NodeFilter>(size);
-			for (String name : tagNames) {
+			final List<NodeFilter> predicates = new ArrayList<NodeFilter>(size);
+			for (final String name : tagNames) {
 				predicates.add(new TagNameFilter(name));
 			}
 			return children.extractAllNodesThatMatch(new OrFilter(predicates.toArray(new NodeFilter[size])), true);
@@ -314,8 +318,8 @@ public final class HtmlParserUtil {
 	public static List<NameValuePair> toListNameValuePair(final Map<String, String> params) {
 		final Set<String> names = params.keySet();
 		final List<NameValuePair> ret = new ArrayList<NameValuePair>(names.size());
-		for (String name : names) {
-			String value = params.get(name);
+		for (final String name : names) {
+			final String value = params.get(name);
 			if (value != null) {
 				ret.add(new BasicNameValuePair(name, params.get(name)));
 			}
@@ -373,7 +377,7 @@ public final class HtmlParserUtil {
 	 */
 	public static void fillParams(final MultipartEntity entity, final Map<String, String> params)
 			throws UnsupportedEncodingException {
-		for (String name : params.keySet()) {
+		for (final String name : params.keySet()) {
 			// if (name != null) {
 			entity.addPart(name, new StringBody(params.get(name)));
 			// }
@@ -410,7 +414,7 @@ public final class HtmlParserUtil {
 	public static Map<String, String> setForm(final FormTag form) {
 		return setForm(form, null);
 	}
-	
+
 	public static Map<String, String> setForm(final FormTag form, final Map<String, String> params) {
 		final Map<String, String> ret = (params == null) ? new LinkedHashMap<String, String>() : params;
 
@@ -433,7 +437,7 @@ public final class HtmlParserUtil {
 		}
 		return ret;
 	}
-	
+
 	public static String removeRemarks(final String html) {
 		// TODO
 		return null;
