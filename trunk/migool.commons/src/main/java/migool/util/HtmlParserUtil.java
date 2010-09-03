@@ -78,6 +78,10 @@ public final class HtmlParserUtil {
 	public static final String H5 = "h5";
 	public static final String H6 = "h6";
 
+	public static final String TABLE = "table";
+	public static final String TR = "tr";
+	public static final String TD = "td";
+
 	public static final NodeFilter TYPE_HIDDEN_FILTER = new HasAttributeFilter(TYPE, HIDDEN);
 	public static final NodeFilter TYPE_FILE_FILTER = new HasAttributeFilter(TYPE, FILE);
 	public static final NodeFilter TYPE_PASSWORD_FILTER = new HasAttributeFilter(TYPE, PASSWORD);
@@ -105,6 +109,10 @@ public final class HtmlParserUtil {
 	public static final NodeFilter H4_FILTER = new TagNameFilter(H4);
 	public static final NodeFilter H5_FILTER = new TagNameFilter(H5);
 	public static final NodeFilter H6_FILTER = new TagNameFilter(H6);
+
+	public static final NodeFilter TABLE_FILTER = new TagNameFilter(TABLE);
+	public static final NodeFilter TR_FILTER = new TagNameFilter(TR);
+	public static final NodeFilter TD_FILTER = new TagNameFilter(TD);
 
 	public static final NodeFilter FORM_FILTER = new TagNameFilter(FORM);
 	public static final NodeFilter LOGIN_FORM_FILTER = new AndFilter(FORM_FILTER, new HasChildFilter(
