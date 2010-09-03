@@ -442,4 +442,31 @@ public final class HtmlParserUtil {
 		// TODO
 		return null;
 	}
+
+	public static String toText(final NodeList nl) {
+		final StringBuilder ret = new StringBuilder();
+		final int size = nl.size();
+		for (int i = 0; i < size; i++) {
+			final Node node = nl.elementAt(i);
+			if (node instanceof TextNode) {
+				final String text = ((TextNode) node).getText();
+				if (!"".equals(text.trim())) {
+					ret.append(text);
+				}
+			} else if (node instanceof TagNode) {
+				final String tag = ((TagNode) node).getTagName().toLowerCase();
+				if ("p".equals(tag)) {
+					ret.append(StringUtil.LINE_SEPARATOR);
+					ret.append(StringUtil.LINE_SEPARATOR);
+				} else if ("br".equals(tag)) {
+					ret.append(StringUtil.LINE_SEPARATOR);
+				}
+			}
+			final NodeList children = node.getChildren();
+			if (children != null && children.size() > 0) {
+				ret.append(toText(children));
+			}
+		}
+		return ret.toString();
+	}
 }
