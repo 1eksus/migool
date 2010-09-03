@@ -8,11 +8,16 @@ import migool.entity.FileEntity;
 import migool.entity.MimeTypeEntity;
 import migool.util.IOUtil;
 
+import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.protocol.BasicHttpContext;
+import org.apache.http.protocol.ExecutionContext;
+import org.apache.http.protocol.HttpContext;
 import org.htmlparser.Parser;
 import org.htmlparser.filters.AndFilter;
 import org.htmlparser.filters.HasAttributeFilter;
@@ -140,6 +145,16 @@ public final class HttpClientWrapper {
 
 	/**
 	 * 
+	 * @param uri
+	 * @return
+	 * @throws IOException
+	 */
+	public MimeTypeEntity getToMimeTypeEntity(final String uri) throws IOException {
+		return requestToMimeTypeEntity(new HttpGet(uri));
+	}
+
+	/**
+	 * 
 	 * @return
 	 */
 	public String getCharset() {
@@ -152,5 +167,22 @@ public final class HttpClientWrapper {
 
 	public void setHttpClient(final HttpClient httpClient) {
 		this.httpClient = httpClient;
+	}
+
+	/**
+	 * 
+	 * @param url
+	 * @return
+	 * @throws IOException
+	 */
+	public String getRedirectedUrl(final String url) throws IOException {
+		final HttpGet httpget = new HttpGet(url);
+		final HttpContext context = new BasicHttpContext();
+		final HttpResponse response = httpClient.execute(httpget, context);
+		if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK)
+			throw new IOException(response.getStatusLine().toString());
+		final HttpUriRequest currentReq = (HttpUriRequest) context.getAttribute(ExecutionContext.HTTP_REQUEST);
+		final HttpHost currentHost = (HttpHost) context.getAttribute(ExecutionContext.HTTP_TARGET_HOST);
+		return currentHost.toURI() + currentReq.getURI();
 	}
 }
