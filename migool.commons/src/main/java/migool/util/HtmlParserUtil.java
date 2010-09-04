@@ -451,6 +451,13 @@ public final class HtmlParserUtil {
 		return null;
 	}
 
+	public static String htmlStringToString(final String htmlString) {
+		// TODO http://www.rgagnon.com/javadetails/java-0306.html
+		String ret = htmlString;
+		ret = ret.replace("&nbsp;", " ");
+		return ret;
+	}
+
 	public static String toText(final NodeList nl) {
 		final StringBuilder ret = new StringBuilder();
 		final int size = nl.size();
