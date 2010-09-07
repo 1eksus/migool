@@ -1,6 +1,8 @@
 package migool.util;
 
-import static migool.util.StringUtil.*;
+import static migool.util.StringUtil.cutPrefix;
+import static migool.util.StringUtil.isNotNullOrEmpty;
+import static migool.util.StringUtil.isNullOrEmpty;
 
 import java.net.URL;
 
@@ -89,10 +91,10 @@ public final class LinkUtil {
 				return "";
 			}
 			try {
-				URL url = new URL(HTTP_PREFIX + host);
+				final URL url = new URL(HTTP_PREFIX + host);
 				url.openConnection();
 				return url.getHost();
-			} catch (Exception e) {
+			} catch (final Exception e) {
 				return "";
 			}
 		}
@@ -105,7 +107,7 @@ public final class LinkUtil {
 	 * @return
 	 */
 	public static String createHttpRoot(final String link) {
-		String host = cutLinkToHost(link);
+		final String host = cutLinkToHost(link);
 		if (isNotNullOrEmpty(host)) {
 			return HTTP_PREFIX + host;
 		} else {
@@ -134,15 +136,15 @@ public final class LinkUtil {
 	 * @param link
 	 * @return
 	 */
-	public static boolean isRootLink(String link) {
+	public static boolean isRootLink(final String link) {
 		if (isNullOrEmpty(link) || !RegexUtil.isUrl(link)) {
 			return false;
 		}
-		String host = getHost(link);
+		final String host = getHost(link);
 		return isNotNullOrEmpty(host) && (link.endsWith(host) || link.endsWith(host + "/"));
 	}
 
-	public static String getFileName(String url) {
+	public static String getFileName(final String url) {
 		if (isNullOrEmpty(url)) {
 			return url;
 		}
