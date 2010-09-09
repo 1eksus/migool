@@ -1,5 +1,7 @@
 package migool.util;
 
+import static migool.util.StringUtil.isNullOrEmpty;
+
 /**
  * @author Denis Migol
  * 
@@ -16,11 +18,11 @@ public final class BBCode {
 	 * @param bbTag
 	 * @return
 	 */
-	public static final String createBBBegin(final String bbTag) {
-		return StringUtil.isNullOrEmpty(bbTag) ? "" : createBBBeginInternal(bbTag);
+	public static String createBBBegin(final String bbTag) {
+		return isNullOrEmpty(bbTag) ? "" : createBBBeginInternal(bbTag);
 	}
 
-	private static final String createBBBeginInternal(final String bbTag) {
+	private static String createBBBeginInternal(final String bbTag) {
 		return "[" + bbTag + "]";
 	}
 
@@ -30,12 +32,12 @@ public final class BBCode {
 	 * @param bbText
 	 * @return
 	 */
-	public static final String createBBBegin(final String bbTag, final String bbText) {
-		return StringUtil.isNullOrEmpty(bbTag) ? "" : StringUtil.isNullOrEmpty(bbText) ? createBBBeginInternal(bbTag)
+	public static String createBBBegin(final String bbTag, final String bbText) {
+		return isNullOrEmpty(bbTag) ? "" : isNullOrEmpty(bbText) ? createBBBeginInternal(bbTag)
 				: createBBBeginInternal(bbTag, bbText);
 	}
 
-	private static final String createBBBeginInternal(final String bbTag, final String bbText) {
+	private static String createBBBeginInternal(final String bbTag, final String bbText) {
 		return "[" + bbTag + "=" + bbText + "]";
 	}
 
@@ -44,15 +46,20 @@ public final class BBCode {
 	 * @param bbTag
 	 * @return
 	 */
-	public static final String createBBEnd(final String bbTag) {
-		return StringUtil.isNullOrEmpty(bbTag) ? "" : createBBEndInternal(bbTag);
+	public static String createBBEnd(final String bbTag) {
+		return isNullOrEmpty(bbTag) ? "" : createBBEndInternal(bbTag);
 	}
 
-	private static final String createBBEndInternal(final String bbTag) {
+	private static String createBBEndInternal(final String bbTag) {
 		return "[/" + bbTag + "]";
 	}
 
-	public static final String createBBCode(final String bbTag) {
+	/**
+	 * 
+	 * @param bbTag
+	 * @return
+	 */
+	public static String createBBCode(final String bbTag) {
 		return "[" + bbTag + "]";
 	}
 
@@ -62,12 +69,11 @@ public final class BBCode {
 	 * @param text
 	 * @return [bb]text[/bb]
 	 */
-	public static final String createBBCode(final String bbTag, final String text) {
-		return (StringUtil.isNullOrEmpty(bbTag) || StringUtil.isNullOrEmpty(text)) ? "" : createBBCodeInternal(bbTag,
-				text);
+	public static String createBBCode(final String bbTag, final String text) {
+		return (isNullOrEmpty(bbTag) || isNullOrEmpty(text)) ? "" : createBBCodeInternal(bbTag, text);
 	}
 
-	private static final String createBBCodeInternal(final String bbTag, final String text) {
+	private static String createBBCodeInternal(final String bbTag, final String text) {
 		return createBBBeginInternal(bbTag) + text + createBBEndInternal(bbTag);
 	}
 
@@ -78,12 +84,12 @@ public final class BBCode {
 	 * @param text
 	 * @return
 	 */
-	public static final String createBBCode(final String bbTag, final String bbText, final String text) {
-		return (StringUtil.isNullOrEmpty(bbTag) || StringUtil.isNullOrEmpty(text)) ? "" : (StringUtil
-				.isNullOrEmpty(bbText)) ? createBBCodeInternal(bbTag, text) : createBBCodeInternal(bbTag, bbText, text);
+	public static String createBBCode(final String bbTag, final String bbText, final String text) {
+		return (isNullOrEmpty(bbTag) || isNullOrEmpty(text)) ? "" : (isNullOrEmpty(bbText)) ? createBBCodeInternal(
+				bbTag, text) : createBBCodeInternal(bbTag, bbText, text);
 	}
 
-	private static final String createBBCodeInternal(final String bbTag, final String bbText, final String text) {
+	private static String createBBCodeInternal(final String bbTag, final String bbText, final String text) {
 		return createBBBeginInternal(bbTag, bbText) + text + createBBEndInternal(bbTag);
 	}
 }
