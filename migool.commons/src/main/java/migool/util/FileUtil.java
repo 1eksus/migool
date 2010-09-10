@@ -70,4 +70,22 @@ public final class FileUtil {
 			file.delete();
 		}
 	}
+
+	/**
+	 * 
+	 * @param file
+	 * @return
+	 */
+	public static String getExtension(final File file) {
+		String ext = null;
+		final String s = file.getName();
+		final int i = s.lastIndexOf('.');
+
+		if (file.isDirectory())
+			ext = null;
+		else if (i > 0 && i < s.length() - 1) {
+			ext = s.substring(i + 1).toLowerCase();
+		}
+		return ext;
+	}
 }

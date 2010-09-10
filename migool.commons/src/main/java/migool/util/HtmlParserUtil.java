@@ -254,6 +254,11 @@ public final class HtmlParserUtil {
 		setInputs(getHiddenInputs(form), params);
 	}
 
+	public static void setFormInputs(final FormTag form, final Map<String, String> params) {
+		setInputs(getNotHiddenInputs(form), params);
+		setInputs(getHiddenInputs(form), params);
+	}
+
 	/**
 	 * 
 	 * @param form
