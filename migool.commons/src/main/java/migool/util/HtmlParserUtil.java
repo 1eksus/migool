@@ -13,6 +13,7 @@ import org.apache.http.NameValuePair;
 import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.message.BasicNameValuePair;
+import org.htmlparser.Attribute;
 import org.htmlparser.Node;
 import org.htmlparser.NodeFilter;
 import org.htmlparser.Parser;
@@ -58,6 +59,7 @@ public final class HtmlParserUtil {
 	public static final String PASSWORD = "password";
 	public static final String TYPE = "type";
 	public static final String INPUT = "input";
+	public static final String SELECT = "select";
 	public static final String VALUE = "value";
 	public static final String NAME = "name";
 	public static final String CLASS = "class";
@@ -82,6 +84,9 @@ public final class HtmlParserUtil {
 	public static final String TR = "tr";
 	public static final String TD = "td";
 
+	public static final String SELECTED = "selected";
+	public static final String CHECKED = "checked";
+
 	public static final NodeFilter TYPE_HIDDEN_FILTER = new HasAttributeFilter(TYPE, HIDDEN);
 	public static final NodeFilter TYPE_FILE_FILTER = new HasAttributeFilter(TYPE, FILE);
 	public static final NodeFilter TYPE_PASSWORD_FILTER = new HasAttributeFilter(TYPE, PASSWORD);
@@ -98,6 +103,7 @@ public final class HtmlParserUtil {
 	public static final NodeFilter B_FILTER = new TagNameFilter(B);
 	public static final NodeFilter IMG_FILTER = new TagNameFilter(IMG);
 	public static final NodeFilter TEXTAREA_FILTER = new TagNameFilter(TEXTAREA);
+	public static final NodeFilter SELECT_FILTER = new TagNameFilter(SELECT);
 	public static final NodeFilter OBJECT_FILTER = new TagNameFilter(OBJECT);
 	public static final NodeFilter DIV_FILTER = new TagNameFilter(DIV);
 	public static final NodeFilter SPAN_FILTER = new TagNameFilter(SPAN);
@@ -190,17 +196,9 @@ public final class HtmlParserUtil {
 		final Map<String, String> ret = (params == null) ? new LinkedHashMap<String, String>() : params;
 
 		setInputs(form.getFormInputs(), params);
-
-		// final NodeList textareas = form.getFormTextareas();
-		// final int textareasSize = textareas.size();
-		// for (int i = 0; i < textareasSize; i++) {
-		// final TextareaTag textarea = (TextareaTag) textareas.elementAt(i);
-		// final String name = textarea.getAttribute(NAME);
-		// final String value = ret.containsKey(name) ? ret.get(name) :
-		// textarea.getValue();
-		// ret.put(name, value);
-		// }
 		setTextareas(form.getFormTextareas(), params);
+		setSelects(getSelects(form), params);
+
 		return ret;
 	}
 
@@ -222,16 +220,38 @@ public final class HtmlParserUtil {
 		final int inputsSize = inputs.size();
 		for (int i = 0; i < inputsSize; i++) {
 			final InputTag input = (InputTag) inputs.elementAt(i);
-			final String name = input.getAttribute(NAME);
-			if (name != null) {
-				// final String value = ret.containsKey(name) ? ret.get(name) :
-				// input.getAttribute(VALUE);
-				final String value = input.getAttribute(VALUE);
-				if (value != null) {
-					params.put(name, value);
-				}
+			setInput(input, params);
+		}
+	}
+
+	public static void setInput(final InputTag input, final Map<String, String> params) {
+		final String name = input.getAttribute(NAME);
+		if (name != null) {
+			if (isCheckbox(input) && !isChecked(input)) {
+				return;
+			}
+			// final String value = ret.containsKey(name) ? ret.get(name) :
+			// input.getAttribute(VALUE);
+			final String value = input.getAttribute(VALUE);
+			if (value != null) {
+				params.put(name, value);
 			}
 		}
+	}
+
+	public static boolean isCheckbox(final InputTag input) {
+		final String value = input.getAttribute(TYPE);
+		return CHECKBOX.equalsIgnoreCase(value);
+	}
+
+	public static boolean isChecked(final InputTag input) {
+		boolean ret = false;
+		final Attribute attribute = input.getAttributeEx(CHECKED);
+		if (attribute != null) {
+			final String value = attribute.getValue();
+			ret = (value == null) || CHECKED.equalsIgnoreCase(value);
+		}
+		return ret;
 	}
 
 	/**
@@ -317,9 +337,39 @@ public final class HtmlParserUtil {
 			final String name = textarea.getAttribute(NAME);
 			// final String value = params.containsKey(name) ? params.get(name)
 			// : textarea.getValue();
-			final String value = textarea.getValue(); // ???
+			final String value = textarea.getValue();
 			params.put(name, value);
 		}
+	}
+
+	public static NodeList getSelects(final FormTag form) {
+		return form.getChildren().extractAllNodesThatMatch(SELECT_FILTER, true);
+	}
+
+	public static void setSelects(final NodeList selects, final Map<String, String> params) {
+		final int selectsSize = selects.size();
+		for (int i = 0; i < selectsSize; i++) {
+			final SelectTag select = (SelectTag) selects.elementAt(i);
+			for (final OptionTag option : select.getOptionTags()) {
+				if (isOptionSelected(option)) {
+					final String name = select.getAttribute(NAME);
+					final String value = option.getValue();
+					params.put(name, value);
+					break;
+				}
+			}
+		}
+	}
+
+	public static boolean isOptionSelected(final OptionTag option) {
+		// option.getAttribute(SELECTED);
+		boolean ret = false;
+		final Attribute attribute = option.getAttributeEx(SELECTED);
+		if (attribute != null) {
+			final String value = attribute.getValue();
+			ret = (value == null) || (SELECTED.equalsIgnoreCase(value));
+		}
+		return ret;
 	}
 
 	/**
