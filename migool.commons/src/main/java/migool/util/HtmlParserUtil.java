@@ -182,16 +182,35 @@ public final class HtmlParserUtil {
 
 	/**
 	 * 
-	 * @param inputs
+	 * @param form
+	 * @param params
+	 * @return
+	 */
+	public static Map<String, String> setForm(final FormTag form, final Map<String, String> params) {
+		final Map<String, String> ret = (params == null) ? new LinkedHashMap<String, String>() : params;
+
+		setInputs(form.getFormInputs(), params);
+
+		// final NodeList textareas = form.getFormTextareas();
+		// final int textareasSize = textareas.size();
+		// for (int i = 0; i < textareasSize; i++) {
+		// final TextareaTag textarea = (TextareaTag) textareas.elementAt(i);
+		// final String name = textarea.getAttribute(NAME);
+		// final String value = ret.containsKey(name) ? ret.get(name) :
+		// textarea.getValue();
+		// ret.put(name, value);
+		// }
+		setTextareas(form.getFormTextareas(), params);
+		return ret;
+	}
+
+	/**
+	 * 
+	 * @param form
 	 * @param params
 	 */
-	public static void setInputs(final NodeList inputs, final List<NameValuePair> params) {
-		InputTag input = null;
-		final int size = inputs.size();
-		for (int i = 0; i < size; i++) {
-			input = (InputTag) inputs.elementAt(i);
-			params.add(new BasicNameValuePair(input.getAttribute(NAME), input.getAttribute(VALUE)));
-		}
+	public static void setInputs(final FormTag form, final Map<String, String> params) {
+		setInputs(form.getFormInputs(), params);
 	}
 
 	/**
@@ -200,18 +219,41 @@ public final class HtmlParserUtil {
 	 * @param params
 	 */
 	public static void setInputs(final NodeList inputs, final Map<String, String> params) {
-		InputTag input = null;
-		String name = null;
-		String value = null;
-		final int size = inputs.size();
-		for (int i = 0; i < size; i++) {
-			input = (InputTag) inputs.elementAt(i);
-			name = input.getAttribute(NAME);
+		final int inputsSize = inputs.size();
+		for (int i = 0; i < inputsSize; i++) {
+			final InputTag input = (InputTag) inputs.elementAt(i);
+			final String name = input.getAttribute(NAME);
 			if (name != null) {
-				value = input.getAttribute(VALUE);
+				// final String value = ret.containsKey(name) ? ret.get(name) :
+				// input.getAttribute(VALUE);
+				final String value = input.getAttribute(VALUE);
 				if (value != null) {
 					params.put(name, value);
 				}
+			}
+		}
+	}
+
+	/**
+	 * 
+	 * @param inputs
+	 * @param params
+	 */
+	public static void setInputs(final NodeList inputs, final List<NameValuePair> params) {
+		final int size = inputs.size();
+		for (int i = 0; i < size; i++) {
+			final InputTag input = (InputTag) inputs.elementAt(i);
+			params.add(new BasicNameValuePair(input.getAttribute(NAME), input.getAttribute(VALUE)));
+		}
+	}
+
+	public static void setInputs(final NodeList inputs, final MultipartEntity entity) {
+		final int inputsSize = inputs.size();
+		for (int i = 0; i < inputsSize; i++) {
+			final InputTag input = (InputTag) inputs.elementAt(i);
+			try {
+				entity.addPart(input.getAttribute(NAME), new StringBody(input.getAttribute(VALUE)));
+			} catch (final UnsupportedEncodingException e) {
 			}
 		}
 	}
@@ -254,25 +296,29 @@ public final class HtmlParserUtil {
 		setInputs(getHiddenInputs(form), params);
 	}
 
-	public static void setFormInputs(final FormTag form, final Map<String, String> params) {
-		setInputs(getNotHiddenInputs(form), params);
-		setInputs(getHiddenInputs(form), params);
-	}
-
 	/**
 	 * 
 	 * @param form
 	 * @param entity
 	 */
 	public static void setHiddenInputs(final FormTag form, final MultipartEntity entity) {
-		final NodeList hiddens = getHiddenInputs(form);
-		InputTag input = null;
-		for (int i = 0; i < hiddens.size(); i++) {
-			input = (InputTag) hiddens.elementAt(i);
-			try {
-				entity.addPart(input.getAttribute(NAME), new StringBody(input.getAttribute(VALUE)));
-			} catch (final UnsupportedEncodingException e) {
-			}
+		setInputs(getHiddenInputs(form), entity);
+	}
+
+	/**
+	 * 
+	 * @param textareas
+	 * @param params
+	 */
+	public static void setTextareas(final NodeList textareas, final Map<String, String> params) {
+		final int textareasSize = textareas.size();
+		for (int i = 0; i < textareasSize; i++) {
+			final TextareaTag textarea = (TextareaTag) textareas.elementAt(i);
+			final String name = textarea.getAttribute(NAME);
+			// final String value = params.containsKey(name) ? params.get(name)
+			// : textarea.getValue();
+			final String value = textarea.getValue(); // ???
+			params.put(name, value);
 		}
 	}
 
@@ -298,12 +344,13 @@ public final class HtmlParserUtil {
 	public static NodeList getChildTags(final Node node, final List<String> tagNames) {
 		final NodeList children = node.getChildren();
 		if (children != null) {
-			final int size = tagNames.size();
-			final List<NodeFilter> predicates = new ArrayList<NodeFilter>(size);
+			final int tagNamesSize = tagNames.size();
+			final List<NodeFilter> predicates = new ArrayList<NodeFilter>(tagNamesSize);
 			for (final String name : tagNames) {
 				predicates.add(new TagNameFilter(name));
 			}
-			return children.extractAllNodesThatMatch(new OrFilter(predicates.toArray(new NodeFilter[size])), true);
+			return children.extractAllNodesThatMatch(new OrFilter(predicates.toArray(new NodeFilter[tagNamesSize])),
+					true);
 		}
 		return null;
 	}
@@ -314,10 +361,10 @@ public final class HtmlParserUtil {
 	 * @return
 	 */
 	public static List<String> getNameAttributeValues(final NodeList nl) {
-		final int size = nl.size();
-		final List<String> ret = new ArrayList<String>(size);
+		final int nlSize = nl.size();
+		final List<String> ret = new ArrayList<String>(nlSize);
 		String name = null;
-		for (int i = 0; i < size; i++) {
+		for (int i = 0; i < nlSize; i++) {
 			if ((name = ((TagNode) nl.elementAt(i)).getAttribute(NAME)) != null) {
 				ret.add(name);
 			}
@@ -413,42 +460,15 @@ public final class HtmlParserUtil {
 	 * @return
 	 */
 	public static Map<String, String> getOptionsValues(final SelectTag select) {
-		final OptionTag[] options = select.getOptionTags();
-		final int length = options.length;
-		OptionTag option = null;
-		final Map<String, String> values = new HashMap<String, String>();
-		for (int i = 0; i < length; i++) {
-			option = options[i];
-			values.put(option.getValue(), option.getOptionText());
+		final Map<String, String> ret = new HashMap<String, String>();
+		for (final OptionTag option : select.getOptionTags()) {
+			ret.put(option.getValue(), option.getOptionText());
 		}
-		return values;
+		return ret;
 	}
 
 	public static Map<String, String> setForm(final FormTag form) {
 		return setForm(form, null);
-	}
-
-	public static Map<String, String> setForm(final FormTag form, final Map<String, String> params) {
-		final Map<String, String> ret = (params == null) ? new LinkedHashMap<String, String>() : params;
-
-		final NodeList inputs = form.getFormInputs();
-		final int inputsSize = inputs.size();
-		for (int i = 0; i < inputsSize; i++) {
-			final InputTag input = (InputTag) inputs.elementAt(i);
-			final String name = input.getAttribute(NAME);
-			final String value = ret.containsKey(name) ? ret.get(name) : input.getAttribute(VALUE);
-			ret.put(name, value);
-		}
-
-		final NodeList textareas = form.getFormTextareas();
-		final int textareasSize = textareas.size();
-		for (int i = 0; i < textareasSize; i++) {
-			final TextareaTag textarea = (TextareaTag) textareas.elementAt(i);
-			final String name = textarea.getAttribute(NAME);
-			final String value = ret.containsKey(name) ? ret.get(name) : textarea.getValue();
-			ret.put(name, value);
-		}
-		return ret;
 	}
 
 	public static String removeRemarks(final String html) {
