@@ -20,11 +20,4 @@
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>org.maven.ide.eclipse.maven2Nature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>commons</name>
-			<type>2</type>
-			<locationURI>WORKSPACE_LOC/migool.commons/src/main/java</locationURI>
-		</link>
-	</linkedResources>
 </projectDescription>
