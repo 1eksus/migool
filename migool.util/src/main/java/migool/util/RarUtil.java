@@ -23,57 +23,57 @@ public final class RarUtil {
 	/**
 	 * User stopped the process
 	 */
-	private static final int USER_BREAK = 255;
+	public static final int USER_BREAK = 255;
 
 	/**
 	 * Create file error
 	 */
-	private static final int CREATE_ERROR = 9;
+	public static final int CREATE_ERROR = 9;
 
 	/**
 	 * Not enough memory for operation
 	 */
-	private static final int MEMORY_ERROR = 8;
+	public static final int MEMORY_ERROR = 8;
 
 	/**
 	 * Command line option error
 	 */
-	private static final int USER_ERROR = 7;
+	public static final int USER_ERROR = 7;
 
 	/**
 	 * Open file error
 	 */
-	private static final int OPEN_ERROR = 6;
+	public static final int OPEN_ERROR = 6;
 
 	/**
 	 * Write to disk error
 	 */
-	private static final int WRITE_ERROR = 5;
+	public static final int WRITE_ERROR = 5;
 
 	/**
 	 * Attempt to modify an archive previously locked by the 'k' command
 	 */
-	private static final int LOCKED_ARCHIVE = 4;
+	public static final int LOCKED_ARCHIVE = 4;
 
 	/**
 	 * A CRC error occurred when unpacking
 	 */
-	private static final int CRC_ERROR = 3;
+	public static final int CRC_ERROR = 3;
 
 	/**
 	 * A fatal error occurred
 	 */
-	private static final int FATAL_ERROR = 2;
+	public static final int FATAL_ERROR = 2;
 
 	/**
 	 * Non fatal error(s) occurred
 	 */
-	private static final int WARNING = 1;
+	public static final int WARNING = 1;
 
 	/**
 	 * Successful operation
 	 */
-	private static final int SUCCESS = 0;
+	public static final int SUCCESS = 0;
 
 	/* EXIT VALUES end */
 
