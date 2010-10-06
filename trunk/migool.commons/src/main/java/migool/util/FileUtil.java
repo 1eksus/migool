@@ -58,6 +58,15 @@ public final class FileUtil {
 
 	/**
 	 * 
+	 * @param dir
+	 * @return
+	 */
+	public static boolean isDirectoryExists(final File dir) {
+		return (dir == null) ? false : (dir.isDirectory() && dir.exists()) ? true : false;
+	}
+
+	/**
+	 * 
 	 * @param file
 	 */
 	public static void delete(final File file) {
