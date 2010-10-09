@@ -68,6 +68,15 @@ public final class FileUtil {
 	/**
 	 * 
 	 * @param file
+	 * @return
+	 */
+	public static boolean isFileExists(final File file) {
+		return (file == null) ? false : file.isFile() && file.exists();
+	}
+
+	/**
+	 * 
+	 * @param file
 	 */
 	public static void delete(final File file) {
 		if (file != null) {
