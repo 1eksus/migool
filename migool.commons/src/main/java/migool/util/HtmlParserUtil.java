@@ -196,6 +196,8 @@ public final class HtmlParserUtil {
 		final Map<String, String> ret = (params == null) ? new LinkedHashMap<String, String>() : params;
 
 		setInputs(form.getFormInputs(), params);
+		// setInputs(form.getChildren().extractAllNodesThatMatch(INPUT_FILTER,
+		// true), params);
 		setTextareas(form.getFormTextareas(), params);
 		setSelects(getSelects(form), params);
 
@@ -350,13 +352,21 @@ public final class HtmlParserUtil {
 		final int selectsSize = selects.size();
 		for (int i = 0; i < selectsSize; i++) {
 			final SelectTag select = (SelectTag) selects.elementAt(i);
+			boolean selected = false;
 			for (final OptionTag option : select.getOptionTags()) {
 				if (isOptionSelected(option)) {
+					selected = true;
 					final String name = select.getAttribute(NAME);
 					final String value = option.getValue();
 					params.put(name, value);
 					break;
 				}
+			}
+			if (!selected) {
+				final OptionTag option = select.getOptionTags()[0];
+				final String name = select.getAttribute(NAME);
+				final String value = option.getValue();
+				params.put(name, value);
 			}
 		}
 	}
