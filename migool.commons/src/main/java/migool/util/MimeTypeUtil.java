@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -32,6 +33,19 @@ public final class MimeTypeUtil {
 	public static final String IMAGE_SVG_XML = "image/svg+xml";
 	public static final String IMAGE_TIFF = "image/tiff";
 	public static final String IMAGE_XICON = "image/x-icon";
+
+	public static final Set<String> IMAGE_MIME_TYPES;
+	static {
+		IMAGE_MIME_TYPES = new HashSet<String>();
+		IMAGE_MIME_TYPES.add(IMAGE_BMP);
+		IMAGE_MIME_TYPES.add(IMAGE_GIF);
+		IMAGE_MIME_TYPES.add(IMAGE_JPEG);
+		IMAGE_MIME_TYPES.add(IMAGE_PIPEG);
+		IMAGE_MIME_TYPES.add(IMAGE_PNG);
+		IMAGE_MIME_TYPES.add(IMAGE_SVG_XML);
+		IMAGE_MIME_TYPES.add(IMAGE_TIFF);
+		IMAGE_MIME_TYPES.add(IMAGE_XICON);
+	}
 
 	// file extensions:
 
@@ -86,5 +100,9 @@ public final class MimeTypeUtil {
 		final byte[] bytes = IOUtil.toByteArray(new FileInputStream(file));
 		final String mimeType = getMimeTypeByFileExtension(FileUtil.getExtension(file));
 		return new MimeTypeEntity(mimeType, bytes);
+	}
+
+	public static boolean isImage(final String mimeType) {
+		return IMAGE_MIME_TYPES.contains(mimeType.toLowerCase());
 	}
 }
