@@ -259,6 +259,91 @@ public final class StringUtil {
 		return ret;
 	}
 
+	public static boolean equalsIgnoreCaseSkipSpaces(final String s1, final String s2) {
+		if (s1 == null || s2 == null) {
+			return false;
+		}
+
+		final String string1 = s1.trim().toLowerCase();
+		final String string2 = s2.trim().toLowerCase();
+
+		if (string1.equals(string2)) {
+			return true;
+		} else {
+			final int length1 = string1.length() - 1;
+			final int length2 = string2.length() - 1;
+
+			if (length1 == -1 || length2 == -1) {
+				return false;
+			}
+
+			int i1 = 0;
+			int i2 = 0;
+			boolean a = i1 >= 0;
+			boolean b = i2 >= 0;
+			boolean ret = true;
+
+			while (ret & (a || b)) {
+				if (a && b) {
+					final char c1 = string1.charAt(i1);
+					final char c2 = string2.charAt(i2);
+
+					if (c1 == c2) {
+						if (i1 < length1) {
+							i1++;
+						} else {
+							i1 = -1;
+						}
+						if (i2 < length2) {
+							i2++;
+						} else {
+							i2 = -1;
+						}
+					} else if (c1 == ' ') {
+						if (i1 < length1) {
+							i1++;
+						} else {
+							i1 = -1;
+						}
+					} else if (c2 == ' ') {
+						if (i2 < length2) {
+							i2++;
+						} else {
+							i2 = -1;
+						}
+					} else {
+						ret = false;
+					}
+				} else if (a) { // i1 >= 0
+					final char c1 = string1.charAt(i1);
+					if (c1 == ' ') {
+						if (i1 < length1) {
+							i1++;
+						} else {
+							i1 = -1;
+						}
+					} else {
+						ret = false;
+					}
+				} else { // i2 >= 0
+					final char c2 = string2.charAt(i2);
+					if (c2 == ' ') {
+						if (i2 < length2) {
+							i2++;
+						} else {
+							i2 = -1;
+						}
+					} else {
+						ret = false;
+					}
+				}
+				a = i1 >= 0;
+				b = i1 >= 0;
+			} // while
+			return ret;
+		}
+	}
+
 	// public static void main(String[] args) {
 	// System.out.println(appendPrefixWithZeros("asdf", 10));
 	// System.out.println(appendPrefixWithZeros(null, 10));
