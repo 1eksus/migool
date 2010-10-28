@@ -12,6 +12,8 @@ import java.util.Set;
 
 import migool.entity.MimeTypeEntity;
 
+import org.apache.commons.io.FilenameUtils;
+
 /**
  * @author Denis Migol
  * 
@@ -49,25 +51,25 @@ public final class MimeTypeUtil {
 
 	// file extensions:
 
-	public static final String _BMP = ".bmp";
-	public static final String _GIF = ".gif";
-	public static final String _JPEG = ".jpeg";
-	public static final String _JPG = ".jpg";
-	public static final String _PNG = ".png";
-	public static final String _TIFF = ".tiff";
-	public static final String _ICO = ".ico";
+	public static final String BMP = "bmp";
+	public static final String GIF = "gif";
+	public static final String JPEG = "jpeg";
+	public static final String JPG = "jpg";
+	public static final String PNG = "png";
+	public static final String TIFF = "tiff";
+	public static final String ICO = "ico";
 
 	private static final Map<String, String> MIME_TYPE_EXTENSION = new HashMap<String, String>();
 
 	static {
 		// TODO
-		MIME_TYPE_EXTENSION.put(IMAGE_BMP, _BMP);
-		MIME_TYPE_EXTENSION.put(IMAGE_GIF, _GIF);
-		MIME_TYPE_EXTENSION.put(IMAGE_JPEG, _JPEG);
-		MIME_TYPE_EXTENSION.put(IMAGE_JPEG, _JPG);
-		MIME_TYPE_EXTENSION.put(IMAGE_PNG, _PNG);
-		MIME_TYPE_EXTENSION.put(IMAGE_TIFF, _TIFF);
-		MIME_TYPE_EXTENSION.put(IMAGE_XICON, _ICO);
+		MIME_TYPE_EXTENSION.put(IMAGE_BMP, BMP);
+		MIME_TYPE_EXTENSION.put(IMAGE_GIF, GIF);
+		MIME_TYPE_EXTENSION.put(IMAGE_JPEG, JPEG);
+		MIME_TYPE_EXTENSION.put(IMAGE_JPEG, JPG);
+		MIME_TYPE_EXTENSION.put(IMAGE_PNG, PNG);
+		MIME_TYPE_EXTENSION.put(IMAGE_TIFF, TIFF);
+		MIME_TYPE_EXTENSION.put(IMAGE_XICON, ICO);
 	}
 
 	/**
@@ -81,15 +83,13 @@ public final class MimeTypeUtil {
 
 	/**
 	 * 
-	 * @param fileExtension
+	 * @param extension
 	 * @return
 	 */
-	public static String getMimeTypeByFileExtension(final String fileExtension) {
-		final String ext = fileExtension.charAt(0) == '.' ? fileExtension.toLowerCase() : "."
-				+ fileExtension.toLowerCase();
+	public static String getMimeTypeByFileExtension(final String extension) {
 		final Set<Entry<String, String>> entries = MIME_TYPE_EXTENSION.entrySet();
 		for (final Entry<String, String> entry : entries) {
-			if (entry.getValue().equalsIgnoreCase(ext)) {
+			if (entry.getValue().equalsIgnoreCase(extension)) {
 				return entry.getKey();
 			}
 		}
@@ -98,7 +98,7 @@ public final class MimeTypeUtil {
 
 	public static MimeTypeEntity fileToMimeTypeEntity(final File file) throws FileNotFoundException, IOException {
 		final byte[] bytes = IOUtil.toByteArray(new FileInputStream(file));
-		final String mimeType = getMimeTypeByFileExtension(FileUtil.getExtension(file));
+		final String mimeType = getMimeTypeByFileExtension(FilenameUtils.getExtension(file.getName()));
 		return new MimeTypeEntity(mimeType, bytes);
 	}
 
