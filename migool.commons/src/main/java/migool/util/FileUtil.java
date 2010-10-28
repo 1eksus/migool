@@ -89,33 +89,4 @@ public final class FileUtil {
 		}
 	}
 
-	/**
-	 * 
-	 * @param file
-	 * @return
-	 */
-	public static String getExtension(final File file) {
-		String ext = "";
-
-		if (!file.isDirectory()) {
-			final String fileName = file.getName();
-			ext = getExtension(fileName);
-		}
-		return ext;
-	}
-
-	/**
-	 * 
-	 * @param fileName
-	 * @return
-	 */
-	public static String getExtension(final String fileName) {
-		String ext = "";
-		final int i = fileName.lastIndexOf('.');
-
-		if (i > 0 && i < fileName.length() - 1) {
-			ext = fileName.substring(i + 1).toLowerCase();
-		}
-		return ext;
-	}
 }
