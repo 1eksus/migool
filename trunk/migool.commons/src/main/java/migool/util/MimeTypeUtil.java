@@ -25,7 +25,7 @@ public final class MimeTypeUtil {
 	private MimeTypeUtil() {
 	}
 
-	// mime types:
+	// image mime types:
 
 	public static final String IMAGE_BMP = "image/bmp";
 	public static final String IMAGE_GIF = "image/gif";
