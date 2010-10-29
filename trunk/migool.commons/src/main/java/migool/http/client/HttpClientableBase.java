@@ -7,7 +7,7 @@ import org.apache.http.client.HttpClient;
  * @author Denis Migol
  * 
  */
-public class HttpClientableBase implements IHttpClientable {
+public class HttpClientableBase implements HttpClientable {
 
 	protected final HttpClientWrapper client = new HttpClientWrapper();
 
