@@ -28,6 +28,7 @@ import org.htmlparser.nodes.TagNode;
 import org.htmlparser.nodes.TextNode;
 import org.htmlparser.tags.FormTag;
 import org.htmlparser.tags.InputTag;
+import org.htmlparser.tags.LinkTag;
 import org.htmlparser.tags.OptionTag;
 import org.htmlparser.tags.SelectTag;
 import org.htmlparser.tags.TextareaTag;
@@ -598,6 +599,18 @@ public final class HtmlParserUtil {
 				if (node != null) {
 					ret.add(node);
 				}
+			}
+		}
+		return ret;
+	}
+
+	public static List<String> getLinkTexts(final NodeList list) {
+		final List<String> ret = new ArrayList<String>();
+		final int listSize = list.size();
+		for (int i = 0; i < listSize; i++) {
+			final Node node = list.elementAt(i);
+			if (node instanceof LinkTag) {
+				ret.add(((LinkTag) node).getLinkText());
 			}
 		}
 		return ret;
