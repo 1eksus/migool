@@ -570,7 +570,6 @@ public final class HtmlParserUtil {
 		return ret.toString();
 	}
 
-	// TODO not work correctly
 	public static Node removeEmptyTextNodes(final Node node) {
 		if (node instanceof TextNode) {
 			final TextNode textNode = (TextNode) node;
@@ -589,7 +588,6 @@ public final class HtmlParserUtil {
 		return null;
 	}
 
-	// TODO not work correctly
 	public static NodeList removeEmptyTextNodes(final NodeList list) {
 		NodeList ret = null;
 		if (list != null) {

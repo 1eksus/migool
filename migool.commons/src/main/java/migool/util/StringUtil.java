@@ -344,6 +344,28 @@ public final class StringUtil {
 		}
 	}
 
+	public static String removeChars(final String string, final String chars) {
+		if (string == null) {
+			return null;
+		}
+		final StringBuilder sb = new StringBuilder();
+		final int stringLength = string.length();
+		final int charsLength = chars.length();
+		for (int i = 0; i < stringLength; i++) {
+			final char c = string.charAt(i);
+			boolean found = false;
+			for (int j = 0; j < charsLength; j++) {
+				if (c == chars.charAt(j)) {
+					found = true;
+				}
+			}
+			if (!found) {
+				sb.append(c);
+			}
+		}
+		return sb.toString();
+	}
+
 	// public static void main(String[] args) {
 	// System.out.println(appendPrefixWithZeros("asdf", 10));
 	// System.out.println(appendPrefixWithZeros(null, 10));
