@@ -569,4 +569,37 @@ public final class HtmlParserUtil {
 		}
 		return ret.toString();
 	}
+
+	public static Node removeEmptyTextNodes(final Node node) {
+		if (node instanceof TextNode) {
+			final TextNode textNode = (TextNode) node;
+			String text = textNode.getText();
+			text = text.trim();
+			if (!"".equals(text)) {
+				return node;
+			}
+		} else {
+			final NodeList children = node.getChildren();
+			if (children != null && children.size() > 0) {
+				node.setChildren(removeEmptyTextNodes(children));
+			}
+			return node;
+		}
+		return null;
+	}
+
+	public static NodeList removeEmptyTextNodes(final NodeList list) {
+		NodeList ret = null;
+		if (list != null) {
+			ret = new NodeList();
+			final int listSize = list.size();
+			for (int i = 0; i < listSize; i++) {
+				final Node node = removeEmptyTextNodes(list.elementAt(i));
+				if (node != null) {
+					ret.add(node);
+				}
+			}
+		}
+		return ret;
+	}
 }
