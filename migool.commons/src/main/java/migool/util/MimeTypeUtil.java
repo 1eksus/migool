@@ -4,11 +4,14 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.TreeSet;
 
 import migool.entity.MimeTypeEntity;
 
@@ -59,17 +62,16 @@ public final class MimeTypeUtil {
 	public static final String TIFF = "tiff";
 	public static final String ICO = "ico";
 
-	private static final Map<String, String> MIME_TYPE_EXTENSION = new HashMap<String, String>();
+	private static final Map<String, Set<String>> MIME_TYPE_EXTENSIONS = new HashMap<String, Set<String>>();
 
 	static {
 		// TODO
-		MIME_TYPE_EXTENSION.put(IMAGE_BMP, BMP);
-		MIME_TYPE_EXTENSION.put(IMAGE_GIF, GIF);
-		MIME_TYPE_EXTENSION.put(IMAGE_JPEG, JPEG);
-		MIME_TYPE_EXTENSION.put(IMAGE_JPEG, JPG);
-		MIME_TYPE_EXTENSION.put(IMAGE_PNG, PNG);
-		MIME_TYPE_EXTENSION.put(IMAGE_TIFF, TIFF);
-		MIME_TYPE_EXTENSION.put(IMAGE_XICON, ICO);
+		MIME_TYPE_EXTENSIONS.put(IMAGE_BMP, new TreeSet<String>(Arrays.asList(BMP)));
+		MIME_TYPE_EXTENSIONS.put(IMAGE_GIF, new TreeSet<String>(Arrays.asList(GIF)));
+		MIME_TYPE_EXTENSIONS.put(IMAGE_JPEG, new LinkedHashSet<String>(Arrays.asList(JPEG, JPG)));
+		MIME_TYPE_EXTENSIONS.put(IMAGE_PNG, new TreeSet<String>(Arrays.asList(PNG)));
+		MIME_TYPE_EXTENSIONS.put(IMAGE_TIFF, new TreeSet<String>(Arrays.asList(TIFF)));
+		MIME_TYPE_EXTENSIONS.put(IMAGE_XICON, new TreeSet<String>(Arrays.asList(ICO)));
 	}
 
 	/**
@@ -78,7 +80,8 @@ public final class MimeTypeUtil {
 	 * @return
 	 */
 	public static String getFileExtensionByMimeType(final String mimeType) {
-		return MIME_TYPE_EXTENSION.get(mimeType);
+		final Set<String> extensions = MIME_TYPE_EXTENSIONS.get(mimeType);
+		return (extensions != null && !extensions.isEmpty()) ? extensions.iterator().next() : null;
 	}
 
 	/**
@@ -87,9 +90,10 @@ public final class MimeTypeUtil {
 	 * @return
 	 */
 	public static String getMimeTypeByFileExtension(final String extension) {
-		final Set<Entry<String, String>> entries = MIME_TYPE_EXTENSION.entrySet();
-		for (final Entry<String, String> entry : entries) {
-			if (entry.getValue().equalsIgnoreCase(extension)) {
+		final String ext = extension.toLowerCase();
+		final Set<Entry<String, Set<String>>> entries = MIME_TYPE_EXTENSIONS.entrySet();
+		for (final Entry<String, Set<String>> entry : entries) {
+			if (entry.getValue().contains(ext)) {
 				return entry.getKey();
 			}
 		}
