@@ -1,0 +1,1 @@
+This project provide common java libraries.
